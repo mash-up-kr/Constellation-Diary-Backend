@@ -10,4 +10,7 @@ public class ByeolbyeolApplication {
         SpringApplication.run(ByeolbyeolApplication.class, args);
     }
 
+    public static void test() {
+        System.out.println("hello")
+    }
 }
