@@ -1,4 +1,4 @@
-package com.mashup.byeolbyeol;
+package com.kancho.byeolbyeol;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
