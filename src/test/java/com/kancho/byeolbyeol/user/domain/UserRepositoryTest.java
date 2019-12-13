@@ -28,8 +28,9 @@ public class UserRepositoryTest {
     public void 유저_저장하고_불러오기() {
         //given
         userRepository.save(User.builder()
+                .userId("test")
+                .password("test123")
                 .constellationsId(1)
-                .deviceId("test")
                 .horoscopeAlarmFlag(true)
                 .questionTime("09:00")
                 .questionAlarmFlag(true)
@@ -40,8 +41,9 @@ public class UserRepositoryTest {
 
         //then
         User user = userList.get(0);
+        assertThat(user.getUserId(), is("test"));
+        assertThat(user.getPassword(), is("test123"));
         assertThat(user.getConstellationsId(), is(1));
-        assertThat(user.getDeviceId(), is("test"));
         assertThat(user.getHoroscopeAlarmFlag(), is(true));
         assertThat(user.getQuestionTime(), is("09:00"));
         assertThat(user.getQuestionAlarmFlag(), is(true));

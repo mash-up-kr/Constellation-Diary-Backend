@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -19,9 +16,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer constellationsId;
+    @Column(unique = true)
+    private String userId;
 
-    private String deviceId;
+    private String password;
+
+    private Integer constellationsId;
 
     private Boolean horoscopeAlarmFlag;
 
@@ -30,9 +30,10 @@ public class User {
     private Boolean questionAlarmFlag;
 
     @Builder
-    public User(Integer constellationsId, String deviceId, Boolean horoscopeAlarmFlag, String questionTime, Boolean questionAlarmFlag) {
+    public User(String userId, String password, Integer constellationsId, Boolean horoscopeAlarmFlag, String questionTime, Boolean questionAlarmFlag) {
+        this.userId = userId;
+        this.password = password;
         this.constellationsId = constellationsId;
-        this.deviceId = deviceId;
         this.horoscopeAlarmFlag = horoscopeAlarmFlag;
         this.questionTime = questionTime;
         this.questionAlarmFlag = questionAlarmFlag;
