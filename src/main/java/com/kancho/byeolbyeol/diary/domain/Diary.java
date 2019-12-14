@@ -28,7 +28,7 @@ public class Diary {
     private String content;
 
     @Builder
-    public Diary(Long userId, String date, String title, String content) {
+    private Diary(Long userId, String date, String title, String content) {
         this.usersId = userId;
         this.date = date;
         this.title = title;

@@ -30,7 +30,7 @@ public class User {
     private Boolean questionAlarmFlag;
 
     @Builder
-    public User(String userId, String password, Integer constellationsId, Boolean horoscopeAlarmFlag, String questionTime, Boolean questionAlarmFlag) {
+    private User(String userId, String password, Integer constellationsId, Boolean horoscopeAlarmFlag, String questionTime, Boolean questionAlarmFlag) {
         this.userId = userId;
         this.password = password;
         this.constellationsId = constellationsId;

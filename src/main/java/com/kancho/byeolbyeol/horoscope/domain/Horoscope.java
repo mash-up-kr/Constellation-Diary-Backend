@@ -33,11 +33,8 @@ public class Horoscope {
 
     private String exercise;
 
-
-
-
     @Builder
-    public Horoscope(Integer constellationsId, String date, String content, String stylist, Integer number, String word, String exercise) {
+    private Horoscope(Integer constellationsId, String date, String content, String stylist, Integer number, String word, String exercise) {
         this.constellationsId = constellationsId;
         this.date = date;
         this.content = content;

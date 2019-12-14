@@ -24,7 +24,7 @@ public class DailyQuestion {
     private String content;
 
     @Builder
-    public DailyQuestion(String date, String content) {
+    private DailyQuestion(String date, String content) {
         this.date = date;
         this.content = content;
     }
