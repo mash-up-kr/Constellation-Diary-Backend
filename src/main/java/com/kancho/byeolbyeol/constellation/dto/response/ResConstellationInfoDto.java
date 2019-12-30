@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 @Getter
-public class ResConstellationImageDto {
+public class ResConstellationInfoDto {
 
     @ApiModelProperty(position = 1, example = "1")
     private Integer id;
@@ -20,13 +20,17 @@ public class ResConstellationImageDto {
     private String date;
 
     @ApiModelProperty(position = 5)
+    private String iconUrl;
+
+    @ApiModelProperty(position = 6)
     private String imageUrl;
 
-    public ResConstellationImageDto(Constellation constellation) {
+    public ResConstellationInfoDto(Constellation constellation) {
         this.id = constellation.getId();
         this.name = constellation.getName();
         this.description = constellation.getDescription();
         this.date = constellation.getDate();
+        this.iconUrl = constellation.getIconUrl();
         this.imageUrl = constellation.getImageUrl();
     }
 }
