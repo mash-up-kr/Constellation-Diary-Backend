@@ -1,8 +1,7 @@
 package com.kancho.byeolbyeol.constellation.service;
 
 import com.kancho.byeolbyeol.constellation.domain.ConstellationRepository;
-import com.kancho.byeolbyeol.constellation.dto.response.ResConstellationIconDto;
-import com.kancho.byeolbyeol.constellation.dto.response.ResConstellationImageDto;
+import com.kancho.byeolbyeol.constellation.dto.response.ResConstellationInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +14,10 @@ public class ConstellationService {
 
     private final ConstellationRepository constellationRepository;
 
-    public List<ResConstellationImageDto> getConstellationImageList() {
+    public List<ResConstellationInfoDto> getConstellationInfoList() {
         return constellationRepository.findAll()
                 .stream()
-                .map(constellation -> new ResConstellationImageDto(constellation))
-                .collect(Collectors.toList());
-    }
-
-    public List<ResConstellationIconDto> getConstellationIconList() {
-        return constellationRepository.findAll()
-                .stream()
-                .map(constellation -> new ResConstellationIconDto(constellation))
+                .map(constellation -> new ResConstellationInfoDto(constellation))
                 .collect(Collectors.toList());
     }
 }

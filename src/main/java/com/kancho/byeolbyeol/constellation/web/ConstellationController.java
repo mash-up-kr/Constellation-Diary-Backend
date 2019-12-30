@@ -1,7 +1,6 @@
 package com.kancho.byeolbyeol.constellation.web;
 
-import com.kancho.byeolbyeol.constellation.dto.response.ResConstellationIconDto;
-import com.kancho.byeolbyeol.constellation.dto.response.ResConstellationImageDto;
+import com.kancho.byeolbyeol.constellation.dto.response.ResConstellationInfoDto;
 import com.kancho.byeolbyeol.constellation.service.ConstellationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,23 +20,13 @@ public class ConstellationController {
 
     private final ConstellationService constellationService;
 
-    @ApiOperation(value = "별자리 리스트 조회 - 별자리 선택 화면")
+    @ApiOperation(value = "별자리 정보 리스트 조회")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "별자리 리스트 조회 성공"),
-            @ApiResponse(code = 500, message = "서버 에러")
-    })
-    @GetMapping("/constellations/included-image")
-    public ResponseEntity<List<ResConstellationImageDto>> getConstellationImageList() {
-        return ResponseEntity.ok().body(constellationService.getConstellationImageList());
-    }
-
-    @ApiOperation(value = "별자리 리스트 조회 - 별자리 운세 화면")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "별자리 리스트 조회 성공"),
+            @ApiResponse(code = 200, message = "조회 성공"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @GetMapping("/constellations/included-icon")
-    public ResponseEntity<List<ResConstellationIconDto>> getConstellationIconList() {
-        return ResponseEntity.ok().body(constellationService.getConstellationIconList());
+    public ResponseEntity<List<ResConstellationInfoDto>> getConstellationInfoList() {
+        return ResponseEntity.ok().body(constellationService.getConstellationInfoList());
     }
 }
