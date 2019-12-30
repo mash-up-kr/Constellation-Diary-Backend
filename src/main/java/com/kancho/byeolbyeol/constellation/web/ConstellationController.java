@@ -25,7 +25,7 @@ public class ConstellationController {
             @ApiResponse(code = 200, message = "조회 성공"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
-    @GetMapping("/constellations/included-icon")
+    @GetMapping("/constellations")
     public ResponseEntity<List<ResConstellationInfoDto>> getConstellationInfoList() {
         return ResponseEntity.ok().body(constellationService.getConstellationInfoList());
     }
