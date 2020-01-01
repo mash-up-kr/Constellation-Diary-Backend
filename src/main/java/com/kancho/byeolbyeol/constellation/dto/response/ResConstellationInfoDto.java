@@ -8,7 +8,7 @@ import lombok.Getter;
 public class ResConstellationInfoDto {
 
     @ApiModelProperty(position = 1, example = "1")
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty(position = 2, example = "물병자리")
     private String name;
@@ -19,18 +19,10 @@ public class ResConstellationInfoDto {
     @ApiModelProperty(position = 4, example = "1월 20일~2월 18일")
     private String date;
 
-    @ApiModelProperty(position = 5)
-    private String iconUrl;
-
-    @ApiModelProperty(position = 6)
-    private String imageUrl;
-
     public ResConstellationInfoDto(Constellation constellation) {
         this.id = constellation.getId();
         this.name = constellation.getName();
         this.description = constellation.getDescription();
         this.date = constellation.getDate();
-        this.iconUrl = constellation.getIconUrl();
-        this.imageUrl = constellation.getImageUrl();
     }
 }

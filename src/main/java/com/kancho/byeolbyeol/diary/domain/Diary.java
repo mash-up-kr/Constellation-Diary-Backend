@@ -19,13 +19,15 @@ public class Diary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long usersId;
-
     private String date;
 
     private String title;
 
     private String content;
+
+    private Long usersId;
+
+    private Long horoscopeId;
 
     @Builder
     private Diary(Long userId, String date, String title, String content) {

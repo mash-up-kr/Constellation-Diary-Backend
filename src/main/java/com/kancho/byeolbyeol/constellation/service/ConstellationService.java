@@ -17,7 +17,7 @@ public class ConstellationService {
     public List<ResConstellationInfoDto> getConstellationInfoList() {
         return constellationRepository.findAll()
                 .stream()
-                .map(constellation -> new ResConstellationInfoDto(constellation))
+                .map(ResConstellationInfoDto::new)
                 .collect(Collectors.toList());
     }
 }
