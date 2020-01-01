@@ -1,14 +1,15 @@
 package com.kancho.byeolbyeol.horoscope.domain;
 
+import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Word;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -19,27 +20,33 @@ public class Horoscope {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer constellationsId;
-
     private String date;
 
     private String content;
 
-    private String stylist;
+    @Enumerated(EnumType.STRING)
+    private Stylist stylist;
 
-    private Integer number;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "number")
+    private Numeral numeral;
 
-    private String word;
+    @Enumerated(EnumType.STRING)
+    private Word word;
 
-    private String exercise;
+    @Enumerated(EnumType.STRING)
+    private Exercise exercise;
+
+    private Long constellationsId;
 
     @Builder
-    private Horoscope(Integer constellationsId, String date, String content, String stylist, Integer number, String word, String exercise) {
+    private Horoscope(Long constellationsId, String date, String content,
+                      Stylist stylist, Numeral numeral, Word word, Exercise exercise) {
         this.constellationsId = constellationsId;
         this.date = date;
         this.content = content;
         this.stylist = stylist;
-        this.number = number;
+        this.numeral = numeral;
         this.word = word;
         this.exercise = exercise;
     }
