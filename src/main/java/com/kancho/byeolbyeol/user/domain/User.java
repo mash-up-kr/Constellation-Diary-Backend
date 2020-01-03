@@ -21,7 +21,9 @@ public class User {
 
     private String password;
 
-    private Integer constellationsId;
+    private String email;
+
+    private Long constellationsId;
 
     private Boolean horoscopeAlarmFlag;
 
@@ -30,13 +32,10 @@ public class User {
     private Boolean questionAlarmFlag;
 
     @Builder
-    private User(String userId, String password, Integer constellationsId,
-                 Boolean horoscopeAlarmFlag, String questionTime, Boolean questionAlarmFlag) {
+    private User(String userId, String password, Long constellationsId, String email) {
         this.userId = userId;
         this.password = password;
         this.constellationsId = constellationsId;
-        this.horoscopeAlarmFlag = horoscopeAlarmFlag;
-        this.questionTime = questionTime;
-        this.questionAlarmFlag = questionAlarmFlag;
+        this.email = email;
     }
 }
