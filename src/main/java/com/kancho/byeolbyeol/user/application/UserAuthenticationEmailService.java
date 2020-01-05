@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserAuthenticationEmailService {
     private final static String SUBJECT = "별별일기 이메일 인증번호입니다.";
+    private final static String CONTENT = "인증번호 : ";
     private final static Long THREE_MINUTES = 180000L;
 
     private final EmailService emailService;
@@ -21,7 +22,7 @@ public class UserAuthenticationEmailService {
         String number = RandomNumber.generateNumber().toString();
 
         emailService.sendAuthenticationNumberMail(reqEmailDto.getEmail(),
-                SUBJECT, number);
+                SUBJECT, CONTENT + number);
 
         AuthenticationNumber authenticationNumber = AuthenticationNumber.builder()
                 .email(reqEmailDto.getEmail())

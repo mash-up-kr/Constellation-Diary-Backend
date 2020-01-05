@@ -18,10 +18,11 @@ public class UserAuthenticationNumberService {
 
     public ResRegisterTokenDto validation(String email, Long number) {
 
-        AuthenticationNumber authenticationNumber = authenticationNumberRepository
-                .findFirstByEmailAndExpirationTimeLessThanEqualOrderByExpirationTime(email,
-                        System.currentTimeMillis())
-                .orElseThrow(NotFoundAuthenticationNumberException::new);
+        AuthenticationNumber authenticationNumber =
+                authenticationNumberRepository
+                        .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTime(email,
+                                System.currentTimeMillis())
+                        .orElseThrow(NotFoundAuthenticationNumberException::new);
 
         if (authenticationNumber.isNotEqualNumber(number)) {
             throw new IsNotSameAuthenticationNumberException();

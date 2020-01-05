@@ -42,6 +42,17 @@ class UserSignUpControllerTests {
     }
 
     @Test
+    void 인증번호_생성_요청_이메일이_누락될_경우() throws Exception {
+        ReqEmailDto reqEmailDto = new ReqEmailDto();
+
+        this.mockMvc.perform(post("/sign-up/authentication-numbers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(reqEmailDto)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void 인증번호_인증_성공() throws Exception {
         this.mockMvc.perform(get("/sign-up/authentication")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -49,5 +60,13 @@ class UserSignUpControllerTests {
                 .param("email", "test@naver.com"))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void 인증번호_인증_요청시_쿼리_파라미터가_누락될_경우() throws Exception {
+        this.mockMvc.perform(get("/sign-up/authentication")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 }
