@@ -13,7 +13,6 @@ import javax.persistence.*;
 public class Constellation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

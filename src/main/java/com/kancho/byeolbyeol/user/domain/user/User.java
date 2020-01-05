@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
 
@@ -35,8 +36,11 @@ public class User {
     @Builder
     private User(String userId, String password, Long constellationsId, String email) {
         this.userId = userId;
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.constellationsId = constellationsId;
         this.email = email;
+        this.horoscopeAlarmFlag = true;
+        this.questionAlarmFlag = true;
+        this.questionTime = "22:00";
     }
 }
