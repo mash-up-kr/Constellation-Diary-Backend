@@ -3,6 +3,7 @@ package com.kancho.byeolbyeol.user.application;
 import com.kancho.byeolbyeol.common.JWTManager;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
+import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationPurpose;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
 import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
 import com.kancho.byeolbyeol.user.exception.IsNotSameAuthenticationNumberException;
@@ -21,8 +22,9 @@ public class AuthenticationService {
 
         AuthenticationNumber authenticationNumber =
                 authenticationNumberRepository
-                        .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTime(
+                        .findFirstByEmailAndAuthenticationPurposeAndExpirationTimeGreaterThanEqualOrderByExpirationTime(
                                 reqValidationNumberDto.getEmail(),
+                                AuthenticationPurpose.SIGN_UP,
                                 System.currentTimeMillis())
                         .orElseThrow(NotFoundAuthenticationNumberException::new);
 

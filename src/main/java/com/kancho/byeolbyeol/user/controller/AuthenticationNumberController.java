@@ -5,6 +5,7 @@ import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
 import com.kancho.byeolbyeol.user.dto.requset.ReqAuthenticationNumbersDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
 import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
+import com.kancho.byeolbyeol.user.dto.response.ResUserIdDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
