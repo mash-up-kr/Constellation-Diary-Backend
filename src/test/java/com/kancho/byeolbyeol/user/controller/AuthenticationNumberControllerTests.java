@@ -1,9 +1,9 @@
 package com.kancho.byeolbyeol.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kancho.byeolbyeol.user.application.UserSignUpService;
+import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
 import com.kancho.byeolbyeol.user.dto.ReqEmailDto;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,8 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(UserSignUpController.class)
-class UserSignUpControllerTests {
+@WebMvcTest(AuthenticationNumberController.class)
+public class AuthenticationNumberControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -28,13 +28,13 @@ class UserSignUpControllerTests {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private UserSignUpService userSignUpService;
+    private AuthenticationNumberService authenticationNumberService;
 
     @Test
-    void 인증번호_생성_성공() throws Exception {
+    public void 인증번호_생성_성공() throws Exception {
         ReqEmailDto reqEmailDto = new ReqEmailDto("test@naver.com");
 
-        this.mockMvc.perform(post("/sign-up/authentication-numbers")
+        this.mockMvc.perform(post("/authentication-numbers")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reqEmailDto)))
                 .andDo(print())
@@ -42,10 +42,10 @@ class UserSignUpControllerTests {
     }
 
     @Test
-    void 인증번호_생성_요청_이메일이_누락될_경우() throws Exception {
+    public void 인증번호_생성_요청_이메일이_누락될_경우() throws Exception {
         ReqEmailDto reqEmailDto = new ReqEmailDto();
 
-        this.mockMvc.perform(post("/sign-up/authentication-numbers")
+        this.mockMvc.perform(post("/authentication-numbers")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reqEmailDto)))
                 .andDo(print())
@@ -53,8 +53,8 @@ class UserSignUpControllerTests {
     }
 
     @Test
-    void 인증번호_인증_성공() throws Exception {
-        this.mockMvc.perform(get("/sign-up/authentication")
+    public void 인증번호_인증_성공() throws Exception {
+        this.mockMvc.perform(get("/authentication")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("authentication-number", "123456")
                 .param("email", "test@naver.com"))
@@ -63,8 +63,8 @@ class UserSignUpControllerTests {
     }
 
     @Test
-    void 인증번호_인증_요청시_쿼리_파라미터가_누락될_경우() throws Exception {
-        this.mockMvc.perform(get("/sign-up/authentication")
+    public void 인증번호_인증_요청시_쿼리_파라미터가_누락될_경우() throws Exception {
+        this.mockMvc.perform(get("/authentication")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
