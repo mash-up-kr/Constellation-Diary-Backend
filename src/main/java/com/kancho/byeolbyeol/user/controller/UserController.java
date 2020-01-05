@@ -36,14 +36,11 @@ public class UserController {
 
     @PostMapping("/users/sign-up")
     public ResponseEntity<ResUserInfoDto> signUp(
-            @RequestBody @Valid ReqSignUpDto reqSignUpDto, BindingResult bindingResult,
-            @RequestHeader("Authorization") String token) {
+            @RequestBody @Valid ReqSignUpDto reqSignUpDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new RequestWornFieldException();
         }
-
-        jwtManager.authenticate(token);
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(reqSignUpDto));
     }
