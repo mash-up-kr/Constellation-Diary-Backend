@@ -2,8 +2,8 @@ package com.kancho.byeolbyeol.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
-import com.kancho.byeolbyeol.user.dto.ReqEmailDto;
-import com.kancho.byeolbyeol.user.dto.ReqValidationNumberDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqEmailDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

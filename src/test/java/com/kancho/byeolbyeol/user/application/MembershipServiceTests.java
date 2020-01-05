@@ -3,8 +3,7 @@ package com.kancho.byeolbyeol.user.application;
 import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.constellation.domain.ConstellationRepository;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
-import com.kancho.byeolbyeol.user.dto.ReqSignUpDto;
-import com.kancho.byeolbyeol.user.exception.NotFoundAuthenticationNumberException;
+import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
 import com.kancho.byeolbyeol.user.exception.NotFoundConstellationException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class UserSignUpServiceTests {
+public class MembershipServiceTests {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -25,7 +24,7 @@ public class UserSignUpServiceTests {
     private UserRepository userRepository;
     private ConstellationRepository constellationRepository;
     private JWTManager jwtManager;
-    private UserSignUpService userSignUpService;
+    private MembershipService membershipService;
     private ReqSignUpDto reqSignUpDto;
 
     @Before
@@ -35,7 +34,7 @@ public class UserSignUpServiceTests {
         jwtManager = mock(JWTManager.class);
         reqSignUpDto = mock(ReqSignUpDto.class);
 
-        userSignUpService = new UserSignUpService(userRepository, constellationRepository, jwtManager);
+        membershipService = new MembershipService(userRepository, constellationRepository, jwtManager);
     }
 
     @Test
@@ -44,6 +43,6 @@ public class UserSignUpServiceTests {
 
         expectedException.expect(NotFoundConstellationException.class);
 
-        userSignUpService.signUp(reqSignUpDto);
+        membershipService.signUp(reqSignUpDto);
     }
 }

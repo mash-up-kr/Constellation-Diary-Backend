@@ -2,7 +2,7 @@ package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
-import com.kancho.byeolbyeol.user.dto.ReqEmailDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqEmailDto;
 import com.kancho.byeolbyeol.util.RandomNumber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

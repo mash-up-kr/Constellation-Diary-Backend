@@ -1,7 +1,7 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
-import com.kancho.byeolbyeol.user.dto.ResCheckUserDto;
+import com.kancho.byeolbyeol.user.dto.response.ResCheckUserDto;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,14 +13,14 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
     private UserService userService;
-    private UserSignUpService userSignUpService;
+    private MembershipService membershipService;
     private UserRepository userRepository;
 
     @Before
     public void mockUp() {
         userRepository = mock(UserRepository.class);
-        userSignUpService = mock(UserSignUpService.class);
-        userService = new UserService(userRepository, userSignUpService);
+        membershipService = mock(MembershipService.class);
+        userService = new UserService(userRepository, membershipService);
     }
 
     @Test

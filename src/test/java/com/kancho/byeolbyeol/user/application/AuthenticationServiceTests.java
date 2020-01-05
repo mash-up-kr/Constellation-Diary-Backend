@@ -3,7 +3,7 @@ package com.kancho.byeolbyeol.user.application;
 import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
-import com.kancho.byeolbyeol.user.dto.ReqValidationNumberDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
 import com.kancho.byeolbyeol.user.exception.IsNotSameAuthenticationNumberException;
 import com.kancho.byeolbyeol.user.exception.NotFoundAuthenticationNumberException;
 import org.junit.Before;
