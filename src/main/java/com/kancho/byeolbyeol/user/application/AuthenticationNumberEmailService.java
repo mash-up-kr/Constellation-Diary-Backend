@@ -21,8 +21,8 @@ public class AuthenticationNumberEmailService {
     public void generateAuthenticationNumber(ReqEmailDto reqEmailDto) {
         String number = RandomNumber.generateNumber().toString();
 
-        emailService.sendAuthenticationNumberMail(reqEmailDto.getEmail(),
-                SUBJECT, CONTENT + number);
+        emailService.sendAuthenticationNumberMail(
+                        reqEmailDto.getEmail(), SUBJECT, CONTENT + number);
 
         AuthenticationNumber authenticationNumber = AuthenticationNumber.builder()
                 .email(reqEmailDto.getEmail())

@@ -42,7 +42,7 @@ public class JWTManager {
         return createJWT(userId, id, REFRESH_TOKEN, THIRTY_DAYS);
     }
 
-    public String createRegisterJWT(String email, String tokenType, Long day) {
+    private String createRegisterJWT(String email, String tokenType, Long day) {
 
         JwtBuilder jwtHeader = createJWTHeader(tokenType, day);
 
@@ -51,7 +51,7 @@ public class JWTManager {
                 .compact();
     }
 
-    public String createJWT(String userId, Long id, String tokenType, Long day) {
+    private String createJWT(String userId, Long id, String tokenType, Long day) {
 
         JwtBuilder jwtHeader = createJWTHeader(tokenType, day);
 
@@ -76,5 +76,35 @@ public class JWTManager {
     private SecretKey generateKey(String key) {
         byte[] byteKey = key.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(byteKey);
+    }
+
+    public void authenticate(String token) {
+        if (isNotStartBearer(token)) {
+            throw new FailAuthenticationException();
+        }
+
+        String tempToken = subStringKeywordString(token);
+
+        getPayLoad(tempToken);
+    }
+
+    private boolean isNotStartBearer(String token) {
+        return !token.startsWith(KEYWORD);
+    }
+
+    private String subStringKeywordString(String token) {
+        return token.substring(KEYWORD.length());
+    }
+
+    private Jws<Claims> getPayLoad(String token) {
+        Jws<Claims> claims;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey(generateKey(key))
+                    .parseClaimsJws(token);
+        } catch (JwtException e) {
+            throw new FailAuthenticationException();
+        }
+        return claims;
     }
 }

@@ -2,7 +2,9 @@ package com.kancho.byeolbyeol.user.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.user.application.UserService;
+import com.kancho.byeolbyeol.user.dto.ReqSignUpDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,6 +30,9 @@ public class UserControllerTests {
     private ObjectMapper objectMapper;
 
     @MockBean
+    private JWTManager jwtManager;
+
+    @MockBean
     private UserService userService;
 
     @Test
@@ -38,4 +44,32 @@ public class UserControllerTests {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void 회원가입_성공() throws Exception {
+        ReqSignUpDto reqSignUpDto =
+                new ReqSignUpDto("test@naver.com", "testId", "testpwd", "물병자리");
+
+        this.mockMvc.perform(post("/users/sign-up")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "testToken")
+                .content(objectMapper.writeValueAsString(reqSignUpDto)))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void 회원가입_요청시_필드_누락시() throws Exception {
+        ReqSignUpDto reqSignUpDto =
+                new ReqSignUpDto();
+
+        this.mockMvc.perform(post("/users/sign-up")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "testToken")
+                .content(objectMapper.writeValueAsString(reqSignUpDto)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+
 }

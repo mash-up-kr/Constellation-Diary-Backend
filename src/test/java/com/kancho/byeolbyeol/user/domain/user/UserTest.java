@@ -17,7 +17,6 @@ public class UserTest {
                 .build();
 
         assertThat(user.getUserId(), is("test"));
-        assertThat(user.getPassword(), is("test123"));
         assertThat(user.getConstellationsId(), is(1L));
     }
 

@@ -44,7 +44,6 @@ public class UserRepositoryTest {
         //then
         User user = userList.get(0);
         assertThat(user.getUserId(), is("test"));
-        assertThat(user.getPassword(), is("test123"));
         assertThat(user.getConstellationsId(), is(1L));
     }
 }
