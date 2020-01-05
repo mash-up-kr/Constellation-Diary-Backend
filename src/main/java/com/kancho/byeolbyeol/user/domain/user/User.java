@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.user.domain;
+package com.kancho.byeolbyeol.user.domain.user;
 
 import lombok.AccessLevel;
 import lombok.Builder;

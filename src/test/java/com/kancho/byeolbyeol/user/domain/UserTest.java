@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.user.domain;
 
+import com.kancho.byeolbyeol.user.domain.user.User;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
