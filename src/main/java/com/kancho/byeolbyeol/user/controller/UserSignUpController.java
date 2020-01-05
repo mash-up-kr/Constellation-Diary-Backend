@@ -18,7 +18,7 @@ public class UserSignUpController {
 
     private final UserSignUpService userSignUpService;
 
-    @PostMapping("users/sign-up/authentication-number")
+    @PostMapping("/sign-up/authentication-number")
     public ResponseEntity<Void> generateAuthenticationNumber(
             @RequestBody @Valid ReqEmailDto reqEmailDto, BindingResult bindingResult) {
 

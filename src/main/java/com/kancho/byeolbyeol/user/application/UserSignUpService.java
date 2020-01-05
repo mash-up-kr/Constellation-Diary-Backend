@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserSignUpService {
 
+    private final static String SUBJECT = "인증번호입니다.";
+
     private final EmailService emailService;
 
     public void generateAuthenticationNumber(ReqEmailDto reqEmailDto) {
 
-        emailService.sendAuthenticationNumberMail("korea8378@naver.com", "인증번호입니다.", "1234");
+        emailService.sendAuthenticationNumberMail(reqEmailDto.getEmail(), SUBJECT, "1234");
     }
 }
