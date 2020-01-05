@@ -36,7 +36,7 @@ public class UserSignUpService {
         user = userRepository.save(user);
 
         ResTokenDto resTokenDto = createTokens(user);
-        ResUserDto resUserDto = createUser(user, constellation);
+        ResUserDto resUserDto = createUserInfo(user, constellation);
 
         return ResSignUpDto.builder()
                 .resTokenDto(resTokenDto)
@@ -55,7 +55,7 @@ public class UserSignUpService {
                 .build();
     }
 
-    private ResUserDto createUser(User user, Constellation constellation) {
+    private ResUserDto createUserInfo(User user, Constellation constellation) {
         return ResUserDto.builder()
                 .id(user.getId())
                 .userId(user.getUserId())
