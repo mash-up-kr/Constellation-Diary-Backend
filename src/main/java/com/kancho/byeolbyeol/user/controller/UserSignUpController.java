@@ -18,7 +18,7 @@ public class UserSignUpController {
 
     private final UserSignUpService userSignUpService;
 
-    @PostMapping("/sign-up/authentication-numbers")
+    @PostMapping("/authentication-numbers")
     public ResponseEntity<Void> generateAuthenticationNumber(
             @RequestBody @Valid ReqEmailDto reqEmailDto, BindingResult bindingResult) {
 
@@ -31,7 +31,7 @@ public class UserSignUpController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/sign-up/authentication")
+    @GetMapping("/authentication")
     public ResponseEntity<ResRegisterTokenDto> validationAuthenticationNumber(
             @RequestParam("authentication-number") Long number,
             @RequestParam("email") String email) {

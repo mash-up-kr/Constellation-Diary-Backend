@@ -34,7 +34,7 @@ class UserSignUpControllerTests {
     void 인증번호_생성_성공() throws Exception {
         ReqEmailDto reqEmailDto = new ReqEmailDto("test@naver.com");
 
-        this.mockMvc.perform(post("/sign-up/authentication-numbers")
+        this.mockMvc.perform(post("/authentication-numbers")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reqEmailDto)))
                 .andDo(print())
@@ -45,7 +45,7 @@ class UserSignUpControllerTests {
     void 인증번호_생성_요청_이메일이_누락될_경우() throws Exception {
         ReqEmailDto reqEmailDto = new ReqEmailDto();
 
-        this.mockMvc.perform(post("/sign-up/authentication-numbers")
+        this.mockMvc.perform(post("/authentication-numbers")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reqEmailDto)))
                 .andDo(print())
@@ -54,7 +54,7 @@ class UserSignUpControllerTests {
 
     @Test
     void 인증번호_인증_성공() throws Exception {
-        this.mockMvc.perform(get("/sign-up/authentication")
+        this.mockMvc.perform(get("/authentication")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("authentication-number", "123456")
                 .param("email", "test@naver.com"))
@@ -64,7 +64,7 @@ class UserSignUpControllerTests {
 
     @Test
     void 인증번호_인증_요청시_쿼리_파라미터가_누락될_경우() throws Exception {
-        this.mockMvc.perform(get("/sign-up/authentication")
+        this.mockMvc.perform(get("/authentication")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
