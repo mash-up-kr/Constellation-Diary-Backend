@@ -57,7 +57,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqSignInDto));
     }
 
-    @GetMapping("/users/token")
+    @GetMapping("/users/tokens")
     public ResponseEntity<ResTokenDto> refreshToken(
             @RequestHeader("Authorization") String token) {
 
