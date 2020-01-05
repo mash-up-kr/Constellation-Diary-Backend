@@ -31,7 +31,7 @@ public class JWTManager {
 
 
     public String createRegisterToken(String email) {
-        return createJWT(email, REGISTER_TOKEN, ONE_DAY);
+        return createRegisterJWT(email, REGISTER_TOKEN, ONE_DAY);
     }
 
     public String createAuthenticationToken(String userId, Long id) {
@@ -42,7 +42,7 @@ public class JWTManager {
         return createJWT(userId, id, REFRESH_TOKEN, THIRTY_DAYS);
     }
 
-    public String createJWT(String email, String tokenType, Long day) {
+    public String createRegisterJWT(String email, String tokenType, Long day) {
 
         JwtBuilder jwtHeader = createJWTHeader(tokenType, day);
 

@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.user.domain;
+package com.kancho.byeolbyeol.user.domain.user;
 
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
@@ -35,10 +35,7 @@ public class UserRepositoryTest {
         userRepository.save(User.builder()
                 .userId("test")
                 .password("test123")
-                .constellationsId(1)
-                .horoscopeAlarmFlag(true)
-                .questionTime("09:00")
-                .questionAlarmFlag(true)
+                .constellationsId(1L)
                 .build());
 
         //when
@@ -48,9 +45,6 @@ public class UserRepositoryTest {
         User user = userList.get(0);
         assertThat(user.getUserId(), is("test"));
         assertThat(user.getPassword(), is("test123"));
-        assertThat(user.getConstellationsId(), is(1));
-        assertThat(user.getHoroscopeAlarmFlag(), is(true));
-        assertThat(user.getQuestionTime(), is("09:00"));
-        assertThat(user.getQuestionAlarmFlag(), is(true));
+        assertThat(user.getConstellationsId(), is(1L));
     }
 }

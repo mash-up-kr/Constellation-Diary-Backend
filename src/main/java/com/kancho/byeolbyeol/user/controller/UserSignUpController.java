@@ -35,7 +35,7 @@ public class UserSignUpController {
             @RequestParam("authentication-number") Long number,
             @RequestParam("email") String email) {
         //TODO Exception 처리
-        if (number == null) {
+        if (number == null || email == null) {
             throw new RuntimeException();
         }
 
