@@ -1,6 +1,6 @@
 package com.kancho.byeolbyeol.user.application;
 
-import com.kancho.byeolbyeol.authentication.JWTManager;
+import com.kancho.byeolbyeol.common.JWTManager;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
