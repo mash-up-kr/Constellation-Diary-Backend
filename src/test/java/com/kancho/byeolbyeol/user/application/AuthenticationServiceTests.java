@@ -42,7 +42,8 @@ public class AuthenticationServiceTests {
     @Test
     public void 인증_번호가_존재하지_않을_경우() {
         when(authenticationNumberRepository
-                .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTime(any(), any()))
+                .findFirstByEmailAndAuthenticationPurposeAndExpirationTimeGreaterThanEqualOrderByExpirationTime(
+                        any(), any(), any()))
                 .thenReturn(Optional.empty());
 
         expectedException.expect(NotFoundAuthenticationNumberException.class);
@@ -53,7 +54,8 @@ public class AuthenticationServiceTests {
     @Test
     public void 인증_번호가_같지_않을_경우() {
         when(authenticationNumberRepository
-                .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTime(any(), any()))
+                .findFirstByEmailAndAuthenticationPurposeAndExpirationTimeGreaterThanEqualOrderByExpirationTime(
+                        any(), any(), any()))
                 .thenReturn(Optional.ofNullable(authenticationNumber));
         when(authenticationNumber.isNotEqualNumber(any())).thenReturn(true);
 

@@ -1,13 +1,9 @@
 package com.kancho.byeolbyeol.user.controller;
 
-import com.kancho.byeolbyeol.common.JWTManager;
 import com.kancho.byeolbyeol.common.RequestWornFieldException;
 import com.kancho.byeolbyeol.user.application.UserService;
-import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
-import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
-import com.kancho.byeolbyeol.user.dto.response.ResCheckUserDto;
-import com.kancho.byeolbyeol.user.dto.response.ResTokenDto;
-import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
+import com.kancho.byeolbyeol.user.dto.requset.*;
+import com.kancho.byeolbyeol.user.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +18,6 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-    private final JWTManager jwtManager;
 
     @GetMapping("/users")
     public ResponseEntity<ResCheckUserDto> checkUserId(
@@ -57,10 +52,24 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqSignInDto));
     }
 
-    @GetMapping("/users/token")
+    @GetMapping("/users/tokens")
     public ResponseEntity<ResTokenDto> refreshToken(
             @RequestHeader("Authorization") String token) {
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.refreshToken(token));
+    }
+
+
+    @PostMapping("/users/find-id")
+    public ResponseEntity<ResUserIdDto> findUserId(
+            @RequestBody @Valid ReqValidationNumberDto reqValidationNumberDto,
+            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new RequestWornFieldException();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userService.findUserId(reqValidationNumberDto));
     }
 }

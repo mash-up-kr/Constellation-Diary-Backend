@@ -7,10 +7,13 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ReqEmailDto {
+@AllArgsConstructor
+public class ReqFindUserIdDto {
 
     @NotNull
-    private String email;
+    private Long number;
+
+    @NotNull
+    private Long email;
 }

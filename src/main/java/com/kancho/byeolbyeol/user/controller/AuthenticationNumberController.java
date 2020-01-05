@@ -2,9 +2,10 @@ package com.kancho.byeolbyeol.user.controller;
 
 import com.kancho.byeolbyeol.common.RequestWornFieldException;
 import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
-import com.kancho.byeolbyeol.user.dto.requset.ReqEmailDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqAuthenticationNumbersDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
 import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
+import com.kancho.byeolbyeol.user.dto.response.ResUserIdDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +22,14 @@ public class AuthenticationNumberController {
 
     @PostMapping("/authentication-numbers")
     public ResponseEntity<Void> generateAuthenticationNumber(
-            @RequestBody @Valid ReqEmailDto reqEmailDto, BindingResult bindingResult) {
+            @RequestBody @Valid ReqAuthenticationNumbersDto reqAuthenticationNumbersDto,
+            BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new RequestWornFieldException();
         }
 
-        authenticationNumberService.generateAuthenticationNumber(reqEmailDto);
+        authenticationNumberService.generateAuthenticationNumber(reqAuthenticationNumbersDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
