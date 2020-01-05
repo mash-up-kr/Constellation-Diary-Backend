@@ -25,7 +25,6 @@ public class UserSignUpController {
         if (bindingResult.hasErrors()) {
             throw new RuntimeException();
         }
-
         userSignUpService.generateAuthenticationNumber(reqEmailDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();

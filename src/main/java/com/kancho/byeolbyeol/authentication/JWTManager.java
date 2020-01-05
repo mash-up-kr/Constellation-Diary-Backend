@@ -1,9 +1,6 @@
 package com.kancho.byeolbyeol.authentication;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,8 +14,14 @@ public class JWTManager {
 
     private final static String REFRESH_KEYWORD = "Bearer Token";
     private final static String KEYWORD = "Bearer";
-    private final static String USER_ID = "uesrId";
+    private final static String USER_ID = "userId";
     private final static String ID = "id";
+    private final static String EMAIL = "email";
+    private static final Long ONE_DAY = 1000L * 60L * 60L * 24L;
+    private static final Long THIRTY_DAYS = ONE_DAY * 30L;
+    private static final String AUTHENTICATION_TOKEN = "Authentication Token";
+    private static final String REFRESH_TOKEN = "Refresh Token";
+    private static final String REGISTER_TOKEN = "Register Token";
 
     private String key;
 
@@ -26,10 +29,10 @@ public class JWTManager {
         this.key = key;
     }
 
-    private static final Long ONE_DAY = 1000L * 60L * 60L * 24L;
-    private static final Long THIRTY_DAYS = ONE_DAY * 30L;
-    private static final String AUTHENTICATION_TOKEN = "Authentication Token";
-    private static final String REFRESH_TOKEN = "Refresh Token";
+
+    public String createRegisterToken(String email) {
+        return createJWT(email, REGISTER_TOKEN, ONE_DAY);
+    }
 
     public String createAuthenticationToken(String userId, Long id) {
         return createJWT(userId, id, AUTHENTICATION_TOKEN, ONE_DAY);
@@ -39,21 +42,35 @@ public class JWTManager {
         return createJWT(userId, id, REFRESH_TOKEN, THIRTY_DAYS);
     }
 
-    public String createJWT(String userId, Long id, String tokenType, Long day) {
+    public String createJWT(String email, String tokenType, Long day) {
 
-        Date today = new Date();
-        Date tomorrow = new Date(today.getTime() + ONE_DAY);
+        JwtBuilder jwtHeader = createJWTHeader(tokenType, day);
 
-        return Jwts.builder()
-                .setHeaderParam("typ", "JWT")
-                .setIssuer("API Server")
-                .setSubject("JWT Token")
-                .setExpiration(tomorrow)
-                .setIssuedAt(today)
-                .claim("userId", userId)
-                .claim("id", id)
+        return jwtHeader.claim(EMAIL, email)
                 .signWith(generateKey(key))
                 .compact();
+    }
+
+    public String createJWT(String userId, Long id, String tokenType, Long day) {
+
+        JwtBuilder jwtHeader = createJWTHeader(tokenType, day);
+
+        return jwtHeader.claim(USER_ID, userId)
+                .claim(ID, id)
+                .signWith(generateKey(key))
+                .compact();
+    }
+
+    private JwtBuilder createJWTHeader(String tokenType, Long day) {
+        Date today = new Date();
+        Date tomorrow = new Date(today.getTime() + day);
+
+        return Jwts.builder()
+                .setHeaderParam("type", "JWT")
+                .setIssuer("API Server")
+                .setSubject(tokenType)
+                .setExpiration(tomorrow)
+                .setIssuedAt(today);
     }
 
     private SecretKey generateKey(String key) {
