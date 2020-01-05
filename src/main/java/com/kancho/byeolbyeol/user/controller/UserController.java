@@ -1,7 +1,7 @@
 package com.kancho.byeolbyeol.user.controller;
 
 import com.kancho.byeolbyeol.common.JWTManager;
-import com.kancho.byeolbyeol.exception.RequestWornFieldException;
+import com.kancho.byeolbyeol.common.RequestWornFieldException;
 import com.kancho.byeolbyeol.user.application.UserService;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;

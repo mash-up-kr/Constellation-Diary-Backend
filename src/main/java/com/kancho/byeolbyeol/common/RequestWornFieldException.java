@@ -1,5 +1,7 @@
-package com.kancho.byeolbyeol.exception;
+package com.kancho.byeolbyeol.common;
 
+import com.kancho.byeolbyeol.exception.BaseException;
+import com.kancho.byeolbyeol.exception.ErrorModel;
 import org.springframework.http.HttpStatus;
 
 public class RequestWornFieldException extends BaseException {
