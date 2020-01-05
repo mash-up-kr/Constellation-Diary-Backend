@@ -9,8 +9,11 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReqEmailDto {
+public class ReqAuthenticationNumbersDto {
 
     @NotNull
     private String email;
+
+    @NotNull
+    private String authenticationPurpose;
 }
