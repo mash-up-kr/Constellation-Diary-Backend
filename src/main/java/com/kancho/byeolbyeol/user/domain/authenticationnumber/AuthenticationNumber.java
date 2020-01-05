@@ -31,4 +31,8 @@ public class AuthenticationNumber {
         this.number = number;
         this.expirationTime = expirationTime;
     }
+
+    public boolean isNotEqualNumber(Long number) {
+        return !this.number.equals(number.toString());
+    }
 }
