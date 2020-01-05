@@ -4,6 +4,8 @@ import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
 import com.kancho.byeolbyeol.user.dto.ResRegisterTokenDto;
+import com.kancho.byeolbyeol.user.exception.IsNotSameAuthenticationNumberException;
+import com.kancho.byeolbyeol.user.exception.NotFoundAuthenticationNumberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +17,15 @@ public class UserAuthenticationNumberService {
     private final JWTManager jwtManager;
 
     public ResRegisterTokenDto validation(String email, Long number) {
-        //TODO Exception 처리
-        AuthenticationNumber authenticationNumber = authenticationNumberRepository
-                .findFirstByEmailAndExpirationTimeLessThanEqualOrderByExpirationTime(email,
-                        System.currentTimeMillis())
-                .orElseThrow(RuntimeException::new);
 
-        //TODO Exception 처리
+        AuthenticationNumber authenticationNumber =
+                authenticationNumberRepository
+                        .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTime(email,
+                                System.currentTimeMillis())
+                        .orElseThrow(NotFoundAuthenticationNumberException::new);
+
         if (authenticationNumber.isNotEqualNumber(number)) {
-            throw new RuntimeException();
+            throw new IsNotSameAuthenticationNumberException();
         }
 
         String registerToken = jwtManager.createRegisterToken(authenticationNumber.getEmail());

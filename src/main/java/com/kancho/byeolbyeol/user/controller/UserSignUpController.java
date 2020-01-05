@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.user.controller;
 
+import com.kancho.byeolbyeol.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.user.application.UserSignUpService;
 import com.kancho.byeolbyeol.user.dto.ReqEmailDto;
 import com.kancho.byeolbyeol.user.dto.ResRegisterTokenDto;
@@ -20,9 +21,9 @@ public class UserSignUpController {
     @PostMapping("/sign-up/authentication-numbers")
     public ResponseEntity<Void> generateAuthenticationNumber(
             @RequestBody @Valid ReqEmailDto reqEmailDto, BindingResult bindingResult) {
-        //TODO Exception 처리
+
         if (bindingResult.hasErrors()) {
-            throw new RuntimeException();
+            throw new RequestWornFieldException();
         }
 
         userSignUpService.generateAuthenticationNumber(reqEmailDto);
@@ -34,9 +35,9 @@ public class UserSignUpController {
     public ResponseEntity<ResRegisterTokenDto> validationAuthenticationNumber(
             @RequestParam("authentication-number") Long number,
             @RequestParam("email") String email) {
-        //TODO Exception 처리
+
         if (number == null || email == null) {
-            throw new RuntimeException();
+            throw new RequestWornFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK)
