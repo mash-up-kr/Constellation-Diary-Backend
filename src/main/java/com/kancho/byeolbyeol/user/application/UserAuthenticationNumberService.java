@@ -28,6 +28,8 @@ public class UserAuthenticationNumberService {
 
         String registerToken = jwtManager.createRegisterToken(authenticationNumber.getEmail());
 
+        authenticationNumberRepository.delete(authenticationNumber);
+
         return ResRegisterTokenDto.builder()
                 .registerToken(registerToken)
                 .build();
