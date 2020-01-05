@@ -7,15 +7,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserSignUpService {
-    private final UserAuthenticationEmailService userAuthenticationEmailService;
-    private final UserAuthenticationNumberService userAuthenticationNumberService;
+public class AuthenticationNumberService {
+    private final AuthenticationNumberEmailService authenticationNumberEmailService;
+    private final AuthenticationService authenticationService;
 
     public void generateAuthenticationNumber(ReqEmailDto reqEmailDto) {
-        userAuthenticationEmailService.generateAuthenticationNumber(reqEmailDto);
+        authenticationNumberEmailService.generateAuthenticationNumber(reqEmailDto);
     }
 
     public ResRegisterTokenDto validation(String email, Long number) {
-        return userAuthenticationNumberService.validation(email ,number);
+        return authenticationService.validation(email ,number);
     }
 }

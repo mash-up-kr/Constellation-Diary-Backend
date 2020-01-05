@@ -16,12 +16,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class UserAuthenticationNumberServiceTests {
+public class AuthenticationServiceTests {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private UserAuthenticationNumberService userAuthenticationNumberService;
+    private AuthenticationService authenticationService;
     private AuthenticationNumberRepository authenticationNumberRepository;
     private JWTManager jwtManager;
     private AuthenticationNumber authenticationNumber;
@@ -31,8 +31,8 @@ public class UserAuthenticationNumberServiceTests {
         authenticationNumber = mock(AuthenticationNumber.class);
         authenticationNumberRepository = mock(AuthenticationNumberRepository.class);
         jwtManager = mock(JWTManager.class);
-        userAuthenticationNumberService =
-                new UserAuthenticationNumberService(authenticationNumberRepository, jwtManager);
+        authenticationService =
+                new AuthenticationService(authenticationNumberRepository, jwtManager);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class UserAuthenticationNumberServiceTests {
 
         expectedException.expect(NotFoundAuthenticationNumberException.class);
 
-        userAuthenticationNumberService.validation("test@naver.com", 123456L);
+        authenticationService.validation("test@naver.com", 123456L);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class UserAuthenticationNumberServiceTests {
 
         expectedException.expect(IsNotSameAuthenticationNumberException.class);
 
-        userAuthenticationNumberService.validation("test@naver.com", 123456L);
+        authenticationService.validation("test@naver.com", 123456L);
     }
 
 }

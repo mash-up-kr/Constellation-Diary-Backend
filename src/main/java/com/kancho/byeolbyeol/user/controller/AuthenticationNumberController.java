@@ -1,7 +1,7 @@
 package com.kancho.byeolbyeol.user.controller;
 
 import com.kancho.byeolbyeol.exception.RequestWornFieldException;
-import com.kancho.byeolbyeol.user.application.UserSignUpService;
+import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
 import com.kancho.byeolbyeol.user.dto.ReqEmailDto;
 import com.kancho.byeolbyeol.user.dto.ResRegisterTokenDto;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +14,9 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-public class UserSignUpController {
+public class AuthenticationNumberController {
 
-    private final UserSignUpService userSignUpService;
+    private final AuthenticationNumberService authenticationNumberService;
 
     @PostMapping("/authentication-numbers")
     public ResponseEntity<Void> generateAuthenticationNumber(
@@ -26,7 +26,7 @@ public class UserSignUpController {
             throw new RequestWornFieldException();
         }
 
-        userSignUpService.generateAuthenticationNumber(reqEmailDto);
+        authenticationNumberService.generateAuthenticationNumber(reqEmailDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -41,6 +41,6 @@ public class UserSignUpController {
         }
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userSignUpService.validation(email, number));
+                .body(authenticationNumberService.validation(email, number));
     }
 }

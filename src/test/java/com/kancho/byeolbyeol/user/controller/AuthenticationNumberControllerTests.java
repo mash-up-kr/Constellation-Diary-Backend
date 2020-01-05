@@ -1,7 +1,7 @@
 package com.kancho.byeolbyeol.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kancho.byeolbyeol.user.application.UserSignUpService;
+import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
 import com.kancho.byeolbyeol.user.dto.ReqEmailDto;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -18,8 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(UserSignUpController.class)
-class UserSignUpControllerTests {
+@WebMvcTest(AuthenticationNumberController.class)
+class AuthenticationNumberControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -28,7 +28,7 @@ class UserSignUpControllerTests {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private UserSignUpService userSignUpService;
+    private AuthenticationNumberService authenticationNumberService;
 
     @Test
     void 인증번호_생성_성공() throws Exception {

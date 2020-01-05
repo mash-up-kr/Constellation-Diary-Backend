@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserAuthenticationEmailService {
+public class AuthenticationNumberEmailService {
     private final static String SUBJECT = "별별일기 이메일 인증번호입니다.";
     private final static String CONTENT = "인증번호 : ";
     private final static Long THREE_MINUTES = 180000L;
