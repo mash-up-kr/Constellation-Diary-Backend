@@ -1,5 +1,6 @@
-package com.kancho.byeolbyeol.authentication;
+package com.kancho.byeolbyeol.aop;
 
+import com.kancho.byeolbyeol.common.JWTManager;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

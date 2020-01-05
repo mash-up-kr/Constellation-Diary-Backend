@@ -1,7 +1,8 @@
-package com.kancho.byeolbyeol.authentication;
+package com.kancho.byeolbyeol.aop;
 
+import com.kancho.byeolbyeol.common.FailAuthenticationException;
+import com.kancho.byeolbyeol.common.JWTManager;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;

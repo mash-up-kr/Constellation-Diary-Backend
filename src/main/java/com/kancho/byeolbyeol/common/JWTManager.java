@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.authentication;
+package com.kancho.byeolbyeol.common;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -11,8 +11,6 @@ import java.util.Date;
 
 @Component
 public class JWTManager {
-
-    private final static String REFRESH_KEYWORD = "Bearer Token";
     private final static String KEYWORD = "Bearer";
     private final static String USER_ID = "userId";
     private final static String ID = "id";
@@ -44,7 +42,7 @@ public class JWTManager {
 
     private String createRegisterJWT(String email, String tokenType, Long day) {
 
-        JwtBuilder jwtHeader = createJWTHeader(tokenType, day);
+        JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);
 
         return jwtHeader.claim(EMAIL, email)
                 .signWith(generateKey(key))
@@ -53,7 +51,7 @@ public class JWTManager {
 
     private String createJWT(String userId, Long id, String tokenType, Long day) {
 
-        JwtBuilder jwtHeader = createJWTHeader(tokenType, day);
+        JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);
 
         return jwtHeader.claim(USER_ID, userId)
                 .claim(ID, id)
@@ -61,7 +59,7 @@ public class JWTManager {
                 .compact();
     }
 
-    private JwtBuilder createJWTHeader(String tokenType, Long day) {
+    private JwtBuilder createJWTRegisterClaim(String tokenType, Long day) {
         Date today = new Date();
         Date tomorrow = new Date(today.getTime() + day);
 
@@ -107,4 +105,32 @@ public class JWTManager {
         }
         return claims;
     }
+
+    public UserInfoDto getUserInfo(String token) {
+        String tempToken = subStringKeywordString(token);
+
+        Jws<Claims> claims = getPayLoad(tempToken);
+        String subject = getSubjectRefresh(claims);
+
+        if (!subject.equals(REFRESH_TOKEN)) {
+            throw new FailAuthenticationException();
+        }
+        return UserInfoDto.builder()
+                .userId(getClaimsUserId(claims))
+                .id(getClaimsId(claims))
+                .build();
+    }
+
+    private String getSubjectRefresh(Jws<Claims> claims) {
+        return claims.getBody().getSubject();
+    }
+
+    private String getClaimsUserId(Jws<Claims> claims) {
+        return claims.getBody().get(USER_ID).toString();
+    }
+
+    private Long getClaimsId(Jws<Claims> claims) {
+        return Long.parseLong(claims.getBody().get(ID).toString());
+    }
+
 }
