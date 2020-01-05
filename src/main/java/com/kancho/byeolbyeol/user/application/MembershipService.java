@@ -5,23 +5,24 @@ import com.kancho.byeolbyeol.constellation.domain.Constellation;
 import com.kancho.byeolbyeol.constellation.domain.ConstellationRepository;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
-import com.kancho.byeolbyeol.user.dto.ReqSignUpDto;
-import com.kancho.byeolbyeol.user.dto.ResSignUpDto;
-import com.kancho.byeolbyeol.user.dto.ResTokenDto;
-import com.kancho.byeolbyeol.user.dto.ResUserDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
+import com.kancho.byeolbyeol.user.dto.response.ResTokenDto;
+import com.kancho.byeolbyeol.user.dto.response.ResUserDto;
+import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
 import com.kancho.byeolbyeol.user.exception.NotFoundConstellationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserSignUpService {
+public class MembershipService {
 
     private final UserRepository userRepository;
     private final ConstellationRepository constellationRepository;
     private final JWTManager jwtManager;
 
-    public ResSignUpDto signUp(ReqSignUpDto reqSignUpDto) {
+    public ResUserInfoDto signUp(ReqSignUpDto reqSignUpDto) {
 
         Constellation constellation = constellationRepository.findByName(reqSignUpDto.getConstellation())
                 .orElseThrow(NotFoundConstellationException::new);
@@ -38,7 +39,23 @@ public class UserSignUpService {
         ResTokenDto resTokenDto = createTokens(user);
         ResUserDto resUserDto = createUserInfo(user, constellation);
 
-        return ResSignUpDto.builder()
+        return ResUserInfoDto.builder()
+                .resTokenDto(resTokenDto)
+                .resUserDto(resUserDto)
+                .build();
+    }
+
+    public ResUserInfoDto signIn(ReqSignInDto reqSignInDto) {
+        User user = userRepository.findByUserId(reqSignInDto.getUserId())
+                .orElseThrow(RuntimeException::new);
+
+        Constellation constellation = constellationRepository.findById(user.getConstellationsId())
+                .orElseThrow(NotFoundConstellationException::new);
+
+        ResTokenDto resTokenDto = createTokens(user);
+        ResUserDto resUserDto = createUserInfo(user, constellation);
+
+        return ResUserInfoDto.builder()
                 .resTokenDto(resTokenDto)
                 .resUserDto(resUserDto)
                 .build();
@@ -60,7 +77,9 @@ public class UserSignUpService {
                 .id(user.getId())
                 .userId(user.getUserId())
                 .constellation(constellation.getName())
+                .horoscopeAlarmFlag(user.getHoroscopeAlarmFlag())
+                .questionAlarmFlag(user.getQuestionAlarmFlag())
+                .questionTime(user.getQuestionTime())
                 .build();
     }
-
 }

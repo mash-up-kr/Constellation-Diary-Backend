@@ -3,10 +3,10 @@ package com.kancho.byeolbyeol.user.controller;
 import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.user.application.UserService;
-import com.kancho.byeolbyeol.user.dto.ReqSignUpDto;
-import com.kancho.byeolbyeol.user.dto.ResCheckUserDto;
-import com.kancho.byeolbyeol.user.dto.ResSignUpDto;
-import com.kancho.byeolbyeol.user.dto.ResUserDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
+import com.kancho.byeolbyeol.user.dto.response.ResCheckUserDto;
+import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/users/sign-up")
-    public ResponseEntity<ResSignUpDto> signUp(
+    public ResponseEntity<ResUserInfoDto> signUp(
             @RequestBody @Valid ReqSignUpDto reqSignUpDto, BindingResult bindingResult,
             @RequestHeader("Authorization") String token) {
 
@@ -46,5 +46,16 @@ public class UserController {
         jwtManager.authenticate(token);
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(reqSignUpDto));
+    }
+
+    @PostMapping("/users/sign-in")
+    public ResponseEntity<ResUserInfoDto> signIn(
+            @RequestBody @Valid ReqSignInDto reqSignInDto, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new RequestWornFieldException();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqSignInDto));
     }
 }

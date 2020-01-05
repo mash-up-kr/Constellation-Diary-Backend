@@ -1,15 +1,15 @@
-package com.kancho.byeolbyeol.user.dto;
+package com.kancho.byeolbyeol.user.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ResSignUpDto {
+public class ResUserInfoDto {
     private ResTokenDto tokens;
     private ResUserDto user;
 
     @Builder
-    private ResSignUpDto(ResTokenDto resTokenDto, ResUserDto resUserDto) {
+    private ResUserInfoDto(ResTokenDto resTokenDto, ResUserDto resUserDto) {
         this.tokens = resTokenDto;
         this.user = resUserDto;
     }

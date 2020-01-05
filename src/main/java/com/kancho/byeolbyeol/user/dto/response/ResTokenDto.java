@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.user.dto;
+package com.kancho.byeolbyeol.user.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

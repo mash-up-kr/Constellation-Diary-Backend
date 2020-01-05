@@ -1,9 +1,10 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
-import com.kancho.byeolbyeol.user.dto.ReqSignUpDto;
-import com.kancho.byeolbyeol.user.dto.ResCheckUserDto;
-import com.kancho.byeolbyeol.user.dto.ResSignUpDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
+import com.kancho.byeolbyeol.user.dto.response.ResCheckUserDto;
+import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final UserSignUpService userSignUpService;
+    private final MembershipService membershipService;
 
     public ResCheckUserDto duplicateCheck(String checkUserId) {
         boolean result = userRepository.existsByUserId(checkUserId);
@@ -22,7 +23,11 @@ public class UserService {
                 .build();
     }
 
-    public ResSignUpDto signUp(ReqSignUpDto reqSignUpDto) {
-        return userSignUpService.signUp(reqSignUpDto);
+    public ResUserInfoDto signUp(ReqSignUpDto reqSignUpDto) {
+        return membershipService.signUp(reqSignUpDto);
+    }
+
+    public ResUserInfoDto signIn(ReqSignInDto reqSignInDto) {
+        return membershipService.signIn(reqSignInDto);
     }
 }

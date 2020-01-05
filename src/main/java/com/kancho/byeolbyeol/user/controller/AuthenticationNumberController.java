@@ -2,9 +2,9 @@ package com.kancho.byeolbyeol.user.controller;
 
 import com.kancho.byeolbyeol.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
-import com.kancho.byeolbyeol.user.dto.ReqEmailDto;
-import com.kancho.byeolbyeol.user.dto.ReqValidationNumberDto;
-import com.kancho.byeolbyeol.user.dto.ResRegisterTokenDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqEmailDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
+import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
