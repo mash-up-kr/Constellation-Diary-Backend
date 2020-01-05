@@ -13,12 +13,14 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
     private UserService userService;
+    private UserSignUpService userSignUpService;
     private UserRepository userRepository;
 
     @Before
     public void mockUp() {
         userRepository = mock(UserRepository.class);
-        userService = new UserService(userRepository);
+        userSignUpService = mock(UserSignUpService.class);
+        userService = new UserService(userRepository, userSignUpService);
     }
 
     @Test

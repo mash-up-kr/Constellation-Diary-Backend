@@ -3,6 +3,7 @@ package com.kancho.byeolbyeol.user.application;
 import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
+import com.kancho.byeolbyeol.user.dto.ReqValidationNumberDto;
 import com.kancho.byeolbyeol.user.exception.IsNotSameAuthenticationNumberException;
 import com.kancho.byeolbyeol.user.exception.NotFoundAuthenticationNumberException;
 import org.junit.Before;
@@ -25,6 +26,7 @@ public class AuthenticationServiceTests {
     private AuthenticationNumberRepository authenticationNumberRepository;
     private JWTManager jwtManager;
     private AuthenticationNumber authenticationNumber;
+    private ReqValidationNumberDto reqValidationNumberDto;
 
     @Before
     public void mockUp() {
@@ -33,6 +35,8 @@ public class AuthenticationServiceTests {
         jwtManager = mock(JWTManager.class);
         authenticationService =
                 new AuthenticationService(authenticationNumberRepository, jwtManager);
+
+        reqValidationNumberDto = new ReqValidationNumberDto(123456L, "test@naver.com");
     }
 
     @Test
@@ -43,7 +47,7 @@ public class AuthenticationServiceTests {
 
         expectedException.expect(NotFoundAuthenticationNumberException.class);
 
-        authenticationService.validation("test@naver.com", 123456L);
+        authenticationService.validation(reqValidationNumberDto);
     }
 
     @Test
@@ -55,7 +59,7 @@ public class AuthenticationServiceTests {
 
         expectedException.expect(IsNotSameAuthenticationNumberException.class);
 
-        authenticationService.validation("test@naver.com", 123456L);
+        authenticationService.validation(reqValidationNumberDto);
     }
 
 }

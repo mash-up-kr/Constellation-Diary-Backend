@@ -2,6 +2,7 @@ package com.kancho.byeolbyeol.user.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.user.application.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,9 @@ public class UserControllerTests {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @MockBean
+    private JWTManager jwtManager;
 
     @MockBean
     private UserService userService;

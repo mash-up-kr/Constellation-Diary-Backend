@@ -3,6 +3,7 @@ package com.kancho.byeolbyeol.user.controller;
 import com.kancho.byeolbyeol.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
 import com.kancho.byeolbyeol.user.dto.ReqEmailDto;
+import com.kancho.byeolbyeol.user.dto.ReqValidationNumberDto;
 import com.kancho.byeolbyeol.user.dto.ResRegisterTokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,16 +32,16 @@ public class AuthenticationNumberController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/authentication")
+    @PostMapping("/authentication")
     public ResponseEntity<ResRegisterTokenDto> validationAuthenticationNumber(
-            @RequestParam("authentication-number") Long number,
-            @RequestParam("email") String email) {
+            @RequestBody @Valid ReqValidationNumberDto reqValidationNumberDto,
+            BindingResult bindingResult) {
 
-        if (number == null || email == null) {
+        if (bindingResult.hasErrors()) {
             throw new RequestWornFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(authenticationNumberService.validation(email, number));
+                .body(authenticationNumberService.validation(reqValidationNumberDto));
     }
 }

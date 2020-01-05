@@ -3,6 +3,7 @@ package com.kancho.byeolbyeol.user.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
 import com.kancho.byeolbyeol.user.dto.ReqEmailDto;
+import com.kancho.byeolbyeol.user.dto.ReqValidationNumberDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,18 +55,23 @@ public class AuthenticationNumberControllerTests {
 
     @Test
     public void 인증번호_인증_성공() throws Exception {
-        this.mockMvc.perform(get("/authentication")
+        ReqValidationNumberDto reqValidationNumberDto =
+                new ReqValidationNumberDto(123456L, "test@naver.com");
+
+        this.mockMvc.perform(post("/authentication")
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("authentication-number", "123456")
-                .param("email", "test@naver.com"))
+                .content(objectMapper.writeValueAsString(reqValidationNumberDto)))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     public void 인증번호_인증_요청시_쿼리_파라미터가_누락될_경우() throws Exception {
-        this.mockMvc.perform(get("/authentication")
-                .contentType(MediaType.APPLICATION_JSON))
+        ReqValidationNumberDto reqValidationNumberDto = new ReqValidationNumberDto();
+
+        this.mockMvc.perform(post("/authentication")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(reqValidationNumberDto)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
