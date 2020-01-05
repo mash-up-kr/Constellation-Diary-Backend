@@ -1,5 +1,9 @@
 package com.kancho.byeolbyeol.horoscope.domain;
 
+import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Word;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -14,21 +18,21 @@ public class HoroscopeTest {
                 "즐거운 시간이 많겠지만 건강관리는 좀 하셔야 합니다. 특정한 목적을 가진 만남은 좋지 않습니다. 취미나 동호회활동은 약간 기대에 모자란 정도입니다.";
 
         Horoscope horoscope = Horoscope.builder()
-                .constellationsId(1)
+                .constellationsId(1L)
                 .date("2019년 12월 3일")
                 .content(contentTestData)
-                .stylist("스카프")
-                .number(13)
-                .word("우정")
-                .exercise("달리기")
+                .stylist(Stylist.SCARF)
+                .numeral(Numeral.FIVE)
+                .word(Word.COFFEE)
+                .exercise(Exercise.BICYCLE)
                 .build();
 
-        assertThat(horoscope.getConstellationsId(), is(1));
+        assertThat(horoscope.getConstellationsId(), is(1L));
         assertThat(horoscope.getDate(), is("2019년 12월 3일"));
         assertThat(horoscope.getContent(), is(contentTestData));
-        assertThat(horoscope.getStylist(), is("스카프"));
-        assertThat(horoscope.getNumber(), is(13));
-        assertThat(horoscope.getWord(), is("우정"));
-        assertThat(horoscope.getExercise(), is("달리기"));
+        assertThat(horoscope.getStylist(), is(Stylist.SCARF));
+        assertThat(horoscope.getNumeral(), is(Numeral.FIVE));
+        assertThat(horoscope.getWord(), is(Word.COFFEE));
+        assertThat(horoscope.getExercise(), is(Exercise.BICYCLE));
     }
 }

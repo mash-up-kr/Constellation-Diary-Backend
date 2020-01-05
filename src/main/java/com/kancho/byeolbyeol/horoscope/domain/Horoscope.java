@@ -13,7 +13,8 @@ import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Entity(name = "horoscopes")
+@Table(name = "horoscopes")
+@Entity
 public class Horoscope {
 
     @Id

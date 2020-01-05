@@ -1,5 +1,9 @@
 package com.kancho.byeolbyeol.horoscope.domain;
 
+import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Word;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -17,7 +22,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = NONE)
+@ActiveProfiles("test")
 public class HoroscopeRepositoryTest {
 
     @Autowired
@@ -36,13 +41,13 @@ public class HoroscopeRepositoryTest {
                 "즐거운 시간이 많겠지만 건강관리는 좀 하셔야 합니다. 특정한 목적을 가진 만남은 좋지 않습니다. 취미나 동호회활동은 약간 기대에 모자란 정도입니다.";
 
         horoscopeRepository.save(Horoscope.builder()
-                .constellationsId(1)
+                .constellationsId(1L)
                 .date("2019년 12월 3일")
                 .content(contentTestData)
-                .stylist("스카프")
-                .number(13)
-                .word("우정")
-                .exercise("달리기")
+                .stylist(Stylist.SCARF)
+                .numeral(Numeral.FIVE)
+                .word(Word.COFFEE)
+                .exercise(Exercise.BICYCLE)
                 .build());
 
         //when
@@ -50,12 +55,12 @@ public class HoroscopeRepositoryTest {
 
         //then
         Horoscope horoscope = horoscopeList.get(0);
-        assertThat(horoscope.getConstellationsId(), is(1));
+        assertThat(horoscope.getConstellationsId(), is(1L));
         assertThat(horoscope.getDate(), is("2019년 12월 3일"));
         assertThat(horoscope.getContent(), is(contentTestData));
-        assertThat(horoscope.getStylist(), is("스카프"));
-        assertThat(horoscope.getNumber(), is(13));
-        assertThat(horoscope.getWord(), is("우정"));
-        assertThat(horoscope.getExercise(), is("달리기"));
+        assertThat(horoscope.getStylist(), is(Stylist.SCARF));
+        assertThat(horoscope.getNumeral(), is(Numeral.FIVE));
+        assertThat(horoscope.getWord(), is(Word.COFFEE));
+        assertThat(horoscope.getExercise(), is(Exercise.BICYCLE));
     }
 }

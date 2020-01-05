@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.user.domain;
+package com.kancho.byeolbyeol.user.domain.user;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Entity(name = "users")
+@Table(name = "users")
+@Entity
 public class User {
 
     @Id
@@ -21,7 +22,9 @@ public class User {
 
     private String password;
 
-    private Integer constellationsId;
+    private String email;
+
+    private Long constellationsId;
 
     private Boolean horoscopeAlarmFlag;
 
@@ -30,13 +33,10 @@ public class User {
     private Boolean questionAlarmFlag;
 
     @Builder
-    private User(String userId, String password, Integer constellationsId,
-                 Boolean horoscopeAlarmFlag, String questionTime, Boolean questionAlarmFlag) {
+    private User(String userId, String password, Long constellationsId, String email) {
         this.userId = userId;
         this.password = password;
         this.constellationsId = constellationsId;
-        this.horoscopeAlarmFlag = horoscopeAlarmFlag;
-        this.questionTime = questionTime;
-        this.questionAlarmFlag = questionAlarmFlag;
+        this.email = email;
     }
 }
