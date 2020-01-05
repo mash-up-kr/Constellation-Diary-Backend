@@ -3,7 +3,7 @@ package com.kancho.byeolbyeol.user.application;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.ReqSignUpDto;
 import com.kancho.byeolbyeol.user.dto.ResCheckUserDto;
-import com.kancho.byeolbyeol.user.dto.ResUserDto;
+import com.kancho.byeolbyeol.user.dto.ResSignUpDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class UserService {
                 .build();
     }
 
-    public ResUserDto signUp(ReqSignUpDto reqSignUpDto) {
+    public ResSignUpDto signUp(ReqSignUpDto reqSignUpDto) {
         return userSignUpService.signUp(reqSignUpDto);
     }
 }

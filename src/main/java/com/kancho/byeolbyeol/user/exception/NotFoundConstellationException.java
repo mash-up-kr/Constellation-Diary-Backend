@@ -10,7 +10,7 @@ public class NotFoundConstellationException extends BaseException {
     }
 
     private NotFoundConstellationException(HttpStatus httpStatus) {
-        this(4003, httpStatus);
+        this(4004, httpStatus);
     }
 
     private NotFoundConstellationException(int code, HttpStatus httpStatus) {

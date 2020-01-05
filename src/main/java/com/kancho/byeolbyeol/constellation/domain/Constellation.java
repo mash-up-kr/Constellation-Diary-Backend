@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Constellation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -20,4 +21,6 @@ public class Constellation {
     private String date;
 
     private String description;
+
+    private String crawlingUrl;
 }

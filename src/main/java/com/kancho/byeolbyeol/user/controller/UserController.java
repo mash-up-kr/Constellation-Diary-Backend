@@ -5,6 +5,7 @@ import com.kancho.byeolbyeol.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.user.application.UserService;
 import com.kancho.byeolbyeol.user.dto.ReqSignUpDto;
 import com.kancho.byeolbyeol.user.dto.ResCheckUserDto;
+import com.kancho.byeolbyeol.user.dto.ResSignUpDto;
 import com.kancho.byeolbyeol.user.dto.ResUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/users/sign-up")
-    public ResponseEntity<ResUserDto> signUp(
+    public ResponseEntity<ResSignUpDto> signUp(
             @RequestBody @Valid ReqSignUpDto reqSignUpDto, BindingResult bindingResult,
             @RequestHeader("Authorization") String token) {
 

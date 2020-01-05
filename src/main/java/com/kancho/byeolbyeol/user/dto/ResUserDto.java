@@ -6,14 +6,12 @@ import lombok.Getter;
 @Getter
 public class ResUserDto {
 
-    private ResTokenDto tokens;
     private Long id;
     private String userId;
     private String constellation;
 
     @Builder
-    private ResUserDto(ResTokenDto resTokenDto, Long id, String userId, String constellation) {
-        this.tokens = resTokenDto;
+    private ResUserDto(Long id, String userId, String constellation) {
         this.id = id;
         this.userId = userId;
         this.constellation = constellation;

@@ -6,6 +6,7 @@ import com.kancho.byeolbyeol.constellation.domain.ConstellationRepository;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.ReqSignUpDto;
+import com.kancho.byeolbyeol.user.dto.ResSignUpDto;
 import com.kancho.byeolbyeol.user.dto.ResTokenDto;
 import com.kancho.byeolbyeol.user.dto.ResUserDto;
 import com.kancho.byeolbyeol.user.exception.NotFoundConstellationException;
@@ -20,7 +21,7 @@ public class UserSignUpService {
     private final ConstellationRepository constellationRepository;
     private final JWTManager jwtManager;
 
-    public ResUserDto signUp(ReqSignUpDto reqSignUpDto) {
+    public ResSignUpDto signUp(ReqSignUpDto reqSignUpDto) {
 
         Constellation constellation = constellationRepository.findByName(reqSignUpDto.getConstellation())
                 .orElseThrow(NotFoundConstellationException::new);
@@ -35,12 +36,11 @@ public class UserSignUpService {
         user = userRepository.save(user);
 
         ResTokenDto resTokenDto = createTokens(user);
+        ResUserDto resUserDto = createUser(user, constellation);
 
-        return ResUserDto.builder()
+        return ResSignUpDto.builder()
                 .resTokenDto(resTokenDto)
-                .constellation(constellation.getName())
-                .id(user.getId())
-                .userId(user.getUserId())
+                .resUserDto(resUserDto)
                 .build();
     }
 
@@ -54,4 +54,13 @@ public class UserSignUpService {
                 .refreshToken(refreshToken)
                 .build();
     }
+
+    private ResUserDto createUser(User user, Constellation constellation) {
+        return ResUserDto.builder()
+                .id(user.getId())
+                .userId(user.getUserId())
+                .constellation(constellation.getName())
+                .build();
+    }
+
 }
