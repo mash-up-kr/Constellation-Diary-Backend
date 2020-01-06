@@ -5,10 +5,7 @@ import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
 import com.kancho.byeolbyeol.user.dto.requset.ReqAuthenticationNumbersDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
 import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +23,7 @@ public class AuthenticationNumberController {
 
     @ApiOperation(value = "인증번호 생성")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "인증번호 생성 성공"),
+            @ApiResponse(code = 201, message = "인증번호 생성 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 500, message = "서버 에러")
     })

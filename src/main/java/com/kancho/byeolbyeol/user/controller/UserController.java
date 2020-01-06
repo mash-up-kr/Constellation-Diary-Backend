@@ -4,10 +4,7 @@ import com.kancho.byeolbyeol.common.RequestWornFieldException;
 import com.kancho.byeolbyeol.user.application.UserService;
 import com.kancho.byeolbyeol.user.dto.requset.*;
 import com.kancho.byeolbyeol.user.dto.response.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +43,13 @@ public class UserController {
             @ApiResponse(code = 200, message = "회원 가입 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
                     "4004 - Not Found Constellation, 4007 - Exists UserId"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
     @PostMapping("/users/sign-up")
     public ResponseEntity<ResUserInfoDto> signUp(
@@ -82,6 +85,11 @@ public class UserController {
             @ApiResponse(code = 200, message = "토큰 재발급 성공"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
     @GetMapping("/users/tokens")
     public ResponseEntity<ResTokenDto> refreshToken(
