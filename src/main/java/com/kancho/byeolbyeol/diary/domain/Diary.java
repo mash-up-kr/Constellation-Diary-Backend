@@ -21,6 +21,7 @@ public class Diary {
 
     private String title;
 
+    @Lob
     private String content;
 
     private Long usersId;

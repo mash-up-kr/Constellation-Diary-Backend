@@ -23,6 +23,7 @@ public class Horoscope {
 
     private String date;
 
+    @Lob
     private String content;
 
     @Enumerated(EnumType.STRING)
