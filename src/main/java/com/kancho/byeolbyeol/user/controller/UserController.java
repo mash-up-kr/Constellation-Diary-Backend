@@ -19,9 +19,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("/users/check")
     public ResponseEntity<ResCheckUserDto> checkUserId(
-            @RequestParam("check-id") String checkUserId) {
+            @RequestParam("user-id") String checkUserId) {
 
         if (checkUserId == null) {
             throw new RequestWornFieldException();
