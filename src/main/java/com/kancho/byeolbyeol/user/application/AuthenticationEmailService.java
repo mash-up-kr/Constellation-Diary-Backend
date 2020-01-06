@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationNumberEmailService {
+public class AuthenticationEmailService {
     private final static String SUBJECT_FIRST = "별별일기 ";
     private final static String SUBJECT_END = " 인증번호입니다.";
     private final static String CONTENT = " 인증번호 : ";
@@ -20,11 +20,11 @@ public class AuthenticationNumberEmailService {
     private final EmailService emailService;
     private final AuthenticationNumberRepository authenticationNumberRepository;
 
-    public void generateAuthenticationNumber(ReqAuthenticationNumbersDto reqAuthenticationNumbersDto) {
-        String number = RandomNumber.generateNumber().toString();
-        String reqPurpose = reqAuthenticationNumbersDto.getAuthenticationPurpose();
+    public void sendAuthenticationNumber(ReqAuthenticationNumbersDto reqAuthenticationNumbersDto) {
+        String number = createAuthenticationNumber();
+
         AuthenticationPurpose purpose =
-                AuthenticationPurpose.findByAuthenticationPurpose(reqPurpose);
+                toAuthenticationPurpose(reqAuthenticationNumbersDto.getAuthenticationPurpose());
 
         emailService.sendAuthenticationNumberMail(
                 reqAuthenticationNumbersDto.getEmail(),
@@ -39,6 +39,14 @@ public class AuthenticationNumberEmailService {
                 .build();
 
         authenticationNumberRepository.save(authenticationNumber);
+    }
+
+    private String createAuthenticationNumber() {
+        return RandomNumber.generateNumber().toString();
+    }
+
+    private AuthenticationPurpose toAuthenticationPurpose(String reqPurPose) {
+        return AuthenticationPurpose.findByAuthenticationPurpose(reqPurPose);
     }
 
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final MembershipService membershipService;
-    private final UserTokenService userTokenService;
+    private final TokenService tokenService;
     private final UserFindIdService userFindIdService;
 
     public ResCheckUserDto duplicateCheck(String checkUserId) {
@@ -36,11 +36,11 @@ public class UserService {
         return membershipService.signIn(reqSignInDto);
     }
 
-    public ResTokenDto refreshToken(String token) {
-        return userTokenService.refreshToken(token);
-    }
-
     public ResUserIdDto findUserId(ReqValidationNumberDto reqValidationNumberDto) {
         return userFindIdService.findUserId(reqValidationNumberDto);
+    }
+
+    public ResTokenDto refreshToken(String token) {
+        return tokenService.refreshToken(token);
     }
 }

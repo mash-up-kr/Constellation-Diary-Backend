@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationNumberService {
-    private final AuthenticationNumberEmailService authenticationNumberEmailService;
+    private final AuthenticationEmailService authenticationEmailService;
     private final AuthenticationService authenticationService;
 
-    public void generateAuthenticationNumber(ReqAuthenticationNumbersDto reqAuthenticationNumbersDto) {
-        authenticationNumberEmailService.generateAuthenticationNumber(reqAuthenticationNumbersDto);
+    public void sendAuthenticationNumber(ReqAuthenticationNumbersDto reqAuthenticationNumbersDto) {
+        authenticationEmailService.sendAuthenticationNumber(reqAuthenticationNumbersDto);
     }
 
-    public ResRegisterTokenDto validation(ReqValidationNumberDto reqValidationNumberDto) {
-        return authenticationService.validation(reqValidationNumberDto);
+    public ResRegisterTokenDto verify(ReqValidationNumberDto reqValidationNumberDto) {
+        return authenticationService.verify(reqValidationNumberDto);
     }
 }
