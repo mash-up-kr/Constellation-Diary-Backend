@@ -20,7 +20,5 @@ public class Constellation {
 
     private String date;
 
-    private String description;
-
     private String crawlingUrl;
 }

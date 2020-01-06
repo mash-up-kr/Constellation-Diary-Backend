@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.horoscope.domain;
 
+import com.kancho.byeolbyeol.common.LocalDatePersistenceConverter;
 import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
 import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
 import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -21,7 +23,8 @@ public class Horoscope {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String date;
+    @Convert(converter = LocalDatePersistenceConverter.class)
+    private LocalDate date;
 
     @Lob
     private String content;
@@ -42,7 +45,7 @@ public class Horoscope {
     private Long constellationsId;
 
     @Builder
-    private Horoscope(Long constellationsId, String date, String content,
+    private Horoscope(Long constellationsId, LocalDate date, String content,
                       Stylist stylist, Numeral numeral, Word word, Exercise exercise) {
         this.constellationsId = constellationsId;
         this.date = date;

@@ -1,11 +1,13 @@
 package com.kancho.byeolbyeol.diary.domain;
 
+import com.kancho.byeolbyeol.common.LocalDatePersistenceConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -17,7 +19,8 @@ public class Diary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String date;
+    @Convert(converter = LocalDatePersistenceConverter.class)
+    private LocalDate date;
 
     private String title;
 
@@ -29,7 +32,7 @@ public class Diary {
     private Long horoscopeId;
 
     @Builder
-    private Diary(Long userId, String date, String title, String content) {
+    private Diary(Long userId, LocalDate date, String title, String content) {
         this.usersId = userId;
         this.date = date;
         this.title = title;
