@@ -82,7 +82,9 @@ public class JWTManager {
         }
 
         String tempToken = subStringKeywordString(token);
-
+        if(tempToken.isEmpty()) {
+            throw new FailAuthenticationException();
+        }
         getPayLoad(tempToken);
     }
 
