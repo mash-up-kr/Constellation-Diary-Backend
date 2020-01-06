@@ -48,7 +48,7 @@ public class AuthenticationServiceTests {
 
         expectedException.expect(NotFoundAuthenticationNumberException.class);
 
-        authenticationService.validation(reqValidationNumberDto);
+        authenticationService.verify(reqValidationNumberDto);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class AuthenticationServiceTests {
 
         expectedException.expect(IsNotSameAuthenticationNumberException.class);
 
-        authenticationService.validation(reqValidationNumberDto);
+        authenticationService.verify(reqValidationNumberDto);
     }
 
 }

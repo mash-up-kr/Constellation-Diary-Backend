@@ -15,17 +15,17 @@ public class UserServiceTest {
     private UserService userService;
     private MembershipService membershipService;
     private UserRepository userRepository;
-    private UserTokenService userTokenService;
+    private TokenService tokenService;
     private UserFindIdService userFindIdService;
 
     @Before
     public void mockUp() {
         userRepository = mock(UserRepository.class);
         membershipService = mock(MembershipService.class);
-        userTokenService = mock(UserTokenService.class);
+        tokenService = mock(TokenService.class);
         userFindIdService = mock(UserFindIdService.class);
         userService =
-                new UserService(userRepository, membershipService, userTokenService, userFindIdService);
+                new UserService(userRepository, membershipService, tokenService, userFindIdService);
     }
 
     @Test

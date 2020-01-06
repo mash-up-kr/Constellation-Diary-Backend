@@ -97,7 +97,6 @@ public class UserController {
                 .body(userService.findUserId(reqValidationNumberDto));
     }
 
-
     @ApiOperation(value = "토큰 재발급")
     @ApiResponses({
             @ApiResponse(code = 200, message = "토큰 재발급 성공"),
