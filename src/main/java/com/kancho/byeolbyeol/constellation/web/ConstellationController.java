@@ -15,18 +15,8 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@Api(description = "별자리 관련 API")
 public class ConstellationController {
 
     private final ConstellationService constellationService;
 
-    @ApiOperation(value = "별자리 정보 리스트 조회")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "조회 성공"),
-            @ApiResponse(code = 500, message = "서버 에러")
-    })
-    @GetMapping("/constellations")
-    public ResponseEntity<List<ResConstellationInfoDto>> getConstellationInfoList() {
-        return ResponseEntity.ok().body(constellationService.getConstellationInfoList());
-    }
 }

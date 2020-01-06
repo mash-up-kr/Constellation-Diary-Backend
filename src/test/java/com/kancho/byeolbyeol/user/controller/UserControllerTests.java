@@ -34,9 +34,9 @@ public class UserControllerTests {
     @Test
     public void 아이디_중복검사_성공() throws Exception {
 
-        this.mockMvc.perform(get("/users")
+        this.mockMvc.perform(get("/users/check")
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("check-id", "testId"))
+                .param("user-id", "testId"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

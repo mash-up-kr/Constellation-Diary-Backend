@@ -5,7 +5,10 @@ import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
 import com.kancho.byeolbyeol.user.dto.requset.ReqAuthenticationNumbersDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
 import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
-import com.kancho.byeolbyeol.user.dto.response.ResUserIdDto;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +19,18 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@Api(description = "인증 번호 관련 API")
 public class AuthenticationNumberController {
 
     private final AuthenticationNumberService authenticationNumberService;
 
+    @ApiOperation(value = "인증번호 생성 : authenticationPurpose(사용 목적) - SIGN_UP(회원가입), FIND_ID(아이디 찾기)로 구분")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "인증번호 생성 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
+                    "4005 - Not Found Authentication Purpose"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
     @PostMapping("/authentication-numbers")
     public ResponseEntity<Void> generateAuthenticationNumber(
             @RequestBody @Valid ReqAuthenticationNumbersDto reqAuthenticationNumbersDto,
@@ -29,13 +40,20 @@ public class AuthenticationNumberController {
             throw new RequestWornFieldException();
         }
 
-        authenticationNumberService.generateAuthenticationNumber(reqAuthenticationNumbersDto);
+        authenticationNumberService.sendAuthenticationNumber(reqAuthenticationNumbersDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @ApiOperation(value = "인증번호 인증 - SIGN_UP(회원가입)")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "인증번호 인증 - SIGN_UP(회원가입) 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
+                    "4002 - Not Found Authentication-Number, 4003 - Is Not Same Authentication-Number"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
     @PostMapping("/authentication")
-    public ResponseEntity<ResRegisterTokenDto> validationAuthenticationNumber(
+    public ResponseEntity<ResRegisterTokenDto> verifyAuthenticationNumber(
             @RequestBody @Valid ReqValidationNumberDto reqValidationNumberDto,
             BindingResult bindingResult) {
 
@@ -44,6 +62,7 @@ public class AuthenticationNumberController {
         }
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(authenticationNumberService.validation(reqValidationNumberDto));
+                .body(authenticationNumberService.verify(reqValidationNumberDto));
     }
+
 }

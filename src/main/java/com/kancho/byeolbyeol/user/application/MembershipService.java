@@ -10,7 +10,9 @@ import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
 import com.kancho.byeolbyeol.user.dto.response.ResTokenDto;
 import com.kancho.byeolbyeol.user.dto.response.ResUserDto;
 import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
+import com.kancho.byeolbyeol.user.exception.ExistsUserIdException;
 import com.kancho.byeolbyeol.user.exception.NotFoundConstellationException;
+import com.kancho.byeolbyeol.user.exception.NotFoundUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,11 @@ public class MembershipService {
     private final JWTManager jwtManager;
 
     public ResUserInfoDto signUp(ReqSignUpDto reqSignUpDto) {
+        boolean result = userRepository.existsByUserId(reqSignUpDto.getUserId());
+
+        if(result) {
+            throw new ExistsUserIdException();
+        }
 
         Constellation constellation = constellationRepository.findByName(reqSignUpDto.getConstellation())
                 .orElseThrow(NotFoundConstellationException::new);
@@ -47,7 +54,7 @@ public class MembershipService {
 
     public ResUserInfoDto signIn(ReqSignInDto reqSignInDto) {
         User user = userRepository.findByUserId(reqSignInDto.getUserId())
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(NotFoundUserException::new);
 
         Constellation constellation = constellationRepository.findById(user.getConstellationsId())
                 .orElseThrow(NotFoundConstellationException::new);

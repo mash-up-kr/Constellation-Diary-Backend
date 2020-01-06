@@ -18,7 +18,7 @@ public class AuthenticationService {
     private final AuthenticationNumberRepository authenticationNumberRepository;
     private final JWTManager jwtManager;
 
-    public ResRegisterTokenDto validation(ReqValidationNumberDto reqValidationNumberDto) {
+    public ResRegisterTokenDto verify(ReqValidationNumberDto reqValidationNumberDto) {
 
         AuthenticationNumber authenticationNumber =
                 authenticationNumberRepository
