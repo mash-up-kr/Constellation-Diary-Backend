@@ -3,13 +3,14 @@ package com.kancho.byeolbyeol.user.application;
 import com.kancho.byeolbyeol.common.JWTManager;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
-import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationPurpose;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
 import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
 import com.kancho.byeolbyeol.user.exception.IsNotSameAuthenticationNumberException;
 import com.kancho.byeolbyeol.user.exception.NotFoundAuthenticationNumberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +23,8 @@ public class AuthenticationService {
 
         AuthenticationNumber authenticationNumber =
                 authenticationNumberRepository
-                        .findFirstByEmailAndAuthenticationPurposeAndExpirationTimeGreaterThanEqualOrderByExpirationTime(
+                        .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
                                 reqValidationNumberDto.getEmail(),
-                                AuthenticationPurpose.SIGN_UP,
                                 System.currentTimeMillis())
                         .orElseThrow(NotFoundAuthenticationNumberException::new);
 
@@ -34,7 +34,9 @@ public class AuthenticationService {
 
         String registerToken = jwtManager.createRegisterToken(authenticationNumber.getEmail());
 
-        authenticationNumberRepository.delete(authenticationNumber);
+        authenticationNumberRepository.
+                deleteByEmailAndExpirationTimeLessThanEqual(
+                        authenticationNumber.getEmail(), authenticationNumber.getExpirationTime());
 
         return ResRegisterTokenDto.builder()
                 .registerToken(registerToken)

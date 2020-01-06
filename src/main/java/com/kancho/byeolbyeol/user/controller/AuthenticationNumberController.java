@@ -24,11 +24,10 @@ public class AuthenticationNumberController {
 
     private final AuthenticationNumberService authenticationNumberService;
 
-    @ApiOperation(value = "인증번호 생성 : authenticationPurpose(사용 목적) - SIGN_UP(회원가입), FIND_ID(아이디 찾기)로 구분")
+    @ApiOperation(value = "인증번호 생성")
     @ApiResponses({
             @ApiResponse(code = 200, message = "인증번호 생성 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4005 - Not Found Authentication Purpose"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @PostMapping("/authentication-numbers")

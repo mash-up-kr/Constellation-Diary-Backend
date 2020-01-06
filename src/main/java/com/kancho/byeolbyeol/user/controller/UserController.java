@@ -77,26 +77,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqSignInDto));
     }
 
-    @ApiOperation(value = "유저 아이디 찾기")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "유저 아이디 찾기"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4002 - Not Found Authentication Number, 4006 - Not Found User"),
-            @ApiResponse(code = 500, message = "서버 에러")
-    })
-    @PostMapping("/users/find-id")
-    public ResponseEntity<ResUserIdDto> findUserId(
-            @RequestBody @Valid ReqValidationNumberDto reqValidationNumberDto,
-            BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            throw new RequestWornFieldException();
-        }
-
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(userService.findUserId(reqValidationNumberDto));
-    }
-
     @ApiOperation(value = "토큰 재발급")
     @ApiResponses({
             @ApiResponse(code = 200, message = "토큰 재발급 성공"),

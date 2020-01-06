@@ -33,7 +33,7 @@ public class AuthenticationNumberControllerTests {
     @Test
     public void 회원가입_인증번호_생성_성공() throws Exception {
         ReqAuthenticationNumbersDto reqAuthenticationNumbersDto =
-                new ReqAuthenticationNumbersDto("test@naver.com", "SIGN_UP");
+                new ReqAuthenticationNumbersDto("test@naver.com");
 
         this.mockMvc.perform(post("/authentication-numbers")
                 .contentType(MediaType.APPLICATION_JSON)

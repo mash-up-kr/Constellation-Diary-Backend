@@ -13,7 +13,4 @@ public class ReqAuthenticationNumbersDto {
 
     @NotNull
     private String email;
-
-    @NotNull
-    private String authenticationPurpose;
 }

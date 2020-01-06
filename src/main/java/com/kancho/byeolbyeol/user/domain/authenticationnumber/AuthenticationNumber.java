@@ -23,16 +23,12 @@ public class AuthenticationNumber {
 
     private Long expirationTime;
 
-    @Enumerated(EnumType.STRING)
-    private AuthenticationPurpose authenticationPurpose;
-
     @Builder
     private AuthenticationNumber(String email, String number,
-                                 Long expirationTime, AuthenticationPurpose authenticationPurpose) {
+                                 Long expirationTime) {
         this.email = email;
         this.number = number;
         this.expirationTime = expirationTime;
-        this.authenticationPurpose = authenticationPurpose;
     }
 
     public boolean isNotEqualNumber(Long number) {
