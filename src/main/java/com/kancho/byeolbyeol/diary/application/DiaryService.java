@@ -33,6 +33,23 @@ public class DiaryService {
         diaryRepository.save(diary);
     }
 
+    public ResDiaryDto getDiary(UserInfo userInfo, Long diaryId) {
+        Diary diary = diaryRepository.findById(diaryId)
+                .orElseThrow(NotFoundDiaryException::new);
+
+        if (diary.isNotTheWriter(userInfo.getId())) {
+            throw new IsNotTheWriterException();
+        }
+
+        return ResDiaryDto.builder()
+                .id(diary.getId())
+                .date(TimeConverter.covertDate(diary.getDate()))
+                .title(diary.getTitle())
+                .content(diary.getContent())
+                .horoscopeId(diary.getHoroscopeId())
+                .build();
+    }
+
     @Transactional
     public ResDiaryDto modifyDiary(UserInfo userInfo, Long diaryId, ReqModifyDiaryDto reqModifyDiaryDto) {
         Diary diary = diaryRepository.findById(diaryId)
@@ -63,4 +80,5 @@ public class DiaryService {
 
         diaryRepository.delete(diary);
     }
+
 }
