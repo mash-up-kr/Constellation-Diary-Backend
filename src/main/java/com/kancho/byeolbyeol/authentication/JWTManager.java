@@ -1,5 +1,7 @@
-package com.kancho.byeolbyeol.common;
+package com.kancho.byeolbyeol.authentication;
 
+import com.kancho.byeolbyeol.common.user_context.UserInfo;
+import com.kancho.byeolbyeol.common.exception.FailAuthenticationException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.function.Function;
 
 @Component
 public class JWTManager {
@@ -17,9 +20,6 @@ public class JWTManager {
     private final static String EMAIL = "email";
     private static final Long ONE_DAY = 1000L * 60L * 60L * 24L;
     private static final Long THIRTY_DAYS = ONE_DAY * 30L;
-    private static final String AUTHENTICATION_TOKEN = "Authentication Token";
-    private static final String REFRESH_TOKEN = "Refresh Token";
-    private static final String REGISTER_TOKEN = "Register Token";
 
     private String key;
 
@@ -29,18 +29,18 @@ public class JWTManager {
 
 
     public String createRegisterToken(String email) {
-        return createRegisterJWT(email, REGISTER_TOKEN, ONE_DAY);
+        return createRegisterJWT(email, TokenType.REFRESH_TOKEN, ONE_DAY);
     }
 
     public String createAuthenticationToken(String userId, Long id) {
-        return createJWT(userId, id, AUTHENTICATION_TOKEN, ONE_DAY);
+        return createJWT(userId, id, TokenType.AUTHENTICATION_TOKEN, ONE_DAY);
     }
 
     public String createRefreshToken(String userId, Long id) {
-        return createJWT(userId, id, REFRESH_TOKEN, THIRTY_DAYS);
+        return createJWT(userId, id, TokenType.REFRESH_TOKEN, THIRTY_DAYS);
     }
 
-    private String createRegisterJWT(String email, String tokenType, Long day) {
+    private String createRegisterJWT(String email, TokenType tokenType, Long day) {
 
         JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);
 
@@ -49,7 +49,7 @@ public class JWTManager {
                 .compact();
     }
 
-    private String createJWT(String userId, Long id, String tokenType, Long day) {
+    private String createJWT(String userId, Long id, TokenType tokenType, Long day) {
 
         JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);
 
@@ -59,14 +59,14 @@ public class JWTManager {
                 .compact();
     }
 
-    private JwtBuilder createJWTRegisterClaim(String tokenType, Long day) {
+    private JwtBuilder createJWTRegisterClaim(TokenType tokenType, Long day) {
         Date today = new Date();
         Date tomorrow = new Date(today.getTime() + day);
 
         return Jwts.builder()
                 .setHeaderParam("type", "JWT")
                 .setIssuer("API Server")
-                .setSubject(tokenType)
+                .setSubject(tokenType.getValue())
                 .setExpiration(tomorrow)
                 .setIssuedAt(today);
     }
@@ -82,7 +82,7 @@ public class JWTManager {
         }
 
         String tempToken = subStringKeywordString(token);
-        if(tempToken.isEmpty()) {
+        if (tempToken.isEmpty()) {
             throw new FailAuthenticationException();
         }
         getPayLoad(tempToken);
@@ -108,16 +108,17 @@ public class JWTManager {
         return claims;
     }
 
-    public UserInfoDto getUserInfo(String token) {
+    public UserInfo getUserInfo(String token, Function<String, Boolean> f) {
         String tempToken = subStringKeywordString(token);
 
         Jws<Claims> claims = getPayLoad(tempToken);
         String subject = getSubjectRefresh(claims);
 
-        if (!subject.equals(REFRESH_TOKEN)) {
+        if (!f.apply(subject)) {
             throw new FailAuthenticationException();
         }
-        return UserInfoDto.builder()
+
+        return UserInfo.builder()
                 .userId(getClaimsUserId(claims))
                 .id(getClaimsId(claims))
                 .build();

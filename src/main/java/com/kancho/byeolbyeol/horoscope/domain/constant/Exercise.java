@@ -1,5 +1,8 @@
 package com.kancho.byeolbyeol.horoscope.domain.constant;
 
+import lombok.Getter;
+
+@Getter
 public enum Exercise {
     GOLF("골프"),
     HIKING("등산"),

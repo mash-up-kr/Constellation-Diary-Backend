@@ -1,5 +1,8 @@
 package com.kancho.byeolbyeol.horoscope.domain.constant;
 
+import lombok.Getter;
+
+@Getter
 public enum Stylist {
     METAL_MATERIAL_COMPONENTS("금속재료소품"),
     SILVER_RING("은색반지"),

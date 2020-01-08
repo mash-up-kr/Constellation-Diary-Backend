@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.user.domain.user;
 
+import com.kancho.byeolbyeol.common.entity_converter.LocalTimePersistenceConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -29,7 +31,9 @@ public class User {
 
     private Boolean horoscopeAlarmFlag;
 
-    private String questionTime;
+    @Convert(converter = LocalTimePersistenceConverter.class)
+    @Column(name = "question_time", columnDefinition = "TIME")
+    private LocalTime questionTime;
 
     private Boolean questionAlarmFlag;
 
@@ -41,6 +45,11 @@ public class User {
         this.email = email;
         this.horoscopeAlarmFlag = true;
         this.questionAlarmFlag = true;
-        this.questionTime = "22:00";
+        this.questionTime = LocalTime.of(13, 0);
+    }
+
+    public boolean isPreviousQuestionTime(LocalTime localTime) {
+        int compare = this.questionTime.compareTo(localTime);
+        return compare > 0;
     }
 }

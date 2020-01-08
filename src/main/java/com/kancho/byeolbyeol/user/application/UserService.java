@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.user.application;
 
+import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
@@ -33,7 +34,7 @@ public class UserService {
         return membershipService.signIn(reqSignInDto);
     }
 
-    public ResTokenDto refreshToken(String token) {
-        return tokenService.refreshToken(token);
+    public ResTokenDto refreshToken(UserInfo userInfo) {
+        return tokenService.refreshToken(userInfo);
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -42,7 +43,7 @@ public class HoroscopeRepositoryTest {
 
         horoscopeRepository.save(Horoscope.builder()
                 .constellationsId(1L)
-                .date("2019년 12월 3일")
+                .date(LocalDate.now())
                 .content(contentTestData)
                 .stylist(Stylist.SCARF)
                 .numeral(Numeral.FIVE)
@@ -56,7 +57,6 @@ public class HoroscopeRepositoryTest {
         //then
         Horoscope horoscope = horoscopeList.get(0);
         assertThat(horoscope.getConstellationsId(), is(1L));
-        assertThat(horoscope.getDate(), is("2019년 12월 3일"));
         assertThat(horoscope.getContent(), is(contentTestData));
         assertThat(horoscope.getStylist(), is(Stylist.SCARF));
         assertThat(horoscope.getNumeral(), is(Numeral.FIVE));

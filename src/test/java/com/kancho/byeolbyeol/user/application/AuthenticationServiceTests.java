@@ -1,6 +1,6 @@
 package com.kancho.byeolbyeol.user.application;
 
-import com.kancho.byeolbyeol.common.JWTManager;
+import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
@@ -11,6 +11,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -64,4 +67,11 @@ public class AuthenticationServiceTests {
         authenticationService.verify(reqValidationNumberDto);
     }
 
+    @Test
+    public void test() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+        System.out.println(dateFormat.format(date).equals("5:16"));
+    }
 }

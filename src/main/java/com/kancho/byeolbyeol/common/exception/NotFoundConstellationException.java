@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.user.exception;
+package com.kancho.byeolbyeol.common.exception;
 
 import com.kancho.byeolbyeol.exception.BaseException;
 import com.kancho.byeolbyeol.exception.ErrorModel;

@@ -1,5 +1,8 @@
 package com.kancho.byeolbyeol.horoscope.domain.constant;
 
+import lombok.Getter;
+
+@Getter
 public enum Numeral {
     ONE("1"),
     TWO("2"),

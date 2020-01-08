@@ -1,6 +1,6 @@
 package com.kancho.byeolbyeol.user.application;
 
-import com.kancho.byeolbyeol.common.JWTManager;
+import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.constellation.domain.Constellation;
 import com.kancho.byeolbyeol.constellation.domain.ConstellationRepository;
 import com.kancho.byeolbyeol.user.domain.user.User;
@@ -11,8 +11,8 @@ import com.kancho.byeolbyeol.user.dto.response.ResTokenDto;
 import com.kancho.byeolbyeol.user.dto.response.ResUserDto;
 import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
 import com.kancho.byeolbyeol.user.exception.ExistsUserIdException;
-import com.kancho.byeolbyeol.user.exception.NotFoundConstellationException;
-import com.kancho.byeolbyeol.user.exception.NotFoundUserException;
+import com.kancho.byeolbyeol.common.exception.NotFoundConstellationException;
+import com.kancho.byeolbyeol.common.exception.NotFoundUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.kancho.byeolbyeol.horoscope.domain;
 
-import com.kancho.byeolbyeol.common.LocalDatePersistenceConverter;
+import com.kancho.byeolbyeol.common.entity_converter.LocalDatePersistenceConverter;
 import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
 import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
 import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
