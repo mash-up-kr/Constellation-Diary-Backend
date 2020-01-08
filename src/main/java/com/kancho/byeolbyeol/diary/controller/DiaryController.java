@@ -54,8 +54,9 @@ public class DiaryController {
     @ApiOperation(value = "일기 수정")
     @ApiResponses({
             @ApiResponse(code = 200, message = "일기 수 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
-            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, "),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token, " +
+                    "4010 - Not Found Diary, 4011 -Is Not The Writer"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
