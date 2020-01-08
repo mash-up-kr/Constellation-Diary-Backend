@@ -1,6 +1,6 @@
 package com.kancho.byeolbyeol.home.application;
 
-import com.kancho.byeolbyeol.common.util.TimeConverter;
+import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.constellation.domain.Constellation;
 import com.kancho.byeolbyeol.constellation.domain.ConstellationRepository;
 import com.kancho.byeolbyeol.daily_question.domain.DailyQuestion;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -39,8 +38,9 @@ public class HomeService {
 
     public ResHomeViewDto getHomeView(Long id) {
         LocalDateTime nowDateTime = LocalDateTime.now();
-        LocalDate kstTime = TimeConverter.covertKstLocalDate(nowDateTime);
-        Date nowDate = TimeConverter.covertDate(nowDateTime);
+        LocalDate nowLocalDate = TimeCalculate.covertKstLocalDate(nowDateTime);
+        LocalDateTime startTime = TimeCalculate.createStartKstTime(nowDateTime);
+        LocalDateTime endTime = TimeCalculate.createEndKstTime(nowDateTime);
 
         User user = userRepository.findById(id)
                 .orElseThrow(NotFoundUserException::new);
@@ -49,19 +49,19 @@ public class HomeService {
                 .orElseThrow(NotFoundConstellationException::new);
 
         Horoscope horoscope =
-                horoscopeRepository.findByConstellationsIdAndDate(constellation.getId(), kstTime)
+                horoscopeRepository.findByConstellationsIdAndDate(constellation.getId(), nowLocalDate)
                         .orElseThrow(NotFoundHoroscopeException::new);
 
-        Optional<Diary> diary = diaryRepository.findByUsersIdAndDate(id, nowDate);
+        Optional<Diary> diary = diaryRepository.findByUsersIdAndDateBetween(id, startTime, endTime);
         if (diary.isPresent()) {
             return homeMapper.toResHomeViewDto(diary.get(), horoscope, constellation);
         }
 
-        if (user.isPreviousQuestionTime(nowDateTime.toLocalTime())) {
+        if (user.isPreviousQuestionTime(nowDateTime.toLocalTime(), TimeCalculate.KST_NINE)) {
             return homeMapper.toResHomeViewDto(COMMON_QUESTION, horoscope, constellation);
         }
 
-        DailyQuestion dailyQuestion = dailyQuestionRepository.findByDate(kstTime)
+        DailyQuestion dailyQuestion = dailyQuestionRepository.findByDate(nowLocalDate)
                 .orElseThrow(NotFoundQuestionException::new);
         return homeMapper.toResHomeViewDto(dailyQuestion.getContent(), horoscope, constellation);
     }

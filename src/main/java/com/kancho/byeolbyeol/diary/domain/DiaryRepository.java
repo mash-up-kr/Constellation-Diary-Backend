@@ -10,8 +10,5 @@ import java.util.Date;
 import java.util.Optional;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-    @Query("select d from Diary d where d.usersId = ?1 and date(d.date) = ?2")
-    Optional<Diary> findByUsersIdAndDate(Long userId, Date nowLocalDate);
-
-    void deleteByUsersIdAndId(Long id, Long diaryId);
+    Optional<Diary> findByUsersIdAndDateBetween(Long userId, LocalDateTime startTime, LocalDateTime endTime);
 }

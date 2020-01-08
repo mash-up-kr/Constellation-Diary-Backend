@@ -45,11 +45,11 @@ public class User {
         this.email = email;
         this.horoscopeAlarmFlag = true;
         this.questionAlarmFlag = true;
-        this.questionTime = LocalTime.of(13, 0);
+        this.questionTime = LocalTime.of(22, 0);
     }
 
-    public boolean isPreviousQuestionTime(LocalTime localTime) {
-        int compare = this.questionTime.compareTo(localTime);
+    public boolean isPreviousQuestionTime(LocalTime localTime, Long timeZoneHour) {
+        int compare = this.questionTime.compareTo(localTime.plusHours(timeZoneHour));
         return compare > 0;
     }
 }
