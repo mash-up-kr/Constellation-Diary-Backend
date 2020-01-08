@@ -1,6 +1,6 @@
 package com.kancho.byeolbyeol.user.controller;
 
-import com.kancho.byeolbyeol.common.RequestWornFieldException;
+import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
 import com.kancho.byeolbyeol.user.dto.requset.ReqAuthenticationNumbersDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;

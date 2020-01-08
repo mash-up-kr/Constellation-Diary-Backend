@@ -1,5 +1,8 @@
 package com.kancho.byeolbyeol.horoscope.domain.constant;
 
+import lombok.Getter;
+
+@Getter
 public enum Word {
     LOVE("사랑"),
     FRIENDSHIP("우정"),

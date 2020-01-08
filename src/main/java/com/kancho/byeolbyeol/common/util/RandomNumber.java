@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.util;
+package com.kancho.byeolbyeol.common.util;
 
 import java.util.Random;
 
@@ -11,5 +11,9 @@ public class RandomNumber {
         Random random = new Random();
         random.setSeed(System.currentTimeMillis());
         return random.nextInt(MAX) + MIN;
+    }
+
+    private RandomNumber() {
+
     }
 }

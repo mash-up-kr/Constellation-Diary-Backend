@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -34,7 +35,7 @@ public class DiaryRepositoryTest {
         //given
         diaryRepository.save(Diary.builder()
                 .userId(1L)
-                .date("2019년 11월 23일")
+                .date(LocalDate.now())
                 .title("제목")
                 .content("내용")
                 .build());
@@ -45,7 +46,6 @@ public class DiaryRepositoryTest {
         //then
         Diary diary = diaryList.get(0);
         assertThat(diary.getUsersId(), is(1L));
-        assertThat(diary.getDate(), is("2019년 11월 23일"));
         assertThat(diary.getTitle(), is("제목"));
         assertThat(diary.getContent(), is("내용"));
     }

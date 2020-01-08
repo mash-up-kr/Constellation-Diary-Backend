@@ -1,6 +1,6 @@
 package com.kancho.byeolbyeol.daily_question.domain;
 
-import com.kancho.byeolbyeol.common.LocalDatePersistenceConverter;
+import com.kancho.byeolbyeol.common.entity_converter.LocalDatePersistenceConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

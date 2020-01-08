@@ -1,6 +1,8 @@
 package com.kancho.byeolbyeol.user.controller;
 
-import com.kancho.byeolbyeol.common.RequestWornFieldException;
+import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
+import com.kancho.byeolbyeol.common.user_context.ThreadContext;
+import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.user.application.UserService;
 import com.kancho.byeolbyeol.user.dto.requset.*;
 import com.kancho.byeolbyeol.user.dto.response.*;
@@ -92,10 +94,11 @@ public class UserController {
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
     @GetMapping("/users/tokens")
-    public ResponseEntity<ResTokenDto> refreshToken(
-            @RequestHeader("Authorization") String token) {
+    public ResponseEntity<ResTokenDto> refreshToken() {
 
-        return ResponseEntity.status(HttpStatus.OK).body(userService.refreshToken(token));
+        UserInfo userInfo = ThreadContext.userInfo.get();
+
+        return ResponseEntity.status(HttpStatus.OK).body(userService.refreshToken(userInfo));
     }
 
 }

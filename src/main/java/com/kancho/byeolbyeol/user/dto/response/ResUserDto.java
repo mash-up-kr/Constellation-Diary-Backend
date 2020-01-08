@@ -3,6 +3,8 @@ package com.kancho.byeolbyeol.user.dto.response;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalTime;
+
 @Getter
 public class ResUserDto {
 
@@ -15,12 +17,12 @@ public class ResUserDto {
 
     @Builder
     private ResUserDto(Long id, String userId, String constellation,
-                       Boolean horoscopeAlarmFlag, Boolean questionAlarmFlag, String questionTime) {
+                       Boolean horoscopeAlarmFlag, Boolean questionAlarmFlag, LocalTime questionTime) {
         this.id = id;
         this.userId = userId;
         this.constellation = constellation;
         this.horoscopeAlarmFlag = horoscopeAlarmFlag;
         this.questionAlarmFlag = questionAlarmFlag;
-        this.questionTime = questionTime;
+        this.questionTime = questionTime.toString();
     }
 }

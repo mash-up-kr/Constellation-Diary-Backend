@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.common;
+package com.kancho.byeolbyeol.common.entity_converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-@Converter(autoApply = true)
+@Converter
 public class LocalDatePersistenceConverter implements AttributeConverter<LocalDate, Date> {
 
     @Override

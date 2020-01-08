@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -33,7 +34,7 @@ public class DailyQuestionRepositoryTest {
     public void 오늘의질문_저장하고_불러오기() {
         //given
         dailyQuestionRepository.save(DailyQuestion.builder()
-                .date("2019년 12월 12일")
+                .date(LocalDate.now())
                 .content("오늘 가장 감사한 사람은 누구인가요?")
                 .build());
 
@@ -42,7 +43,6 @@ public class DailyQuestionRepositoryTest {
 
         //then
         DailyQuestion dailyQuestion = dailyQuestionList.get(0);
-        assertThat(dailyQuestion.getDate(), is("2019년 12월 12일"));
         assertThat(dailyQuestion.getContent(), is("오늘 가장 감사한 사람은 누구인가요?"));
     }
 }

@@ -6,6 +6,9 @@ import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
 import com.kancho.byeolbyeol.horoscope.domain.constant.Word;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -19,7 +22,7 @@ public class HoroscopeTest {
 
         Horoscope horoscope = Horoscope.builder()
                 .constellationsId(1L)
-                .date("2019년 12월 3일")
+                .date(LocalDate.now())
                 .content(contentTestData)
                 .stylist(Stylist.SCARF)
                 .numeral(Numeral.FIVE)
@@ -28,11 +31,15 @@ public class HoroscopeTest {
                 .build();
 
         assertThat(horoscope.getConstellationsId(), is(1L));
-        assertThat(horoscope.getDate(), is("2019년 12월 3일"));
         assertThat(horoscope.getContent(), is(contentTestData));
         assertThat(horoscope.getStylist(), is(Stylist.SCARF));
         assertThat(horoscope.getNumeral(), is(Numeral.FIVE));
         assertThat(horoscope.getWord(), is(Word.COFFEE));
         assertThat(horoscope.getExercise(), is(Exercise.BICYCLE));
+    }
+
+    @Test
+    public void asdf(){
+        System.out.println(LocalTime.now().getHour() +":" + LocalTime.now().getMinute());
     }
 }

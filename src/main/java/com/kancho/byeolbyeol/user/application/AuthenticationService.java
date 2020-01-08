@@ -1,6 +1,6 @@
 package com.kancho.byeolbyeol.user.application;
 
-import com.kancho.byeolbyeol.common.JWTManager;
+import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
 import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
@@ -9,8 +9,6 @@ import com.kancho.byeolbyeol.user.exception.IsNotSameAuthenticationNumberExcepti
 import com.kancho.byeolbyeol.user.exception.NotFoundAuthenticationNumberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
