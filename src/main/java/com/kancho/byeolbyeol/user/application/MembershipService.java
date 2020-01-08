@@ -1,8 +1,8 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
-import com.kancho.byeolbyeol.constellation.domain.Constellation;
-import com.kancho.byeolbyeol.constellation.domain.ConstellationRepository;
+import com.kancho.byeolbyeol.horoscope.domain.constellation.Constellation;
+import com.kancho.byeolbyeol.horoscope.domain.constellation.ConstellationRepository;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;

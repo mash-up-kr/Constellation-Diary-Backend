@@ -1,7 +1,7 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
-import com.kancho.byeolbyeol.constellation.domain.ConstellationRepository;
+import com.kancho.byeolbyeol.horoscope.domain.constellation.ConstellationRepository;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
 import com.kancho.byeolbyeol.common.exception.NotFoundConstellationException;

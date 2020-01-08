@@ -1,10 +1,10 @@
-package com.kancho.byeolbyeol.horoscope.domain;
+package com.kancho.byeolbyeol.horoscope.domain.horoscope;
 
 import com.kancho.byeolbyeol.common.entity_converter.LocalDatePersistenceConverter;
-import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
-import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
-import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
-import com.kancho.byeolbyeol.horoscope.domain.constant.Word;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Exercise;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Numeral;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Stylist;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Word;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

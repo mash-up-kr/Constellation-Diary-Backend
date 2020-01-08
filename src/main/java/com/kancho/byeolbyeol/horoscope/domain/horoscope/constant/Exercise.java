@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.horoscope.domain.constant;
+package com.kancho.byeolbyeol.horoscope.domain.horoscope.constant;
 
 import lombok.Getter;
 

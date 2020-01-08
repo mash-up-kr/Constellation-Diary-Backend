@@ -1,8 +1,8 @@
 package com.kancho.byeolbyeol.home.application;
 
 import com.kancho.byeolbyeol.common.util.TimeCalculate;
-import com.kancho.byeolbyeol.constellation.domain.Constellation;
-import com.kancho.byeolbyeol.constellation.domain.ConstellationRepository;
+import com.kancho.byeolbyeol.horoscope.domain.constellation.Constellation;
+import com.kancho.byeolbyeol.horoscope.domain.constellation.ConstellationRepository;
 import com.kancho.byeolbyeol.daily_question.domain.DailyQuestion;
 import com.kancho.byeolbyeol.daily_question.domain.DailyQuestionRepository;
 import com.kancho.byeolbyeol.diary.domain.Diary;
@@ -10,8 +10,8 @@ import com.kancho.byeolbyeol.diary.domain.DiaryRepository;
 import com.kancho.byeolbyeol.home.dto.ResHomeViewDto;
 import com.kancho.byeolbyeol.home.exception.NotFoundHoroscopeException;
 import com.kancho.byeolbyeol.home.exception.NotFoundQuestionException;
-import com.kancho.byeolbyeol.horoscope.domain.Horoscope;
-import com.kancho.byeolbyeol.horoscope.domain.HoroscopeRepository;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.Horoscope;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.HoroscopeRepository;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.common.exception.NotFoundConstellationException;

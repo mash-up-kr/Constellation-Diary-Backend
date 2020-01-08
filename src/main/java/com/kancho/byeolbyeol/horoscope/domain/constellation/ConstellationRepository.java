@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.constellation.domain;
+package com.kancho.byeolbyeol.horoscope.domain.constellation;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

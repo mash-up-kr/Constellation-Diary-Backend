@@ -1,11 +1,11 @@
 package com.kancho.byeolbyeol.home.application;
 
 import com.kancho.byeolbyeol.common.util.TimeCalculate;
-import com.kancho.byeolbyeol.constellation.domain.Constellation;
+import com.kancho.byeolbyeol.horoscope.domain.constellation.Constellation;
 import com.kancho.byeolbyeol.diary.domain.Diary;
 import com.kancho.byeolbyeol.home.dto.ResHomeViewDto;
 import com.kancho.byeolbyeol.home.dto.ResHoroscopeDto;
-import com.kancho.byeolbyeol.horoscope.domain.Horoscope;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.Horoscope;
 import org.springframework.stereotype.Component;
 
 @Component

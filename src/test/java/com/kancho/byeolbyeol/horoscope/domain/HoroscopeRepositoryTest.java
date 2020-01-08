@@ -1,16 +1,16 @@
 package com.kancho.byeolbyeol.horoscope.domain;
 
-import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
-import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
-import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
-import com.kancho.byeolbyeol.horoscope.domain.constant.Word;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.Horoscope;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.HoroscopeRepository;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Exercise;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Numeral;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Stylist;
+import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Word;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,7 +19,6 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
