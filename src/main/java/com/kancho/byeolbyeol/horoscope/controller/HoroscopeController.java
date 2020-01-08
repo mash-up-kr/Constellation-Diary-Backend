@@ -17,7 +17,7 @@ public class HoroscopeController {
 
     private final HoroscopeService horoscopeService;
 
-    @ApiOperation(value = "선택한 별자리 오늘의 운세 보기 - date(UTC)")
+    @ApiOperation(value = "선택한 별자리 오늘의 운세 보기 - date(TIME ZONE X, 단순 날짜)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "선택한 별자리 오늘의 운세 보기"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
