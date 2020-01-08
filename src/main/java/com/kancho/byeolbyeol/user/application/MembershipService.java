@@ -1,8 +1,10 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
+import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.Constellation;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.ConstellationRepository;
+import com.kancho.byeolbyeol.user.dto.requset.ReqModifyConstellationDto;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
@@ -16,6 +18,8 @@ import com.kancho.byeolbyeol.common.exception.NotFoundUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class MembershipService {
@@ -27,7 +31,7 @@ public class MembershipService {
     public ResUserInfoDto signUp(ReqSignUpDto reqSignUpDto) {
         boolean result = userRepository.existsByUserId(reqSignUpDto.getUserId());
 
-        if(result) {
+        if (result) {
             throw new ExistsUserIdException();
         }
 
@@ -68,6 +72,27 @@ public class MembershipService {
                 .build();
     }
 
+    @Transactional
+    public ResUserDto modifyConstellations(UserInfo userInfo, ReqModifyConstellationDto reqModifyConstellationDto) {
+        User user = userRepository.findById(userInfo.getId())
+                .orElseThrow(NotFoundUserException::new);
+
+        Constellation constellation = constellationRepository.findByName(reqModifyConstellationDto.getConstellation())
+                .orElseThrow(NotFoundConstellationException::new);
+
+        user.modifyConstellation(constellation.getId());
+
+        return ResUserDto.builder()
+                .id(user.getId())
+                .constellation(constellation.getName())
+                .userId(user.getUserId())
+                .horoscopeAlarmFlag(user.getHoroscopeAlarmFlag())
+                .questionAlarmFlag(user.getQuestionAlarmFlag())
+                .questionTime(user.getQuestionTime())
+                .build();
+    }
+
+
     private ResTokenDto createTokens(User user) {
 
         String authenticationToken = jwtManager.createAuthenticationToken(user.getUserId(), user.getId());
@@ -89,4 +114,6 @@ public class MembershipService {
                 .questionTime(user.getQuestionTime())
                 .build();
     }
+
+
 }

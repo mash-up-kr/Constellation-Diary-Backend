@@ -23,6 +23,10 @@ public class AuthenticationAspect {
     public void signUp() {
     }
 
+    @Pointcut("execution(public * com.kancho.byeolbyeol.user.controller.UserController.modifyConstellation(..))")
+    public void modifyConstellation() {
+    }
+
     @Pointcut("execution(public * com.kancho.byeolbyeol.user.controller.UserController.refreshToken(..))")
     public void refreshToken() {
     }
@@ -57,7 +61,7 @@ public class AuthenticationAspect {
         ThreadContext.userInfo.set(userInfo);
     }
 
-    @Before(value = "dailyQuestionController() || diaryController()")
+    @Before(value = "dailyQuestionController() || diaryController() || modifyConstellation()")
     public void checkAuthenticationToken() {
         String token = getToken();
 

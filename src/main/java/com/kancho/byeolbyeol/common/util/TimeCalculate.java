@@ -21,6 +21,10 @@ public class TimeCalculate {
         return Date.from(nowTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
+    public static Date covertKstToUctDate(LocalDate nowTime) {
+        return Date.from(nowTime.atStartOfDay().minusHours(KST_NINE).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
     public static LocalDateTime createStartKstTime(LocalDateTime localDateTime) {
         LocalDateTime localDateKstTime;
         if (localDateTime.getHour() >= (DAY_TIME - KST_NINE)) {
@@ -47,7 +51,13 @@ public class TimeCalculate {
         return localDateKstTime;
     }
 
+    public static Long getKstDeadLine() {
+        return DAY_TIME - KST_NINE;
+    }
+
     private TimeCalculate() {
 
     }
+
+
 }
