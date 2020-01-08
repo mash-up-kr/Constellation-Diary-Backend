@@ -42,7 +42,7 @@ public class DailyQuestionService {
             return dailyQuestionMapper.toResHomeViewDto(diary.get());
         }
 
-        if (user.isPreviousQuestionTime(nowDateTime.toLocalTime(), TimeCalculate.KST_NINE)) {
+        if (user.isPreviousQuestionTime(nowDateTime.toLocalTime(), TimeCalculate.getKstDeadLine())) {
             return dailyQuestionMapper.toResHomeViewDto(COMMON_QUESTION);
         }
 

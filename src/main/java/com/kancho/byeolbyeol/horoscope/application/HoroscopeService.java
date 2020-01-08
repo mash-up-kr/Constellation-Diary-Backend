@@ -36,7 +36,7 @@ public class HoroscopeService {
                 .id(horoscope.getId())
                 .constellation(constellation.getName())
                 .content(horoscope.getContent())
-                .date(horoscope.getDate())
+                .date(TimeCalculate.covertKstToUctDate(horoscope.getDate()))
                 .exercise(horoscope.getExercise().getValue())
                 .numeral(horoscope.getNumeral().getValue())
                 .stylist(horoscope.getStylist().getValue())

@@ -1,11 +1,13 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
+import com.kancho.byeolbyeol.user.dto.requset.ReqModifyConstellationDto;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
 import com.kancho.byeolbyeol.user.dto.response.ResCheckUserDto;
 import com.kancho.byeolbyeol.user.dto.response.ResTokenDto;
+import com.kancho.byeolbyeol.user.dto.response.ResUserDto;
 import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,5 +38,9 @@ public class UserService {
 
     public ResTokenDto refreshToken(UserInfo userInfo) {
         return tokenService.refreshToken(userInfo);
+    }
+
+    public ResUserDto modifyConstellations(UserInfo userInfo, ReqModifyConstellationDto reqModifyConstellationDto) {
+        return membershipService.modifyConstellations(userInfo, reqModifyConstellationDto);
     }
 }

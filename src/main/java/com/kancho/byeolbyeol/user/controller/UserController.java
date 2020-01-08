@@ -64,7 +64,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(reqSignUpDto));
     }
 
-    @ApiOperation(value = "로그인")
+    @ApiOperation(value = "로그인 - questionTime(UTC)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "로그인 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -80,6 +80,29 @@ public class UserController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqSignInDto));
+    }
+
+    @ApiOperation(value = "유저 별자리 변경 - questionTime(UTC)")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "유저 별자리 변경"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
+                    "4004 - Not Found Constellation, 4006 - Not Found User"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+    })
+    @PatchMapping("/users/constellations")
+    public ResponseEntity<ResUserDto> modifyConstellation(
+            @RequestBody @Valid ReqModifyConstellationDto reqModifyConstellationDto) {
+
+        UserInfo userInfo = ThreadContext.userInfo.get();
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userService.modifyConstellations(userInfo, reqModifyConstellationDto));
     }
 
     @ApiOperation(value = "토큰 재발급")

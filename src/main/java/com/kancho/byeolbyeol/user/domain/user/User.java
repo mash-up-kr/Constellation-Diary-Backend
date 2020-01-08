@@ -45,11 +45,19 @@ public class User {
         this.email = email;
         this.horoscopeAlarmFlag = true;
         this.questionAlarmFlag = true;
-        this.questionTime = LocalTime.of(22, 0);
+        this.questionTime = LocalTime.of(13, 0);
     }
 
-    public boolean isPreviousQuestionTime(LocalTime localTime, Long timeZoneHour) {
-        int compare = this.questionTime.compareTo(localTime.plusHours(timeZoneHour));
+    public boolean isPreviousQuestionTime(LocalTime localTime, Long deadline) {
+        if (localTime.getHour() >= deadline) {
+            return false;
+        }
+
+        int compare = this.questionTime.compareTo(localTime);
         return compare > 0;
+    }
+
+    public void modifyConstellation(Long constellationsId) {
+        this.constellationsId = constellationsId;
     }
 }
