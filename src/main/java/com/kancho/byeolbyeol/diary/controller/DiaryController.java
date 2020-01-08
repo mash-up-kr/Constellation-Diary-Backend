@@ -25,7 +25,8 @@ public class DiaryController {
     @ApiOperation(value = "일기 작성")
     @ApiResponses({
             @ApiResponse(code = 201, message = "일기 작성 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
+                    "4012 - Is Exceed Write Diary"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })

@@ -1,12 +1,13 @@
 package com.kancho.byeolbyeol.diary.application;
 
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
-import com.kancho.byeolbyeol.common.util.TimeConverter;
+import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.diary.dto.ReqModifyDiaryDto;
 import com.kancho.byeolbyeol.diary.dto.ReqWriteDiaryDto;
 import com.kancho.byeolbyeol.diary.domain.Diary;
 import com.kancho.byeolbyeol.diary.domain.DiaryRepository;
 import com.kancho.byeolbyeol.diary.dto.ResDiaryDto;
+import com.kancho.byeolbyeol.diary.exception.IsExceedWriteDiaryException;
 import com.kancho.byeolbyeol.diary.exception.IsNotTheWriterException;
 import com.kancho.byeolbyeol.diary.exception.NotFoundDiaryException;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +24,20 @@ public class DiaryService {
     private final DiaryRepository diaryRepository;
 
     public void writeDiary(UserInfo userInfo, ReqWriteDiaryDto reqWriteDiaryDto) {
+        LocalDateTime nowDateTime = LocalDateTime.now();
+        LocalDateTime startTime = TimeCalculate.createStartKstTime(nowDateTime);
+        LocalDateTime endTime = TimeCalculate.createEndKstTime(nowDateTime);
+
+        Optional<Diary> restrictDiary =
+                diaryRepository.findByUsersIdAndDateBetween(userInfo.getId(), startTime, endTime);
+
+        if (restrictDiary.isPresent()) {
+            throw new IsExceedWriteDiaryException();
+        }
+
         Diary diary = Diary.builder()
                 .content(reqWriteDiaryDto.getContent())
-                .date(LocalDateTime.now())
+                .date(nowDateTime)
                 .title(reqWriteDiaryDto.getTitle())
                 .horoscopeId(reqWriteDiaryDto.getHoroscopeId())
                 .userId(userInfo.getId())
@@ -43,7 +56,7 @@ public class DiaryService {
 
         return ResDiaryDto.builder()
                 .id(diary.getId())
-                .date(TimeConverter.covertDate(diary.getDate()))
+                .date(TimeCalculate.covertDate(diary.getDate()))
                 .title(diary.getTitle())
                 .content(diary.getContent())
                 .horoscopeId(diary.getHoroscopeId())
@@ -63,7 +76,7 @@ public class DiaryService {
 
         return ResDiaryDto.builder()
                 .id(diary.getId())
-                .date(TimeConverter.covertDate(diary.getDate()))
+                .date(TimeCalculate.covertDate(diary.getDate()))
                 .title(diary.getTitle())
                 .content(diary.getContent())
                 .horoscopeId(diary.getHoroscopeId())
