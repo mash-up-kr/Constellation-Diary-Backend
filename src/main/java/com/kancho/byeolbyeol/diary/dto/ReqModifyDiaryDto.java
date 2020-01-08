@@ -9,14 +9,14 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReqWriteDiaryDto {
+public class ReqModifyDiaryDto {
+
+    @NotNull
+    private Long diaryId;
 
     @NotNull
     private String title;
 
     @NotNull
     private String content;
-
-    @NotNull
-    private Long horoscopeId;
 }

@@ -39,4 +39,13 @@ public class Diary {
         this.content = content;
         this.horoscopeId = horoscopeId;
     }
+
+    public boolean isNotTheWriter(Long id) {
+        return !this.usersId.equals(id);
+    }
+
+    public void modify(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
