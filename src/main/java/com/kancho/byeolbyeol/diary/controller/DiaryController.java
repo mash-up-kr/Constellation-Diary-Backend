@@ -4,6 +4,7 @@ import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.diary.application.DiaryService;
+import com.kancho.byeolbyeol.diary.dto.ReqWriteDiaryDto;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.diary.controller;
+package com.kancho.byeolbyeol.diary.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
