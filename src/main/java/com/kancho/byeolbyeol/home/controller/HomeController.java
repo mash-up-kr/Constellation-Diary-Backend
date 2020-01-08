@@ -19,8 +19,8 @@ public class HomeController {
     @ApiOperation(value = "Home API - question 필드에 일기 제목 or 질문, existDiary - 일기 존재 여부")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Home API 성공"),
-            @ApiResponse(code = 400, message = "4006 - Not Found User, 4004 - Not Found Constellation," +
-                    " 4008 - Not Found Question, 4009 - Not Found Horoscope"),
+            @ApiResponse(code = 400, message = "4006 - Not Found User, " +
+                    " 4008 - Not Found Question "),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })

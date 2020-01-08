@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.home.dto;
+package com.kancho.byeolbyeol.horoscope.dto;
 
 import lombok.Builder;
 import lombok.Getter;

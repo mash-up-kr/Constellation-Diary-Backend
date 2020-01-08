@@ -12,14 +12,11 @@ public class ResHomeViewDto {
 
     private Long diaryId;
 
-    private ResHoroscopeDto horoscope;
-
     @Builder
     private ResHomeViewDto (Boolean existDiary, String question,
-                            Long diaryId, ResHoroscopeDto resHoroscopeDto) {
+                            Long diaryId) {
         this.existDiary = existDiary;
         this.question = question;
         this.diaryId = diaryId;
-        this.horoscope = resHoroscopeDto;
     }
 }

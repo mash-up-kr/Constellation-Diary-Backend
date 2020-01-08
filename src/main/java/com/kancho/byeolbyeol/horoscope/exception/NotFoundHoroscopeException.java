@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.home.exception;
+package com.kancho.byeolbyeol.horoscope.exception;
 
 import com.kancho.byeolbyeol.exception.BaseException;
 import com.kancho.byeolbyeol.exception.ErrorModel;
