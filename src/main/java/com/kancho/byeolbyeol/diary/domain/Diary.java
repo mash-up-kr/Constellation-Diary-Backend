@@ -32,10 +32,11 @@ public class Diary {
     private Long horoscopeId;
 
     @Builder
-    private Diary(Long userId, LocalDateTime date, String title, String content) {
+    private Diary(Long userId, LocalDateTime date, String title, String content, Long horoscopeId) {
         this.usersId = userId;
         this.date = date;
         this.title = title;
         this.content = content;
+        this.horoscopeId = horoscopeId;
     }
 }

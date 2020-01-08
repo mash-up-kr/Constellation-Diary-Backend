@@ -31,6 +31,10 @@ public class AuthenticationAspect {
     public void homeController() {
     }
 
+    @Pointcut("execution(public * com.kancho.byeolbyeol.diary.controller.DiaryController.*(..))")
+    public void diaryController() {
+    }
+
     @Before(value = "signUp()")
     public void checkRegisterToken() {
         String token = getToken();
@@ -53,7 +57,7 @@ public class AuthenticationAspect {
         ThreadContext.userInfo.set(userInfo);
     }
 
-    @Before(value = "homeController()")
+    @Before(value = "homeController() || diaryController()")
     public void checkAuthenticationToken() {
         String token = getToken();
 

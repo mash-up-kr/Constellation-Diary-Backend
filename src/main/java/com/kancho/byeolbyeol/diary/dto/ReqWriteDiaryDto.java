@@ -12,4 +12,6 @@ public class ReqWriteDiaryDto {
     private String title;
 
     private String content;
+
+    private Long horoscopeId;
 }

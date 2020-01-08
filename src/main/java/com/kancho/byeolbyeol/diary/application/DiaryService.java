@@ -20,6 +20,7 @@ public class DiaryService {
                 .content(reqWriteDiaryDto.getContent())
                 .date(LocalDateTime.now())
                 .title(reqWriteDiaryDto.getTitle())
+                .horoscopeId(reqWriteDiaryDto.getHoroscopeId())
                 .userId(userInfo.getId())
                 .build();
 
