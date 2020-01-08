@@ -34,11 +34,11 @@ public class DiaryService {
     }
 
     @Transactional
-    public ResDiaryDto modifyDiary(UserInfo userInfo, ReqModifyDiaryDto reqModifyDiaryDto) {
-        Diary diary = diaryRepository.findById(reqModifyDiaryDto.getDiaryId())
+    public ResDiaryDto modifyDiary(UserInfo userInfo, Long diaryId, ReqModifyDiaryDto reqModifyDiaryDto) {
+        Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(NotFoundDiaryException::new);
 
-        if(diary.isNotTheWriter(userInfo.getId())) {
+        if (diary.isNotTheWriter(userInfo.getId())) {
             throw new IsNotTheWriterException();
         }
 

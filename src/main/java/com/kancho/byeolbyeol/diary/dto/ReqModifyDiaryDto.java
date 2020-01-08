@@ -12,9 +12,6 @@ import javax.validation.constraints.NotNull;
 public class ReqModifyDiaryDto {
 
     @NotNull
-    private Long diaryId;
-
-    @NotNull
     private String title;
 
     @NotNull

@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -64,9 +61,11 @@ public class DiaryController {
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
-    @PatchMapping("/diaries")
-    public ResponseEntity<ResDiaryDto> modifyDiary(@RequestBody @Valid ReqModifyDiaryDto reqModifyDiaryDto,
-                                                   BindingResult bindingResult) {
+    @PatchMapping("/diaries/{diary-id}")
+    public ResponseEntity<ResDiaryDto> modifyDiary(
+            @PathVariable("diary-id") Long diaryId,
+            @RequestBody @Valid ReqModifyDiaryDto reqModifyDiaryDto,
+            BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new RequestWornFieldException();
@@ -74,7 +73,9 @@ public class DiaryController {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
-        return ResponseEntity.status(HttpStatus.OK).body(diaryService.modifyDiary(userInfo, reqModifyDiaryDto));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(diaryService.modifyDiary(userInfo, diaryId, reqModifyDiaryDto));
     }
+
 
 }
