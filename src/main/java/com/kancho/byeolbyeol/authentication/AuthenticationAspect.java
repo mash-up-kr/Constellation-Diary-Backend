@@ -27,11 +27,11 @@ public class AuthenticationAspect {
     public void refreshToken() {
     }
 
-    @Pointcut("execution(public * com.kancho.byeolbyeol.home.controller.HomeController.*(..))")
-    public void homeController() {
+    @Pointcut("execution(public * com.kancho.byeolbyeol.daily.controller.DailyQuestionController.*(..))")
+    public void dailyQuestionController() {
     }
 
-    @Pointcut("execution(public * com.kancho.byeolbyeol.diary.controller.DiaryController.*(..))")
+    @Pointcut("execution(public * com.kancho.byeolbyeol.daily.controller.DiaryController.*(..))")
     public void diaryController() {
     }
 
@@ -57,7 +57,7 @@ public class AuthenticationAspect {
         ThreadContext.userInfo.set(userInfo);
     }
 
-    @Before(value = "homeController() || diaryController()")
+    @Before(value = "dailyQuestionController() || diaryController()")
     public void checkAuthenticationToken() {
         String token = getToken();
 
