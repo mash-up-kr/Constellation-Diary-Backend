@@ -13,7 +13,7 @@ public class TimeConverter {
     }
 
     public static Date covertDate(LocalDateTime nowTime) {
-        return Date.from(nowTime.toLocalDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        return Date.from(nowTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public static Date covertKstToUctDate(LocalDate nowTime) {
