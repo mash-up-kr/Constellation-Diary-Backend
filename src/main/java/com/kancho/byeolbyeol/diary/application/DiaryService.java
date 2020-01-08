@@ -52,4 +52,15 @@ public class DiaryService {
                 .horoscopeId(diary.getHoroscopeId())
                 .build();
     }
+
+    public void deleteDiary(UserInfo userInfo, Long diaryId) {
+        Diary diary = diaryRepository.findById(diaryId)
+                .orElseThrow(NotFoundDiaryException::new);
+
+        if (diary.isNotTheWriter(userInfo.getId())) {
+            throw new IsNotTheWriterException();
+        }
+
+        diaryRepository.delete(diary);
+    }
 }

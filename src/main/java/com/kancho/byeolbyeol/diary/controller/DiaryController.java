@@ -50,10 +50,10 @@ public class DiaryController {
 
     @ApiOperation(value = "일기 수정")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "일기 수 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, "),
-            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token, " +
+            @ApiResponse(code = 200, message = "일기 수정 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
                     "4010 - Not Found Diary, 4011 -Is Not The Writer"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
@@ -77,5 +77,28 @@ public class DiaryController {
                 .body(diaryService.modifyDiary(userInfo, diaryId, reqModifyDiaryDto));
     }
 
+    @ApiOperation(value = "일기 삭제")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "일기 삭제 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
+                    "4010 - Not Found Diary, 4011 -Is Not The Writer"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+    })
+    @DeleteMapping("/diaries/{diary-id}")
+    public ResponseEntity<Void> deleteDiary(
+            @PathVariable("diary-id") Long diaryId) {
+
+        UserInfo userInfo = ThreadContext.userInfo.get();
+
+        diaryService.deleteDiary(userInfo, diaryId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }
