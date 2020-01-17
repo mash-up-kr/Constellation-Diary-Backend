@@ -4,6 +4,7 @@ import com.kancho.byeolbyeol.common.exception.FailAuthenticationException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -71,6 +72,11 @@ public class AuthenticationAspect {
         UserInfo userInfo = jwtManager.getUserInfo(token, TokenType.AUTHENTICATION_TOKEN::verifyValue);
 
         ThreadContext.userInfo.set(userInfo);
+    }
+
+    @After(value = "dailyQuestionController() || diaryController() || modifyConstellation()")
+    public void removeThreadLocal() {
+        ThreadContext.userInfo.remove();
     }
 
     private String getToken() {
