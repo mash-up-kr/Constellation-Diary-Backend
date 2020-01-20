@@ -4,6 +4,7 @@ import com.kancho.byeolbyeol.daily.domain.diary.Diary;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -14,7 +15,7 @@ public class DiaryTest {
     public void 일기_생성() {
         Diary diary = Diary.builder()
                 .userId(1L)
-                .date(LocalDate.now())
+                .date(LocalDateTime.now())
                 .title("제목")
                 .content("내용")
                 .build();
