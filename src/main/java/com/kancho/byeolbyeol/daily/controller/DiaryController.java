@@ -62,7 +62,7 @@ public class DiaryController {
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
-    @GetMapping("/diaries/{diary-id}")
+    @GetMapping("/diaries/{diary-id:^[0-9]+$}")
     public ResponseEntity<ResDiaryDto> getDiary(
             @PathVariable("diary-id") Long diaryId) {
 
@@ -84,7 +84,7 @@ public class DiaryController {
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
-    @PatchMapping("/diaries/{diary-id}")
+    @PatchMapping("/diaries/{diary-id:^[0-9]+$}")
     public ResponseEntity<ResDiaryDto> modifyDiary(
             @PathVariable("diary-id") Long diaryId,
             @RequestBody @Valid ReqModifyDiaryDto reqModifyDiaryDto,
@@ -113,7 +113,7 @@ public class DiaryController {
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
-    @DeleteMapping("/diaries/{diary-id}")
+    @DeleteMapping("/diaries/{diary-id:^[0-9]+$}")
     public ResponseEntity<Void> deleteDiary(
             @PathVariable("diary-id") Long diaryId) {
 
