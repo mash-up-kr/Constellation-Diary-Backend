@@ -9,6 +9,7 @@ public class TimeCalculate {
 
     private final static Integer ZERO = 0;
     private final static Integer FIFTY_NINE = 59;
+    private final static Long LONG_ONE = 1L;
     private final static Long DAY_TIME = 24L;
     private final static Integer ONE_DAY = 1;
     public final static Long KST_NINE = 9L;
@@ -49,6 +50,16 @@ public class TimeCalculate {
 
     public static Long getKstDeadLine() {
         return DAY_TIME - KST_NINE;
+    }
+
+    public static LocalDateTime createStartKstDate(Integer year, Integer month) {
+        LocalDateTime localDateTime = LocalDateTime.of(year, month, ONE_DAY, ZERO, ZERO, ZERO);
+        return localDateTime.minusDays(LONG_ONE).minusHours(KST_NINE);
+    }
+
+    public static LocalDateTime createEndKstDate(Integer year, Integer month) {
+        LocalDateTime localDateTime = LocalDateTime.of(year, month, ONE_DAY, ZERO, ZERO, ZERO);
+        return localDateTime.plusMonths(LONG_ONE).minusHours(KST_NINE);
     }
 
     private TimeCalculate() {

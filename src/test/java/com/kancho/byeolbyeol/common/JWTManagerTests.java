@@ -5,6 +5,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class JWTManagerTests {
@@ -34,5 +36,15 @@ public class JWTManagerTests {
         String token = jwtManager.createRefreshToken("testId", 1L);
 
         assertThat(token).isNotEmpty();
+    }
+
+    @Test
+    public void Tests() {
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 12, 1,0,0,0);
+        LocalDateTime localDateTimeTwo = LocalDateTime.of(2020, 12, 1,0,0,0);
+
+        System.out.println(localDateTime.minusDays(1L).minusHours(9L));
+
+        System.out.println(localDateTimeTwo.plusMonths(1L).minusHours(9L));
     }
 }

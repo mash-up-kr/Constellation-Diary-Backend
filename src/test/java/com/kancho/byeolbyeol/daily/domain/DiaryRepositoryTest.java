@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -34,7 +35,7 @@ public class DiaryRepositoryTest {
         //given
         diaryRepository.save(Diary.builder()
                 .userId(1L)
-                .date(LocalDate.now())
+                .date(LocalDateTime.now())
                 .title("제목")
                 .content("내용")
                 .build());
