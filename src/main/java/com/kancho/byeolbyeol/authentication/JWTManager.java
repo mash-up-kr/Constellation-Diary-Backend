@@ -44,6 +44,33 @@ public class JWTManager {
         return createJWT(userId, id, TokenType.REFRESH_TOKEN, THIRTY_DAYS);
     }
 
+    public Jws<Claims> authenticate(String token, Function<String, Boolean> f) {
+        String tempToken = subStringKeywordString(token);
+
+        if (isNotStartBearer(token) || tempToken.isEmpty()) {
+            throw new FailAuthenticationException();
+        }
+
+        Jws<Claims> claims = getPayLoad(tempToken);
+        String subject = getSubjectRefresh(claims);
+
+        if (!f.apply(subject)) {
+            throw new FailAuthenticationException();
+        }
+
+        return claims;
+    }
+
+    public UserInfo getUserInfo(String token, Function<String, Boolean> f) {
+        Jws<Claims> claims = authenticate(token, f);
+
+        return UserInfo.builder()
+                .userId(getClaimsUserId(claims))
+                .id(getClaimsId(claims))
+                .build();
+    }
+
+
     private String createSignUpJWT(String email, TokenType tokenType, Long day) {
 
         JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);
@@ -63,7 +90,6 @@ public class JWTManager {
     }
 
     private String createJWT(String userId, Long id, TokenType tokenType, Long day) {
-
         JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);
 
         return jwtHeader.claim(USER_ID, userId)
@@ -89,24 +115,8 @@ public class JWTManager {
         return Keys.hmacShaKeyFor(byteKey);
     }
 
-    public void authenticate(String token) {
-        if (isNotStartBearer(token)) {
-            throw new FailAuthenticationException();
-        }
-
-        String tempToken = subStringKeywordString(token);
-        if (tempToken.isEmpty()) {
-            throw new FailAuthenticationException();
-        }
-        getPayLoad(tempToken);
-    }
-
     private boolean isNotStartBearer(String token) {
         return !token.startsWith(KEYWORD);
-    }
-
-    private String subStringKeywordString(String token) {
-        return token.substring(KEYWORD.length());
     }
 
     private Jws<Claims> getPayLoad(String token) {
@@ -121,20 +131,8 @@ public class JWTManager {
         return claims;
     }
 
-    public UserInfo getUserInfo(String token, Function<String, Boolean> f) {
-        String tempToken = subStringKeywordString(token);
-
-        Jws<Claims> claims = getPayLoad(tempToken);
-        String subject = getSubjectRefresh(claims);
-
-        if (!f.apply(subject)) {
-            throw new FailAuthenticationException();
-        }
-
-        return UserInfo.builder()
-                .userId(getClaimsUserId(claims))
-                .id(getClaimsId(claims))
-                .build();
+    private String subStringKeywordString(String token) {
+        return token.substring(KEYWORD.length());
     }
 
     private String getSubjectRefresh(Jws<Claims> claims) {
