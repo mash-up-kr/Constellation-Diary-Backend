@@ -9,9 +9,11 @@ import java.util.List;
 public class ResDiariesDto {
 
     private List<ResSimpleDiaryDto> diaries;
+    private String timeZone;
 
     @Builder
-    private ResDiariesDto(List<ResSimpleDiaryDto> diaries) {
+    private ResDiariesDto(List<ResSimpleDiaryDto> diaries, String timeZone) {
         this.diaries = diaries;
+        this.timeZone = timeZone;
     }
 }

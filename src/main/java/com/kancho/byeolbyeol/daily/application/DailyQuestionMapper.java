@@ -11,7 +11,7 @@ public class DailyQuestionMapper {
     private final static Boolean NOT_EXIST = false;
 
 
-    public ResDailyQuestionDto toResHomeViewDto(Diary diary) {
+    public ResDailyQuestionDto toResDailyQuestionDto(Diary diary) {
         return ResDailyQuestionDto.builder()
                 .existDiary(EXIST)
                 .question(diary.getTitle())
@@ -19,7 +19,7 @@ public class DailyQuestionMapper {
                 .build();
     }
 
-    public ResDailyQuestionDto toResHomeViewDto(String question) {
+    public ResDailyQuestionDto toResDailyQuestionDto(String question) {
         return ResDailyQuestionDto.builder()
                 .existDiary(NOT_EXIST)
                 .question(question)

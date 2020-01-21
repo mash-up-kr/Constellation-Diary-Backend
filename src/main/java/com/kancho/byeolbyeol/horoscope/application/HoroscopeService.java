@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.horoscope.application;
 
+import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 import com.kancho.byeolbyeol.common.exception.NotFoundConstellationException;
 import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.horoscope.exception.NotFoundHoroscopeException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -20,9 +22,9 @@ public class HoroscopeService {
     private final HoroscopeRepository horoscopeRepository;
     private final ConstellationRepository constellationRepository;
 
-    public ResHoroscopeDto findHoroscope(String constellationName) {
-        LocalDateTime nowDateTime = LocalDateTime.now();
-        LocalDate nowLocalDate = TimeCalculate.covertKstLocalDate(nowDateTime);
+    public ResHoroscopeDto findHoroscope(String constellationName, Date date, ReqTimeZone reqTimeZone) {
+        LocalDateTime nowDateTime = TimeCalculate.covertLocalDateTime(date);
+        LocalDate nowLocalDate = TimeCalculate.covertLocalDate(nowDateTime, reqTimeZone);
 
         Constellation constellation = constellationRepository.findByName(constellationName)
                 .orElseThrow(NotFoundConstellationException::new);
@@ -31,10 +33,10 @@ public class HoroscopeService {
                 .findByConstellationsIdAndDate(constellation.getId(), nowLocalDate)
                 .orElseThrow(NotFoundHoroscopeException::new);
 
-        return toResHoroscopeDto(horoscope, constellation);
+        return toResHoroscopeDto(horoscope, constellation, reqTimeZone);
     }
 
-    public ResHoroscopeDto findHoroscope(Long horoscopeId) {
+    public ResHoroscopeDto findHoroscope(Long horoscopeId, ReqTimeZone reqTimeZone) {
         Horoscope horoscope = horoscopeRepository
                 .findById(horoscopeId)
                 .orElseThrow(NotFoundHoroscopeException::new);
@@ -42,12 +44,13 @@ public class HoroscopeService {
         Constellation constellation = constellationRepository.findById(horoscope.getConstellationsId())
                 .orElseThrow(NotFoundConstellationException::new);
 
-        return toResHoroscopeDto(horoscope, constellation);
+        return toResHoroscopeDto(horoscope, constellation, reqTimeZone);
     }
 
-    private ResHoroscopeDto toResHoroscopeDto(Horoscope horoscope, Constellation constellation) {
+    private ResHoroscopeDto toResHoroscopeDto(Horoscope horoscope, Constellation constellation, ReqTimeZone reqTimeZone) {
         return ResHoroscopeDto.builder()
                 .id(horoscope.getId())
+                .timeZone(reqTimeZone.getValue())
                 .constellation(constellation.getName())
                 .content(horoscope.getContent())
                 .date(horoscope.getDate())

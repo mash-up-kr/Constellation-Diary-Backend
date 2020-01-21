@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.daily.application;
 
+import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.daily.dto.*;
@@ -24,9 +25,9 @@ public class DiaryService {
 
     private final DiaryRepository diaryRepository;
 
-    public ResDiariesDto getDiaries(UserInfo userInfo, Integer year, Integer month) {
-        LocalDateTime startDate = TimeCalculate.createStartKstDate(year, month);
-        LocalDateTime endDate = TimeCalculate.createEndKstDate(year, month);
+    public ResDiariesDto getDiaries(UserInfo userInfo, Integer year, Integer month, ReqTimeZone reqTimeZone) {
+        LocalDateTime startDate = TimeCalculate.createStartDate(year, month, reqTimeZone);
+        LocalDateTime endDate = TimeCalculate.createEndDate(year, month, reqTimeZone);
         List<Diary> diaries =
                 diaryRepository.findByUsersIdAndDateGreaterThanEqualAndDateLessThan(userInfo.getId(), startDate, endDate);
 
@@ -41,19 +42,20 @@ public class DiaryService {
                         .map(diary -> ResSimpleDiaryDto.builder()
                                 .id(diary.getId())
                                 .title(diary.getTitle())
-                                .date(TimeCalculate.covertDate(diary.getDate()))
+                                .date(TimeCalculate.covertDate(diary.getDate(), reqTimeZone))
                                 .build())
                         .collect(Collectors.toList());
 
         return ResDiariesDto.builder()
+                .timeZone(reqTimeZone.getValue())
                 .diaries(resSimpleDiaryDtos)
                 .build();
     }
 
-    public void writeDiary(UserInfo userInfo, ReqWriteDiaryDto reqWriteDiaryDto) {
-        LocalDateTime nowDateTime = LocalDateTime.now();
-        LocalDateTime startTime = TimeCalculate.createStartKstTime(nowDateTime);
-        LocalDateTime endTime = TimeCalculate.createEndKstTime(nowDateTime);
+    public void writeDiary(UserInfo userInfo, ReqWriteDiaryDto reqWriteDiaryDto, ReqTimeZone reqTimeZone) {
+        LocalDateTime nowDateTime = TimeCalculate.covertLocalDateTime(reqWriteDiaryDto.getDate());
+        LocalDateTime startTime = TimeCalculate.createStartTime(nowDateTime, reqTimeZone);
+        LocalDateTime endTime = TimeCalculate.createEndTime(nowDateTime, reqTimeZone);
 
         Optional<Diary> restrictDiary =
                 diaryRepository.findByUsersIdAndDateBetween(userInfo.getId(), startTime, endTime);
@@ -73,7 +75,7 @@ public class DiaryService {
         diaryRepository.save(diary);
     }
 
-    public ResDiaryDto getDiary(UserInfo userInfo, Long diaryId) {
+    public ResDiaryDto getDiary(UserInfo userInfo, Long diaryId, ReqTimeZone reqTimeZone) {
         Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(NotFoundDiaryException::new);
 
@@ -83,7 +85,8 @@ public class DiaryService {
 
         return ResDiaryDto.builder()
                 .id(diary.getId())
-                .date(TimeCalculate.covertDate(diary.getDate()))
+                .timeZone(reqTimeZone.getValue())
+                .date(TimeCalculate.covertDate(diary.getDate(), reqTimeZone))
                 .title(diary.getTitle())
                 .content(diary.getContent())
                 .horoscopeId(diary.getHoroscopeId())
@@ -91,7 +94,8 @@ public class DiaryService {
     }
 
     @Transactional
-    public ResDiaryDto modifyDiary(UserInfo userInfo, Long diaryId, ReqModifyDiaryDto reqModifyDiaryDto) {
+    public ResDiaryDto modifyDiary(UserInfo userInfo, Long diaryId,
+                                   ReqModifyDiaryDto reqModifyDiaryDto, ReqTimeZone reqTimeZone) {
         Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(NotFoundDiaryException::new);
 
@@ -103,7 +107,8 @@ public class DiaryService {
 
         return ResDiaryDto.builder()
                 .id(diary.getId())
-                .date(TimeCalculate.covertDate(diary.getDate()))
+                .timeZone(reqTimeZone.getValue())
+                .date(TimeCalculate.covertDate(diary.getDate(), reqTimeZone))
                 .title(diary.getTitle())
                 .content(diary.getContent())
                 .horoscopeId(diary.getHoroscopeId())

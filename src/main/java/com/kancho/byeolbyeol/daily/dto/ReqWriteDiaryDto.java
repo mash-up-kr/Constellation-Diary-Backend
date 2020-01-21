@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Getter
 @NoArgsConstructor
@@ -19,4 +20,7 @@ public class ReqWriteDiaryDto {
 
     @NotNull
     private Long horoscopeId;
+
+    @NotNull
+    private Date date;
 }

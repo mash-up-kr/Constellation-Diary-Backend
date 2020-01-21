@@ -1,6 +1,6 @@
 package com.kancho.byeolbyeol.daily.controller;
 
-import com.kancho.byeolbyeol.common.TimeZone;
+import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
@@ -24,11 +24,10 @@ public class DiaryController {
     private final DiaryService diaryService;
 
 
-    @ApiOperation(value = "일기 리스트")
+    @ApiOperation(value = "일기 리스트 - 요청시 Time-Zone 선택")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "일기 리스트 보기 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4012 - Is Exceed Write Diary"),
+            @ApiResponse(code = 200, message = "일기 리스트 요청 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
@@ -40,7 +39,7 @@ public class DiaryController {
     @GetMapping("/diaries")
     public ResponseEntity<ResDiariesDto> getDiaries(@RequestParam("year") Integer year,
                                                     @RequestParam("month") Integer month,
-                                                    @RequestHeader(value = "Time-Zone") TimeZone timeZone) {
+                                                    @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone) {
 
         if (year == null || month == null) {
             throw new RequestWornFieldException();
@@ -48,10 +47,10 @@ public class DiaryController {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
-        return ResponseEntity.status(HttpStatus.OK).body(diaryService.getDiaries(userInfo, year, month));
+        return ResponseEntity.status(HttpStatus.OK).body(diaryService.getDiaries(userInfo, year, month, reqTimeZone));
     }
 
-    @ApiOperation(value = "일기 작성")
+    @ApiOperation(value = "일기 작성 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 201, message = "일기 작성 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -65,7 +64,7 @@ public class DiaryController {
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
     @PostMapping("/diaries")
-    public ResponseEntity<Void> writeDiary(@RequestHeader(value = "Time-Zone") TimeZone timeZone,
+    public ResponseEntity<Void> writeDiary(@RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
                                            @RequestBody @Valid ReqWriteDiaryDto reqWriteDiaryDto,
                                            BindingResult bindingResult) {
 
@@ -75,11 +74,11 @@ public class DiaryController {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
-        diaryService.writeDiary(userInfo, reqWriteDiaryDto);
+        diaryService.writeDiary(userInfo, reqWriteDiaryDto, reqTimeZone);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @ApiOperation(value = "일기 보기")
+    @ApiOperation(value = "일기 보기 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "일기 보기 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -94,14 +93,15 @@ public class DiaryController {
     })
     @GetMapping("/diaries/{diary-id:^[0-9]+$}")
     public ResponseEntity<ResDiaryDto> getDiary(
-            @PathVariable("diary-id") Long diaryId) {
+            @PathVariable("diary-id") Long diaryId,
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone) {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
-        return ResponseEntity.status(HttpStatus.OK).body(diaryService.getDiary(userInfo, diaryId));
+        return ResponseEntity.status(HttpStatus.OK).body(diaryService.getDiary(userInfo, diaryId, reqTimeZone));
     }
 
-    @ApiOperation(value = "일기 수정")
+    @ApiOperation(value = "일기 수정 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "일기 수정 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -117,6 +117,7 @@ public class DiaryController {
     @PatchMapping("/diaries/{diary-id:^[0-9]+$}")
     public ResponseEntity<ResDiaryDto> modifyDiary(
             @PathVariable("diary-id") Long diaryId,
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
             @RequestBody @Valid ReqModifyDiaryDto reqModifyDiaryDto,
             BindingResult bindingResult) {
 
@@ -127,7 +128,7 @@ public class DiaryController {
         UserInfo userInfo = ThreadContext.userInfo.get();
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(diaryService.modifyDiary(userInfo, diaryId, reqModifyDiaryDto));
+                .body(diaryService.modifyDiary(userInfo, diaryId, reqModifyDiaryDto, reqTimeZone));
     }
 
     @ApiOperation(value = "일기 삭제")
