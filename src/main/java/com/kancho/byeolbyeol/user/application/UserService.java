@@ -49,4 +49,8 @@ public class UserService {
     public ResUserDto modifyHoroscopeAlarm(UserInfo userInfo, ReqModifyHoroscopeAlarmDto reqModifyHoroscopeAlarmDto) {
         return membershipService.modifyHoroscopeAlarm(userInfo, reqModifyHoroscopeAlarmDto);
     }
+
+    public ResUserDto modifyQuestionTime(UserInfo userInfo, ReqModifyQuestionTimeDto reqModifyHoroscopeAlarmDto) {
+        return membershipService.modifyQuestionTime(userInfo, reqModifyHoroscopeAlarmDto);
+    }
 }

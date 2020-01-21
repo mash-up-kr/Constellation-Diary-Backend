@@ -68,4 +68,8 @@ public class User {
     public void modifyHoroscopeAlarm(Boolean horoscopeAlarm) {
         this.horoscopeAlarmFlag = horoscopeAlarm;
     }
+
+    public void modifyQuestionTime(LocalTime questionTime) {
+        this.questionTime = questionTime;
+    }
 }

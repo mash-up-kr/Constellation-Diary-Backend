@@ -2,6 +2,7 @@ package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
+import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.Constellation;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.ConstellationRepository;
 import com.kancho.byeolbyeol.user.dto.requset.*;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
 
 @Service
 @RequiredArgsConstructor
@@ -109,6 +111,21 @@ public class MembershipService {
         return createUserInfo(user, constellation);
     }
 
+    @Transactional
+    public ResUserDto modifyQuestionTime(UserInfo userInfo, ReqModifyQuestionTimeDto reqModifyHoroscopeAlarmDto) {
+        User user = userRepository.findById(userInfo.getId())
+                .orElseThrow(NotFoundUserException::new);
+
+        Constellation constellation = constellationRepository.findById(user.getConstellationsId())
+                .orElseThrow(NotFoundConstellationException::new);
+
+        LocalTime questionTime = TimeCalculate.convertLocalTime(reqModifyHoroscopeAlarmDto.getDate());
+
+        user.modifyQuestionTime(questionTime);
+
+        return createUserInfo(user, constellation);
+    }
+
 
     private ResTokenDto createTokens(User user) {
 
@@ -131,6 +148,4 @@ public class MembershipService {
                 .questionTime(user.getQuestionTime())
                 .build();
     }
-
-
 }

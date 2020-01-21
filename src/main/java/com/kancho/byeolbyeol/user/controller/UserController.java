@@ -152,6 +152,30 @@ public class UserController {
                 .body(userService.modifyHoroscopeAlarm(userInfo, reqModifyHoroscopeAlarmDto));
     }
 
+    @ApiOperation(value = "질문 푸시알람 시간 설정 - UTC 기준")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "질문 푸시알람 시간 설정 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
+                    "4004 - Not Found Constellation, 4006 - Not Found User"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+    })
+    @PatchMapping("/users/question-time")
+    public ResponseEntity<ResUserDto> modifyQuestionTime(
+            @RequestBody @Valid ReqModifyQuestionTimeDto reqModifyHoroscopeAlarmDto) {
+
+        UserInfo userInfo = ThreadContext.userInfo.get();
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userService.modifyQuestionTime(userInfo, reqModifyHoroscopeAlarmDto));
+    }
+
+
     @ApiOperation(value = "토큰 재발급")
     @ApiResponses({
             @ApiResponse(code = 200, message = "토큰 재발급 성공"),

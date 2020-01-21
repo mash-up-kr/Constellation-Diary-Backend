@@ -2,10 +2,7 @@ package com.kancho.byeolbyeol.common.util;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.Date;
 
 public class TimeCalculate {
@@ -20,12 +17,16 @@ public class TimeCalculate {
         return nowTime.plusHours(reqTimeZone.getParallax()).toLocalDate();
     }
 
-    public static LocalDateTime covertLocalDateTime(Date date) {
-        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
-    }
-
     public static Date covertDate(LocalDateTime nowTime, ReqTimeZone reqTimeZone) {
         return Date.from(nowTime.plusHours(reqTimeZone.getParallax()).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public static LocalTime convertLocalTime(Date date) {
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalTime();
+    }
+
+    public static LocalDateTime covertLocalDateTime(Date date) {
+        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     public static LocalDateTime createStartTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
