@@ -3,6 +3,7 @@ package com.kancho.byeolbyeol.user.application;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.user.dto.requset.ReqModifyConstellationDto;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
+import com.kancho.byeolbyeol.user.dto.requset.ReqModifyQuestionAlarmDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
 import com.kancho.byeolbyeol.user.dto.response.ResCheckUserDto;
@@ -42,5 +43,9 @@ public class UserService {
 
     public ResUserDto modifyConstellations(UserInfo userInfo, ReqModifyConstellationDto reqModifyConstellationDto) {
         return membershipService.modifyConstellations(userInfo, reqModifyConstellationDto);
+    }
+
+    public ResUserDto modifyQuestionAlarm(UserInfo userInfo, ReqModifyQuestionAlarmDto reqModifyQuestionAlarmDto) {
+        return membershipService.modifyQuestionAlarm(userInfo, reqModifyQuestionAlarmDto);
     }
 }

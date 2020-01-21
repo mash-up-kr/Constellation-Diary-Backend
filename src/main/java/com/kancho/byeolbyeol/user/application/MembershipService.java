@@ -7,6 +7,7 @@ import com.kancho.byeolbyeol.horoscope.domain.constellation.ConstellationReposit
 import com.kancho.byeolbyeol.user.dto.requset.ReqModifyConstellationDto;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
+import com.kancho.byeolbyeol.user.dto.requset.ReqModifyQuestionAlarmDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
 import com.kancho.byeolbyeol.user.dto.response.ResTokenDto;
@@ -81,6 +82,26 @@ public class MembershipService {
                 .orElseThrow(NotFoundConstellationException::new);
 
         user.modifyConstellation(constellation.getId());
+
+        return ResUserDto.builder()
+                .id(user.getId())
+                .constellation(constellation.getName())
+                .userId(user.getUserId())
+                .horoscopeAlarmFlag(user.getHoroscopeAlarmFlag())
+                .questionAlarmFlag(user.getQuestionAlarmFlag())
+                .questionTime(user.getQuestionTime())
+                .build();
+    }
+
+    @Transactional
+    public ResUserDto modifyQuestionAlarm(UserInfo userInfo, ReqModifyQuestionAlarmDto reqModifyQuestionAlarmDto) {
+        User user = userRepository.findById(userInfo.getId())
+                .orElseThrow(NotFoundUserException::new);
+
+        Constellation constellation = constellationRepository.findById(user.getConstellationsId())
+                .orElseThrow(NotFoundConstellationException::new);
+
+        user.modifyQuestionAlarm(reqModifyQuestionAlarmDto.getModifyQuestionAlarm());
 
         return ResUserDto.builder()
                 .id(user.getId())

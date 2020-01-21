@@ -4,6 +4,7 @@ import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.user.application.UserService;
+import com.kancho.byeolbyeol.user.dto.requset.ReqModifyQuestionAlarmDto;
 import com.kancho.byeolbyeol.user.dto.requset.*;
 import com.kancho.byeolbyeol.user.dto.response.*;
 import io.swagger.annotations.*;
@@ -84,7 +85,7 @@ public class UserController {
 
     @ApiOperation(value = "유저 별자리 변경 - questionTime(UTC)")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "유저 별자리 변경"),
+            @ApiResponse(code = 200, message = "유저 별자리 변경 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
                     "4004 - Not Found Constellation, 4006 - Not Found User"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
@@ -103,6 +104,29 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(userService.modifyConstellations(userInfo, reqModifyConstellationDto));
+    }
+
+    @ApiOperation(value = "질문 푸시알람 설정")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "질문 푸시알람 설정 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
+                    "4004 - Not Found Constellation, 4006 - Not Found User"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+    })
+    @PatchMapping("/users/question-alarm")
+    public ResponseEntity<ResUserDto> modifyQuestionAlarm(
+            @RequestBody @Valid ReqModifyQuestionAlarmDto reqModifyQuestionAlarmDto) {
+
+        UserInfo userInfo = ThreadContext.userInfo.get();
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userService.modifyQuestionAlarm(userInfo, reqModifyQuestionAlarmDto));
     }
 
     @ApiOperation(value = "토큰 재발급")

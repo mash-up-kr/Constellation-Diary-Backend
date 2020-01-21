@@ -60,4 +60,8 @@ public class User {
     public void modifyConstellation(Long constellationsId) {
         this.constellationsId = constellationsId;
     }
+
+    public void modifyQuestionAlarm(Boolean questionAlarm) {
+        this.questionAlarmFlag = questionAlarm;
+    }
 }
