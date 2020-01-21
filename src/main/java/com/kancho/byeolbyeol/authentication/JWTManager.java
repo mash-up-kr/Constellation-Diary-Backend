@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.authentication;
 
+import com.kancho.byeolbyeol.common.user_context.FindPasswordUserInfo;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.common.exception.FailAuthenticationException;
 import io.jsonwebtoken.*;
@@ -44,6 +45,25 @@ public class JWTManager {
         return createJWT(userId, id, TokenType.REFRESH_TOKEN, THIRTY_DAYS);
     }
 
+    public UserInfo getUserInfo(String token, Function<String, Boolean> f) {
+        Jws<Claims> claims = authenticate(token, f);
+
+        return UserInfo.builder()
+                .userId(getClaimsUserId(claims))
+                .id(getClaimsId(claims))
+                .build();
+    }
+
+    public FindPasswordUserInfo getFindPasswordUserInfo(String token) {
+        Jws<Claims> claims = authenticate(token, TokenType.FIND_PASSWORD::verifyValue);
+
+        return FindPasswordUserInfo.builder()
+                .email(getClaimsEmail(claims))
+                .userId(getClaimsUserId(claims))
+                .build();
+    }
+
+
     public Jws<Claims> authenticate(String token, Function<String, Boolean> f) {
         String tempToken = subStringKeywordString(token);
 
@@ -53,21 +73,11 @@ public class JWTManager {
 
         Jws<Claims> claims = getPayLoad(tempToken);
         String subject = getSubjectRefresh(claims);
-
         if (!f.apply(subject)) {
             throw new FailAuthenticationException();
         }
 
         return claims;
-    }
-
-    public UserInfo getUserInfo(String token, Function<String, Boolean> f) {
-        Jws<Claims> claims = authenticate(token, f);
-
-        return UserInfo.builder()
-                .userId(getClaimsUserId(claims))
-                .id(getClaimsId(claims))
-                .build();
     }
 
     private String createSignUpJWT(String email, TokenType tokenType, Long day) {
@@ -80,6 +90,8 @@ public class JWTManager {
     }
 
     private String createFindPasswordJWT(String email, String userId, TokenType tokenType, Long day) {
+
+        System.out.println(tokenType.getValue());
         JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);
 
         return jwtHeader.claim(EMAIL, email)
@@ -146,5 +158,8 @@ public class JWTManager {
         return Long.parseLong(claims.getBody().get(ID).toString());
     }
 
+    private String getClaimsEmail(Jws<Claims> claims) {
+        return claims.getBody().get(EMAIL).toString();
+    }
 
 }

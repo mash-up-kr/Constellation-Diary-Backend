@@ -67,7 +67,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
+            @ApiImplicitParam(name = "Authorization", value = "Sign UP JWT",
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })

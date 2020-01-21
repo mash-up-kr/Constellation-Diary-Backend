@@ -24,7 +24,8 @@ public class AuthenticationAspect {
     public void signUp() {
     }
 
-    @Pointcut("execution(public * com.kancho.byeolbyeol.user.controller.UserChangeController.*(..))")
+    @Pointcut("execution(public * com.kancho.byeolbyeol.user.controller.UserChangeController.*(..)) && " +
+            "!execution(public * com.kancho.byeolbyeol.user.controller.UserChangeController.modifyPassword(..))")
     public void userChangeController() {
     }
 

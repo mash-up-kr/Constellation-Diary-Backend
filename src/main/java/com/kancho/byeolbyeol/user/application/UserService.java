@@ -37,6 +37,10 @@ public class UserService {
 
     }
 
+    public void modifyPassword(String token, ReqModifyPasswordDto reqModifyPasswordDto) {
+        membershipService.modifyPassword(token, reqModifyPasswordDto);
+    }
+
     public ResUserInfoDto signUp(ReqTimeZone reqTimeZone, ReqSignUpDto reqSignUpDto) {
         return membershipService.signUp(reqTimeZone, reqSignUpDto);
     }

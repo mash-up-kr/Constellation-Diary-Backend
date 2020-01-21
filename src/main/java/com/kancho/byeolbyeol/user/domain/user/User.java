@@ -80,6 +80,10 @@ public class User {
     }
 
     public void modifyHoroscopeTime(LocalTime horoscopeTime) {
+        this.horoscopeTime = horoscopeTime;
+    }
 
+    public void modifyPassword(String password) {
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 }
