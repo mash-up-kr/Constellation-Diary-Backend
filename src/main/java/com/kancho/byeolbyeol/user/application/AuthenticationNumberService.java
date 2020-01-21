@@ -4,8 +4,7 @@ import com.kancho.byeolbyeol.user.dto.requset.ReqFindPasswordNumberDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpNumberDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationFindPasswordNumberDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationSignUpNumberDto;
-import com.kancho.byeolbyeol.user.dto.response.ResFindPasswordTokenDto;
-import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
+import com.kancho.byeolbyeol.user.dto.response.ResAuthenticationTokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class AuthenticationNumberService {
         authenticationEmailService.sendSignUpNumber(reqSignUpNumberDto);
     }
 
-    public ResRegisterTokenDto verifySignUpNumber(ReqValidationSignUpNumberDto reqValidationSignUpNumberDto) {
+    public ResAuthenticationTokenDto verifySignUpNumber(ReqValidationSignUpNumberDto reqValidationSignUpNumberDto) {
         return authenticationService.verifySignUpNumber(reqValidationSignUpNumberDto);
     }
 
@@ -27,7 +26,7 @@ public class AuthenticationNumberService {
         authenticationEmailService.sendFindPasswordNumber(reqFindPasswordNumberDto);
     }
 
-    public ResFindPasswordTokenDto verifyFindPasswordNumber(ReqValidationFindPasswordNumberDto reqValidationFindPasswordNumberDto) {
+    public ResAuthenticationTokenDto verifyFindPasswordNumber(ReqValidationFindPasswordNumberDto reqValidationFindPasswordNumberDto) {
         return authenticationService.verifyFindPasswordNumber(reqValidationFindPasswordNumberDto);
     }
 }

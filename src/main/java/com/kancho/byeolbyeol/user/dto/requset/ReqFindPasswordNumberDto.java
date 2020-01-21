@@ -17,5 +17,5 @@ public class ReqFindPasswordNumberDto {
     private String email;
 
     @NotNull
-    private String id;
+    private String userId;
 }

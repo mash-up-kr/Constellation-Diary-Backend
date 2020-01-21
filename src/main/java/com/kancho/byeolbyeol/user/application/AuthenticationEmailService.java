@@ -1,6 +1,8 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.common.util.RandomNumber;
+import com.kancho.byeolbyeol.user.domain.find_password_number.FindPasswordNumber;
+import com.kancho.byeolbyeol.user.domain.find_password_number.FindPasswordNumberRepository;
 import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumber;
 import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumberRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqFindPasswordNumberDto;
@@ -16,6 +18,7 @@ public class AuthenticationEmailService {
 
     private final EmailService emailService;
     private final SignUpNumberRepository signUpNumberRepository;
+    private final FindPasswordNumberRepository findPasswordNumberRepository;
 
     public void sendSignUpNumber(ReqSignUpNumberDto reqSignUpNumberDto) {
         String number = createAuthenticationNumber();
@@ -40,13 +43,14 @@ public class AuthenticationEmailService {
                 reqFindPasswordNumberDto.getEmail(),
                 MailForm.FIND_PASSWORD.getSubject(), MailForm.FIND_PASSWORD.getContent() + number);
 
-        SignUpNumber signUpNumber = SignUpNumber.builder()
+        FindPasswordNumber findPasswordNumber = FindPasswordNumber.builder()
                 .email(reqFindPasswordNumberDto.getEmail())
+                .userId(reqFindPasswordNumberDto.getUserId())
                 .number(number)
                 .expirationTime(System.currentTimeMillis() + THREE_MINUTES)
                 .build();
 
-        signUpNumberRepository.save(signUpNumber);
+        findPasswordNumberRepository.save(findPasswordNumber);
     }
 
 

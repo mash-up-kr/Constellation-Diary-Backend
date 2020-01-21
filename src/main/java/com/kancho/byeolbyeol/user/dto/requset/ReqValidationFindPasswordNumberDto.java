@@ -17,7 +17,7 @@ public class ReqValidationFindPasswordNumberDto {
     private String email;
 
     @NotNull
-    private String id;
+    private String userId;
 
     @NotNull
     private Long number;

@@ -28,8 +28,12 @@ public class JWTManager {
     }
 
 
-    public String createRegisterToken(String email) {
-        return createRegisterJWT(email, TokenType.REFRESH_TOKEN, ONE_DAY);
+    public String createSignUpToken(String email) {
+        return createSignUpJWT(email, TokenType.SIGN_UP_TOKEN, ONE_DAY);
+    }
+
+    public String createFindPasswordToken(String userId, String email) {
+        return createFindPasswordJWT(email, userId, TokenType.FIND_PASSWORD, ONE_DAY);
     }
 
     public String createAuthenticationToken(String userId, Long id) {
@@ -40,11 +44,20 @@ public class JWTManager {
         return createJWT(userId, id, TokenType.REFRESH_TOKEN, THIRTY_DAYS);
     }
 
-    private String createRegisterJWT(String email, TokenType tokenType, Long day) {
+    private String createSignUpJWT(String email, TokenType tokenType, Long day) {
 
         JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);
 
         return jwtHeader.claim(EMAIL, email)
+                .signWith(generateKey(key))
+                .compact();
+    }
+
+    private String createFindPasswordJWT(String email, String userId, TokenType tokenType, Long day) {
+        JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);
+
+        return jwtHeader.claim(EMAIL, email)
+                .claim(USER_ID, userId)
                 .signWith(generateKey(key))
                 .compact();
     }
@@ -135,5 +148,6 @@ public class JWTManager {
     private Long getClaimsId(Jws<Claims> claims) {
         return Long.parseLong(claims.getBody().get(ID).toString());
     }
+
 
 }

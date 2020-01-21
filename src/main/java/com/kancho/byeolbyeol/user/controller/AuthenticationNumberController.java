@@ -6,8 +6,7 @@ import com.kancho.byeolbyeol.user.dto.requset.ReqFindPasswordNumberDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpNumberDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationFindPasswordNumberDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationSignUpNumberDto;
-import com.kancho.byeolbyeol.user.dto.response.ResFindPasswordTokenDto;
-import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
+import com.kancho.byeolbyeol.user.dto.response.ResAuthenticationTokenDto;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,7 +51,7 @@ public class AuthenticationNumberController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @PostMapping("/authentication")
-    public ResponseEntity<ResRegisterTokenDto> verifySignUpNumber(
+    public ResponseEntity<ResAuthenticationTokenDto> verifySignUpNumber(
             @RequestBody @Valid ReqValidationSignUpNumberDto reqValidationSignUpNumberDto,
             BindingResult bindingResult) {
 
@@ -92,7 +91,7 @@ public class AuthenticationNumberController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @PostMapping("/authentication")
-    public ResponseEntity<ResFindPasswordTokenDto> verifyFindPasswordNumber(
+    public ResponseEntity<ResAuthenticationTokenDto> verifyFindPasswordNumber(
             @RequestBody @Valid ReqValidationFindPasswordNumberDto reqValidationFindPasswordNumberDto,
             BindingResult bindingResult) {
 

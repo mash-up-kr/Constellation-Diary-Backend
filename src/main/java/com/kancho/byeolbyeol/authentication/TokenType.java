@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum TokenType {
     AUTHENTICATION_TOKEN("Authentication Token"),
     REFRESH_TOKEN("Refresh Token"),
-    REGISTER_TOKEN("Refresh Token");
+    SIGN_UP_TOKEN("Sign Up Token"),
+    FIND_PASSWORD("Find Password");
 
     private String value;
 
