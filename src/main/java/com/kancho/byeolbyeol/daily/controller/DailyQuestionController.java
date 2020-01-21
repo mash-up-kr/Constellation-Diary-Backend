@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.daily.controller;
 
+import com.kancho.byeolbyeol.common.TimeZone;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.daily.application.DailyQuestionService;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -30,7 +32,7 @@ public class DailyQuestionController {
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
     @GetMapping("/daily-questions")
-    public ResponseEntity<ResDailyQuestionDto> getDailyQuestions() {
+    public ResponseEntity<ResDailyQuestionDto> getDailyQuestions(@RequestHeader(value = "Time-Zone") TimeZone timeZone) {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 

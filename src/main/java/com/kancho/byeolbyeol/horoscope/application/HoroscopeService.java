@@ -1,7 +1,6 @@
 package com.kancho.byeolbyeol.horoscope.application;
 
 import com.kancho.byeolbyeol.common.exception.NotFoundConstellationException;
-import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.horoscope.exception.NotFoundHoroscopeException;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.Constellation;

@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.horoscope.controller;
 
+import com.kancho.byeolbyeol.common.TimeZone;
 import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
@@ -32,7 +33,8 @@ public class HoroscopeController {
     })
     @GetMapping("/horoscopes")
     public ResponseEntity<ResHoroscopeDto> findHoroscopeByConstellation(
-            @RequestParam("constellation") String constellationName) {
+            @RequestParam("constellation") String constellationName,
+            @RequestHeader(value = "Time-Zone") TimeZone timeZone) {
 
         if (constellationName == null) {
             throw new RequestWornFieldException();

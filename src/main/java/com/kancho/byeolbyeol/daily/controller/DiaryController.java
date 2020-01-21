@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.daily.controller;
 
+import com.kancho.byeolbyeol.common.TimeZone;
 import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
@@ -38,7 +39,8 @@ public class DiaryController {
     })
     @GetMapping("/diaries")
     public ResponseEntity<ResDiariesDto> getDiaries(@RequestParam("year") Integer year,
-                                                    @RequestParam("month") Integer month) {
+                                                    @RequestParam("month") Integer month,
+                                                    @RequestHeader(value = "Time-Zone") TimeZone timeZone) {
 
         if (year == null || month == null) {
             throw new RequestWornFieldException();
@@ -63,7 +65,8 @@ public class DiaryController {
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
     @PostMapping("/diaries")
-    public ResponseEntity<Void> writeDiary(@RequestBody @Valid ReqWriteDiaryDto reqWriteDiaryDto,
+    public ResponseEntity<Void> writeDiary(@RequestHeader(value = "Time-Zone") TimeZone timeZone,
+                                           @RequestBody @Valid ReqWriteDiaryDto reqWriteDiaryDto,
                                            BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
