@@ -37,15 +37,4 @@ public class JWTManagerTests {
 
         assertThat(token).isNotEmpty();
     }
-
-    @Test
-    public void Tests() {
-        LocalDateTime localDateTime = LocalDateTime.of(2020, 12, 1,0,0,0);
-        LocalDateTime localDateTimeTwo = LocalDateTime.of(2020, 12, 1,0,0,0);
-
-        localDateTime
-        System.out.println(localDateTime.minusDays(1L).minusHours(9L));
-
-        System.out.println(localDateTimeTwo.plusMonths(1L).minusHours(9L));
-    }
 }
