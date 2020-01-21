@@ -10,12 +10,15 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReqValidationNumberDto {
-
-    @NotNull
-    private Long number;
+public class ReqValidationFindPasswordNumberDto {
 
     @NotNull
     @Email
     private String email;
+
+    @NotNull
+    private String id;
+
+    @NotNull
+    private Long number;
 }

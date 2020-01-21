@@ -2,8 +2,11 @@ package com.kancho.byeolbyeol.user.controller;
 
 import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
 import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
-import com.kancho.byeolbyeol.user.dto.requset.ReqAuthenticationNumbersDto;
-import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqFindPasswordNumberDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpNumberDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqValidationFindPasswordNumberDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqValidationSignUpNumberDto;
+import com.kancho.byeolbyeol.user.dto.response.ResFindPasswordTokenDto;
 import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -21,22 +24,22 @@ public class AuthenticationNumberController {
 
     private final AuthenticationNumberService authenticationNumberService;
 
-    @ApiOperation(value = "인증번호 생성")
+    @ApiOperation(value = "인증번호 생성 - SIGN_UP(회원가입)")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "인증번호 생성 성공"),
+            @ApiResponse(code = 201, message = "인증번호 생성 - SIGN_UP(회원가입) 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @PostMapping("/authentication-numbers")
-    public ResponseEntity<Void> generateAuthenticationNumber(
-            @RequestBody @Valid ReqAuthenticationNumbersDto reqAuthenticationNumbersDto,
+    public ResponseEntity<Void> generateSignUpNumber(
+            @RequestBody @Valid ReqSignUpNumberDto reqSignUpNumberDto,
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new RequestWrongFieldException();
         }
 
-        authenticationNumberService.sendAuthenticationNumber(reqAuthenticationNumbersDto);
+        authenticationNumberService.sendSignUpNumber(reqSignUpNumberDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -49,8 +52,8 @@ public class AuthenticationNumberController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @PostMapping("/authentication")
-    public ResponseEntity<ResRegisterTokenDto> verifyAuthenticationNumber(
-            @RequestBody @Valid ReqValidationNumberDto reqValidationNumberDto,
+    public ResponseEntity<ResRegisterTokenDto> verifySignUpNumber(
+            @RequestBody @Valid ReqValidationSignUpNumberDto reqValidationSignUpNumberDto,
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -58,7 +61,47 @@ public class AuthenticationNumberController {
         }
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(authenticationNumberService.verify(reqValidationNumberDto));
+                .body(authenticationNumberService.verifySignUpNumber(reqValidationSignUpNumberDto));
+    }
+
+    @ApiOperation(value = "인증번호 생성 - FIND_PASSWORD(비밀번호 찾기)")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "인증번호 생성 - FIND_PASSWORD(비밀번호 찾기) 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @PostMapping("/authentication-numbers")
+    public ResponseEntity<Void> generateFindPasswordNumber(
+            @RequestBody @Valid ReqFindPasswordNumberDto reqFindPasswordNumberDto,
+            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new RequestWrongFieldException();
+        }
+
+        authenticationNumberService.sendFindPasswordNumber(reqFindPasswordNumberDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @ApiOperation(value = "인증번호 인증 - FIND_PASSWORD(비밀번호 찾기)")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "인증번호 인증 - FIND_PASSWORD(비밀번호 찾기) 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
+                    "4002 - Not Found Authentication-Number, 4003 - Is Not Same Authentication-Number"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @PostMapping("/authentication")
+    public ResponseEntity<ResFindPasswordTokenDto> verifyFindPasswordNumber(
+            @RequestBody @Valid ReqValidationFindPasswordNumberDto reqValidationFindPasswordNumberDto,
+            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new RequestWrongFieldException();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(authenticationNumberService.verifyFindPasswordNumber(reqValidationFindPasswordNumberDto));
     }
 
 }
