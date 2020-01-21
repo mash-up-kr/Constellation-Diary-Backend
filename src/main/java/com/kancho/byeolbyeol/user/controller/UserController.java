@@ -5,6 +5,7 @@ import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.user.application.UserService;
+import com.kancho.byeolbyeol.user.dto.requset.ReqModifyHoroscopeTimeDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqModifyQuestionAlarmDto;
 import com.kancho.byeolbyeol.user.dto.requset.*;
 import com.kancho.byeolbyeol.user.dto.response.*;
@@ -174,12 +175,36 @@ public class UserController {
     @PatchMapping("/users/question-time")
     public ResponseEntity<ResUserDto> modifyQuestionTime(
             @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
-            @RequestBody @Valid ReqModifyQuestionTimeDto reqModifyHoroscopeAlarmDto) {
+            @RequestBody @Valid ReqModifyQuestionTimeDto reqModifyQuestionTimeDto) {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userService.modifyQuestionTime(userInfo, reqTimeZone, reqModifyHoroscopeAlarmDto));
+                .body(userService.modifyQuestionTime(userInfo, reqTimeZone, reqModifyQuestionTimeDto));
+    }
+
+    @ApiOperation(value = "운세 푸시알람 시간 설정")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "운세 푸시알람 시간 설정 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
+                    "4004 - Not Found Constellation, 4006 - Not Found User"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+    })
+    @PatchMapping("/users/horoscope-time")
+    public ResponseEntity<ResUserDto> modifyHoroscopeTime(
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
+            @RequestBody @Valid ReqModifyHoroscopeTimeDto reqModifyHoroscopeTimeDto) {
+
+        UserInfo userInfo = ThreadContext.userInfo.get();
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userService.modifyHoroscopeTime(userInfo, reqTimeZone, reqModifyHoroscopeTimeDto));
     }
 
 

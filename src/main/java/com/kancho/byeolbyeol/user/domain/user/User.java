@@ -29,6 +29,10 @@ public class User {
 
     private Long constellationsId;
 
+    @Convert(converter = LocalTimePersistenceConverter.class)
+    @Column(name = "horoscope_time", columnDefinition = "TIME")
+    private LocalTime horoscopeTime;
+
     private Boolean horoscopeAlarmFlag;
 
     @Convert(converter = LocalTimePersistenceConverter.class)
@@ -38,14 +42,16 @@ public class User {
     private Boolean questionAlarmFlag;
 
     @Builder
-    private User(String userId, String password, Long constellationsId, String email) {
+    private User(String userId, String password, Long constellationsId, String email,
+                 LocalTime questionTime, LocalTime horoscopeTime) {
         this.userId = userId;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.constellationsId = constellationsId;
         this.email = email;
         this.horoscopeAlarmFlag = true;
         this.questionAlarmFlag = true;
-        this.questionTime = LocalTime.of(13, 0);
+        this.questionTime = questionTime;
+        this.horoscopeTime = horoscopeTime;
     }
 
     public boolean isPreviousQuestionTime(LocalTime localTime, Long deadline) {
@@ -71,5 +77,9 @@ public class User {
 
     public void modifyQuestionTime(LocalTime questionTime) {
         this.questionTime = questionTime;
+    }
+
+    public void modifyHoroscopeTime(LocalTime horoscopeTime) {
+
     }
 }

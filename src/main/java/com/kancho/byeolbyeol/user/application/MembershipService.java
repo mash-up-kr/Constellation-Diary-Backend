@@ -39,11 +39,14 @@ public class MembershipService {
         Constellation constellation = constellationRepository.findByName(reqSignUpDto.getConstellation())
                 .orElseThrow(NotFoundConstellationException::new);
 
+
         User user = User.builder()
                 .constellationsId(constellation.getId())
                 .email(reqSignUpDto.getEmail())
                 .userId(reqSignUpDto.getUserId())
                 .password(reqSignUpDto.getPassword())
+                .horoscopeTime(TimeCalculate.createHoroscopeTime(reqTimeZone))
+                .questionTime(TimeCalculate.createQuestionTime(reqTimeZone))
                 .build();
 
         user = userRepository.save(user);
@@ -117,16 +120,33 @@ public class MembershipService {
 
     @Transactional
     public ResUserDto modifyQuestionTime(UserInfo userInfo, ReqTimeZone reqTimeZone,
-                                         ReqModifyQuestionTimeDto reqModifyHoroscopeAlarmDto) {
+                                         ReqModifyQuestionTimeDto reqModifyQuestionTimeDto) {
         User user = userRepository.findById(userInfo.getId())
                 .orElseThrow(NotFoundUserException::new);
 
         Constellation constellation = constellationRepository.findById(user.getConstellationsId())
                 .orElseThrow(NotFoundConstellationException::new);
 
-        LocalTime questionTime = TimeCalculate.convertLocalTime(reqModifyHoroscopeAlarmDto.getDate());
+        LocalTime questionTime = TimeCalculate.convertLocalTime(reqModifyQuestionTimeDto.getDate());
 
         user.modifyQuestionTime(questionTime);
+
+        return createUserInfo(user, constellation, reqTimeZone);
+    }
+
+
+    @Transactional
+    public ResUserDto modifyHoroscopeTime(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                          ReqModifyHoroscopeTimeDto reqModifyHoroscopeTimeDto) {
+        User user = userRepository.findById(userInfo.getId())
+                .orElseThrow(NotFoundUserException::new);
+
+        Constellation constellation = constellationRepository.findById(user.getConstellationsId())
+                .orElseThrow(NotFoundConstellationException::new);
+
+        LocalTime horoscopeTime = TimeCalculate.convertLocalTime(reqModifyHoroscopeTimeDto.getDate());
+
+        user.modifyHoroscopeTime(horoscopeTime);
 
         return createUserInfo(user, constellation, reqTimeZone);
     }
@@ -153,4 +173,5 @@ public class MembershipService {
                 .questionTime(user.getQuestionTime())
                 .build();
     }
+
 }

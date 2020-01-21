@@ -55,7 +55,12 @@ public class UserService {
     }
 
     public ResUserDto modifyQuestionTime(UserInfo userInfo, ReqTimeZone reqTimeZone,
-                                         ReqModifyQuestionTimeDto reqModifyHoroscopeAlarmDto) {
-        return membershipService.modifyQuestionTime(userInfo, reqTimeZone, reqModifyHoroscopeAlarmDto);
+                                         ReqModifyQuestionTimeDto reqModifyQuestionTimeDto) {
+        return membershipService.modifyQuestionTime(userInfo, reqTimeZone, reqModifyQuestionTimeDto);
+    }
+
+    public ResUserDto modifyHoroscopeTime(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                          ReqModifyHoroscopeTimeDto reqModifyHoroscopeTimeDto) {
+        return membershipService.modifyHoroscopeTime(userInfo, reqTimeZone, reqModifyHoroscopeTimeDto);
     }
 }

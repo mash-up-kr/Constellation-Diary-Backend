@@ -1,6 +1,7 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
+import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.ConstellationRepository;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
@@ -43,6 +44,6 @@ public class MembershipServiceTests {
 
         expectedException.expect(NotFoundConstellationException.class);
 
-        membershipService.signUp(reqSignUpDto);
+        membershipService.signUp(ReqTimeZone.KST, reqSignUpDto);
     }
 }
