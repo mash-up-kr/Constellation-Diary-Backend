@@ -35,7 +35,7 @@ public class SignUpNumberControllerTests {
         ReqSignUpNumberDto reqSignUpNumberDto =
                 new ReqSignUpNumberDto("test@naver.com");
 
-        this.mockMvc.perform(post("/authentication-numbers")
+        this.mockMvc.perform(post("/authentication-numbers/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reqSignUpNumberDto)))
                 .andDo(print())
@@ -47,7 +47,7 @@ public class SignUpNumberControllerTests {
         ReqSignUpNumberDto reqSignUpNumberDto =
                 new ReqSignUpNumberDto();
 
-        this.mockMvc.perform(post("/authentication-numbers")
+        this.mockMvc.perform(post("/authentication-numbers/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reqSignUpNumberDto)))
                 .andDo(print())
@@ -59,7 +59,7 @@ public class SignUpNumberControllerTests {
         ReqValidationSignUpNumberDto reqValidationSignUpNumberDto =
                 new ReqValidationSignUpNumberDto(123456L, "test@naver.com");
 
-        this.mockMvc.perform(post("/authentication")
+        this.mockMvc.perform(post("/authentication/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reqValidationSignUpNumberDto)))
                 .andDo(print())
@@ -70,7 +70,7 @@ public class SignUpNumberControllerTests {
     public void 인증번호_인증_요청시_쿼리_파라미터가_누락될_경우() throws Exception {
         ReqValidationSignUpNumberDto reqValidationSignUpNumberDto = new ReqValidationSignUpNumberDto();
 
-        this.mockMvc.perform(post("/authentication")
+        this.mockMvc.perform(post("/authentication/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reqValidationSignUpNumberDto)))
                 .andDo(print())

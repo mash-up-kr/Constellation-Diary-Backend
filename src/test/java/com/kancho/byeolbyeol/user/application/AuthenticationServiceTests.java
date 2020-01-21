@@ -1,6 +1,7 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
+import com.kancho.byeolbyeol.user.domain.find_password_number.FindPasswordNumberRepository;
 import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumber;
 import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumberRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationSignUpNumberDto;
@@ -27,6 +28,7 @@ public class AuthenticationServiceTests {
 
     private AuthenticationService authenticationService;
     private SignUpNumberRepository signUpNumberRepository;
+    private FindPasswordNumberRepository findPasswordNumberRepository;
     private JWTManager jwtManager;
     private SignUpNumber signUpNumber;
     private ReqValidationSignUpNumberDto reqValidationSignUpNumberDto;
@@ -35,9 +37,10 @@ public class AuthenticationServiceTests {
     public void mockUp() {
         signUpNumber = mock(SignUpNumber.class);
         signUpNumberRepository = mock(SignUpNumberRepository.class);
+        findPasswordNumberRepository = mock(FindPasswordNumberRepository.class);
         jwtManager = mock(JWTManager.class);
         authenticationService =
-                new AuthenticationService(signUpNumberRepository, jwtManager);
+                new AuthenticationService(signUpNumberRepository, findPasswordNumberRepository, jwtManager);
 
         reqValidationSignUpNumberDto = new ReqValidationSignUpNumberDto(123456L, "test@naver.com");
     }
@@ -51,7 +54,7 @@ public class AuthenticationServiceTests {
 
         expectedException.expect(NotFoundAuthenticationNumberException.class);
 
-        authenticationService.verify(reqValidationSignUpNumberDto);
+        authenticationService.verifySignUpNumber(reqValidationSignUpNumberDto);
     }
 
     @Test
@@ -64,7 +67,7 @@ public class AuthenticationServiceTests {
 
         expectedException.expect(IsNotSameAuthenticationNumberException.class);
 
-        authenticationService.verify(reqValidationSignUpNumberDto);
+        authenticationService.verifySignUpNumber(reqValidationSignUpNumberDto);
     }
 
     @Test

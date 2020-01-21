@@ -18,7 +18,7 @@ public class JWTManagerTests {
     @Test
     public void 회원가입_인증용_JWT_생성() {
         JWTManager jwtManager = new JWTManager("안녕하세요 test용 키입니다.");
-        String token = jwtManager.createRegisterToken("test@naver.com");
+        String token = jwtManager.createSignUpToken("test@naver.com");
 
         assertThat(token).isNotEmpty();
     }
