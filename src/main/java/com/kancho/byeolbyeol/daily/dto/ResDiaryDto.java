@@ -10,6 +10,8 @@ public class ResDiaryDto {
 
     private Long id;
 
+    private String timeZone;
+
     private Date date;
 
     private String title;
@@ -19,8 +21,9 @@ public class ResDiaryDto {
     private Long horoscopeId;
 
     @Builder
-    private ResDiaryDto(Long id, Date date, String title, String content, Long horoscopeId) {
+    private ResDiaryDto(Long id, String timeZone, Date date, String title, String content, Long horoscopeId) {
         this.id = id;
+        this.timeZone = timeZone;
         this.date = date;
         this.title = title;
         this.content = content;
