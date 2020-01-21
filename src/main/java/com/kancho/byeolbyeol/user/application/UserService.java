@@ -2,12 +2,12 @@ package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
+import com.kancho.byeolbyeol.common.util.ReplacePassword;
+import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.dto.requset.*;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
-import com.kancho.byeolbyeol.user.dto.response.ResCheckUserDto;
-import com.kancho.byeolbyeol.user.dto.response.ResTokenDto;
-import com.kancho.byeolbyeol.user.dto.response.ResUserDto;
-import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
+import com.kancho.byeolbyeol.user.dto.response.*;
+import com.kancho.byeolbyeol.user.exception.NotFoundUserByEmailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,16 @@ public class UserService {
                 .userId(checkUserId)
                 .available(!result)
                 .build();
+    }
+
+    public ResUserIdDto findUserId(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(NotFoundUserByEmailException::new);
+
+        return ResUserIdDto.builder()
+                .userId(ReplacePassword.changeAsterisk(user.getUserId()))
+                .build();
+
     }
 
     public ResUserInfoDto signUp(ReqTimeZone reqTimeZone, ReqSignUpDto reqSignUpDto) {
@@ -63,4 +73,5 @@ public class UserService {
                                           ReqModifyHoroscopeTimeDto reqModifyHoroscopeTimeDto) {
         return membershipService.modifyHoroscopeTime(userInfo, reqTimeZone, reqModifyHoroscopeTimeDto);
     }
+
 }
