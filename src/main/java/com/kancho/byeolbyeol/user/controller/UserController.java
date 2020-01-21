@@ -1,7 +1,7 @@
 package com.kancho.byeolbyeol.user.controller;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
-import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
+import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.user.application.UserService;
@@ -35,7 +35,7 @@ public class UserController {
             @RequestParam("user-id") String checkUserId) {
 
         if (checkUserId == null) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.duplicateCheck(checkUserId));
@@ -52,7 +52,7 @@ public class UserController {
             @RequestParam("email") @Email String email) {
 
         if (email == null) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.findUserId(email));
@@ -67,7 +67,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
+            @ApiImplicitParam(name = "Authorization", value = "Sign UP JWT",
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
@@ -77,7 +77,7 @@ public class UserController {
             @RequestBody @Valid ReqSignUpDto reqSignUpDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(reqTimeZone, reqSignUpDto));
@@ -96,7 +96,7 @@ public class UserController {
             @RequestBody @Valid ReqSignInDto reqSignInDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqTimeZone, reqSignInDto));

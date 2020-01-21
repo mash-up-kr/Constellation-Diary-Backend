@@ -1,9 +1,14 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.common.util.RandomNumber;
-import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
-import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
-import com.kancho.byeolbyeol.user.dto.requset.ReqAuthenticationNumbersDto;
+import com.kancho.byeolbyeol.user.domain.find_password_number.FindPasswordNumber;
+import com.kancho.byeolbyeol.user.domain.find_password_number.FindPasswordNumberRepository;
+import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumber;
+import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumberRepository;
+import com.kancho.byeolbyeol.user.domain.user.UserRepository;
+import com.kancho.byeolbyeol.user.dto.requset.ReqFindPasswordNumberDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpNumberDto;
+import com.kancho.byeolbyeol.user.exception.IsNotExistsUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,28 +16,53 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationEmailService {
-    private final static String SUBJECT = "별별일기 인증번호입니다.";
-    private final static String CONTENT = " 인증번호 : ";
     private final static Long THREE_MINUTES = 180000L;
 
     private final EmailService emailService;
-    private final AuthenticationNumberRepository authenticationNumberRepository;
+    private final UserRepository userRepository;
+    private final SignUpNumberRepository signUpNumberRepository;
+    private final FindPasswordNumberRepository findPasswordNumberRepository;
 
-    public void sendAuthenticationNumber(ReqAuthenticationNumbersDto reqAuthenticationNumbersDto) {
+    public void sendSignUpNumber(ReqSignUpNumberDto reqSignUpNumberDto) {
         String number = createAuthenticationNumber();
 
         emailService.sendAuthenticationNumberMail(
-                reqAuthenticationNumbersDto.getEmail(),
-                SUBJECT, CONTENT + number);
+                reqSignUpNumberDto.getEmail(),
+                MailForm.SIGN_UP.getSubject(), MailForm.SIGN_UP.getContent() + number);
 
-        AuthenticationNumber authenticationNumber = AuthenticationNumber.builder()
-                .email(reqAuthenticationNumbersDto.getEmail())
+        SignUpNumber signUpNumber = SignUpNumber.builder()
+                .email(reqSignUpNumberDto.getEmail())
                 .number(number)
                 .expirationTime(System.currentTimeMillis() + THREE_MINUTES)
                 .build();
 
-        authenticationNumberRepository.save(authenticationNumber);
+        signUpNumberRepository.save(signUpNumber);
     }
+
+    public void sendFindPasswordNumber(ReqFindPasswordNumberDto reqFindPasswordNumberDto) {
+        boolean result =
+                userRepository.existsByEmailAndUserId(reqFindPasswordNumberDto.getEmail(), reqFindPasswordNumberDto.getUserId());
+
+        if (!result) {
+            throw new IsNotExistsUserException();
+        }
+
+        String number = createAuthenticationNumber();
+
+        emailService.sendAuthenticationNumberMail(
+                reqFindPasswordNumberDto.getEmail(),
+                MailForm.FIND_PASSWORD.getSubject(), MailForm.FIND_PASSWORD.getContent() + number);
+
+        FindPasswordNumber findPasswordNumber = FindPasswordNumber.builder()
+                .email(reqFindPasswordNumberDto.getEmail())
+                .userId(reqFindPasswordNumberDto.getUserId())
+                .number(number)
+                .expirationTime(System.currentTimeMillis() + THREE_MINUTES)
+                .build();
+
+        findPasswordNumberRepository.save(findPasswordNumber);
+    }
+
 
     private String createAuthenticationNumber() {
         return RandomNumber.generateNumber().toString();

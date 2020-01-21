@@ -1,7 +1,7 @@
 package com.kancho.byeolbyeol.horoscope.controller;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
-import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
+import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
 import com.kancho.byeolbyeol.horoscope.dto.ResHoroscopeDto;
 import com.kancho.byeolbyeol.horoscope.application.HoroscopeService;
 import io.swagger.annotations.*;
@@ -39,7 +39,7 @@ public class HoroscopeController {
             @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone) {
 
         if (constellationName == null) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK)

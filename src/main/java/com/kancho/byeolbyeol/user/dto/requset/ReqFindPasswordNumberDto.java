@@ -8,14 +8,14 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ReqValidationNumberDto {
-
-    @NotNull
-    private Long number;
+@AllArgsConstructor
+public class ReqFindPasswordNumberDto {
 
     @NotNull
     @Email
     private String email;
+
+    @NotNull
+    private String userId;
 }

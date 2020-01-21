@@ -1,7 +1,7 @@
 package com.kancho.byeolbyeol.daily.controller;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
-import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
+import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.daily.application.DiaryService;
@@ -43,7 +43,7 @@ public class DiaryController {
                                                     @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone) {
 
         if (year == null || month == null) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         UserInfo userInfo = ThreadContext.userInfo.get();
@@ -70,7 +70,7 @@ public class DiaryController {
                                            BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         UserInfo userInfo = ThreadContext.userInfo.get();
@@ -123,7 +123,7 @@ public class DiaryController {
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         UserInfo userInfo = ThreadContext.userInfo.get();

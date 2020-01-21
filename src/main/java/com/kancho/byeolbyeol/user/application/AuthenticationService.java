@@ -1,10 +1,13 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
-import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
-import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
-import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
-import com.kancho.byeolbyeol.user.dto.response.ResRegisterTokenDto;
+import com.kancho.byeolbyeol.user.domain.find_password_number.FindPasswordNumber;
+import com.kancho.byeolbyeol.user.domain.find_password_number.FindPasswordNumberRepository;
+import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumber;
+import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumberRepository;
+import com.kancho.byeolbyeol.user.dto.requset.ReqValidationFindPasswordNumberDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqValidationSignUpNumberDto;
+import com.kancho.byeolbyeol.user.dto.response.ResAuthenticationTokenDto;
 import com.kancho.byeolbyeol.user.exception.IsNotSameAuthenticationNumberException;
 import com.kancho.byeolbyeol.user.exception.NotFoundAuthenticationNumberException;
 import lombok.RequiredArgsConstructor;
@@ -14,30 +17,55 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final AuthenticationNumberRepository authenticationNumberRepository;
+    private final SignUpNumberRepository signUpNumberRepository;
+    private final FindPasswordNumberRepository findPasswordNumberRepository;
     private final JWTManager jwtManager;
 
-    public ResRegisterTokenDto verify(ReqValidationNumberDto reqValidationNumberDto) {
+    public ResAuthenticationTokenDto verifySignUpNumber(ReqValidationSignUpNumberDto reqValidationSignUpNumberDto) {
 
-        AuthenticationNumber authenticationNumber =
-                authenticationNumberRepository
+        SignUpNumber signUpNumber =
+                signUpNumberRepository
                         .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
-                                reqValidationNumberDto.getEmail(),
+                                reqValidationSignUpNumberDto.getEmail(),
                                 System.currentTimeMillis())
                         .orElseThrow(NotFoundAuthenticationNumberException::new);
 
-        if (authenticationNumber.isNotEqualNumber(reqValidationNumberDto.getNumber())) {
+        if (signUpNumber.isNotEqualNumber(reqValidationSignUpNumberDto.getNumber())) {
             throw new IsNotSameAuthenticationNumberException();
         }
 
-        String registerToken = jwtManager.createRegisterToken(authenticationNumber.getEmail());
+        String token = jwtManager.createSignUpToken(signUpNumber.getEmail());
 
-        authenticationNumberRepository.
-                deleteByEmailAndExpirationTimeLessThanEqual(
-                        authenticationNumber.getEmail(), authenticationNumber.getExpirationTime());
+        signUpNumberRepository.delete(signUpNumber);
 
-        return ResRegisterTokenDto.builder()
-                .registerToken(registerToken)
+        return ResAuthenticationTokenDto.builder()
+                .token(token)
                 .build();
+    }
+
+    public ResAuthenticationTokenDto verifyFindPasswordNumber(
+            ReqValidationFindPasswordNumberDto reqValidationFindPasswordNumberDto) {
+
+        FindPasswordNumber findPasswordNumber =
+                findPasswordNumberRepository
+                        .findFirstByEmailAndUserIdAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
+                                reqValidationFindPasswordNumberDto.getEmail(),
+                                reqValidationFindPasswordNumberDto.getUserId(),
+                                System.currentTimeMillis())
+                        .orElseThrow(NotFoundAuthenticationNumberException::new);
+
+        if (findPasswordNumber.isNotEqualNumber(reqValidationFindPasswordNumberDto.getNumber())) {
+            throw new IsNotSameAuthenticationNumberException();
+        }
+
+        String token = jwtManager.createFindPasswordToken(findPasswordNumber.getUserId(),
+                findPasswordNumber.getEmail());
+
+        findPasswordNumberRepository.delete(findPasswordNumber);
+
+        return ResAuthenticationTokenDto.builder()
+                .token(token)
+                .build();
+
     }
 }

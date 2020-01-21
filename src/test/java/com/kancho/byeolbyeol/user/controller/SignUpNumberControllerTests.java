@@ -2,8 +2,8 @@ package com.kancho.byeolbyeol.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
-import com.kancho.byeolbyeol.user.dto.requset.ReqAuthenticationNumbersDto;
-import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpNumberDto;
+import com.kancho.byeolbyeol.user.dto.requset.ReqValidationSignUpNumberDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AuthenticationNumberController.class)
-public class AuthenticationNumberControllerTests {
+public class SignUpNumberControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,47 +32,47 @@ public class AuthenticationNumberControllerTests {
 
     @Test
     public void 회원가입_인증번호_생성_성공() throws Exception {
-        ReqAuthenticationNumbersDto reqAuthenticationNumbersDto =
-                new ReqAuthenticationNumbersDto("test@naver.com");
+        ReqSignUpNumberDto reqSignUpNumberDto =
+                new ReqSignUpNumberDto("test@naver.com");
 
-        this.mockMvc.perform(post("/authentication-numbers")
+        this.mockMvc.perform(post("/authentication-numbers/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(reqAuthenticationNumbersDto)))
+                .content(objectMapper.writeValueAsString(reqSignUpNumberDto)))
                 .andDo(print())
                 .andExpect(status().isCreated());
     }
 
     @Test
     public void 인증번호_생성_요청_이메일이_누락될_경우() throws Exception {
-        ReqAuthenticationNumbersDto reqAuthenticationNumbersDto =
-                new ReqAuthenticationNumbersDto();
+        ReqSignUpNumberDto reqSignUpNumberDto =
+                new ReqSignUpNumberDto();
 
-        this.mockMvc.perform(post("/authentication-numbers")
+        this.mockMvc.perform(post("/authentication-numbers/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(reqAuthenticationNumbersDto)))
+                .content(objectMapper.writeValueAsString(reqSignUpNumberDto)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     public void 인증번호_인증_성공() throws Exception {
-        ReqValidationNumberDto reqValidationNumberDto =
-                new ReqValidationNumberDto(123456L, "test@naver.com");
+        ReqValidationSignUpNumberDto reqValidationSignUpNumberDto =
+                new ReqValidationSignUpNumberDto(123456L, "test@naver.com");
 
-        this.mockMvc.perform(post("/authentication")
+        this.mockMvc.perform(post("/authentication/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(reqValidationNumberDto)))
+                .content(objectMapper.writeValueAsString(reqValidationSignUpNumberDto)))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     public void 인증번호_인증_요청시_쿼리_파라미터가_누락될_경우() throws Exception {
-        ReqValidationNumberDto reqValidationNumberDto = new ReqValidationNumberDto();
+        ReqValidationSignUpNumberDto reqValidationSignUpNumberDto = new ReqValidationSignUpNumberDto();
 
-        this.mockMvc.perform(post("/authentication")
+        this.mockMvc.perform(post("/authentication/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(reqValidationNumberDto)))
+                .content(objectMapper.writeValueAsString(reqValidationSignUpNumberDto)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }

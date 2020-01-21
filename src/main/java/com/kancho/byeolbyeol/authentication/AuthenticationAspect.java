@@ -24,7 +24,8 @@ public class AuthenticationAspect {
     public void signUp() {
     }
 
-    @Pointcut("execution(public * com.kancho.byeolbyeol.user.controller.UserChangeController.*(..))")
+    @Pointcut("execution(public * com.kancho.byeolbyeol.user.controller.UserChangeController.*(..)) && " +
+            "!execution(public * com.kancho.byeolbyeol.user.controller.UserChangeController.modifyPassword(..))")
     public void userChangeController() {
     }
 
@@ -47,7 +48,7 @@ public class AuthenticationAspect {
         if (isEmptyToken(token)) {
             throw new FailAuthenticationException();
         }
-        jwtManager.authenticate(token);
+        jwtManager.authenticate(token, TokenType.SIGN_UP_TOKEN::verifyValue);
     }
 
     @Before(value = "refreshToken()")

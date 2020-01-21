@@ -2,6 +2,7 @@ package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
+import com.kancho.byeolbyeol.common.user_context.FindPasswordUserInfo;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.Constellation;
@@ -149,6 +150,17 @@ public class MembershipService {
         user.modifyHoroscopeTime(horoscopeTime);
 
         return createUserInfo(user, constellation, reqTimeZone);
+    }
+
+    @Transactional
+    public void modifyPassword(String token, ReqModifyPasswordDto reqModifyPasswordDto) {
+        FindPasswordUserInfo findPasswordUserInfo = jwtManager.getFindPasswordUserInfo(token);
+
+        User user =
+                userRepository.findByUserIdAndEmail(findPasswordUserInfo.getUserId(), findPasswordUserInfo.getEmail())
+                        .orElseThrow(NotFoundUserException::new);
+
+        user.modifyPassword(reqModifyPasswordDto.getPassword());
     }
 
 

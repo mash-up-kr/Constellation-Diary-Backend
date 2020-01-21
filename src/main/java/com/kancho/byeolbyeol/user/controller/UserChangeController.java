@@ -20,6 +20,28 @@ import javax.validation.Valid;
 public class UserChangeController {
     private final UserService userService;
 
+    @ApiOperation(value = "유저 비밀번호 변경")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "유저 비밀번호 변경 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4006 - Not Found User"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Find Password JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+    })
+    @PatchMapping("/users/password")
+    public ResponseEntity<Void> modifyPassword(
+            @RequestHeader("Authorization") String token,
+            @RequestBody @Valid ReqModifyPasswordDto reqModifyPasswordDto) {
+
+        userService.modifyPassword(token, reqModifyPasswordDto);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @ApiOperation(value = "유저 별자리 변경 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "유저 별자리 변경 성공"),
@@ -29,7 +51,7 @@ public class UserChangeController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
@@ -53,7 +75,7 @@ public class UserChangeController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
@@ -77,7 +99,7 @@ public class UserChangeController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
@@ -101,7 +123,7 @@ public class UserChangeController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
@@ -125,7 +147,7 @@ public class UserChangeController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
