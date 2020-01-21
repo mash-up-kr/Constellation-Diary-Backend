@@ -170,6 +170,7 @@ public class MembershipService {
                 .constellation(constellation.getName())
                 .horoscopeAlarmFlag(user.getHoroscopeAlarmFlag())
                 .questionAlarmFlag(user.getQuestionAlarmFlag())
+                .horoscopeTime(user.getHoroscopeTime())
                 .questionTime(user.getQuestionTime())
                 .build();
     }
