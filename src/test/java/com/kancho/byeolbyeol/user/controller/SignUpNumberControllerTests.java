@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AuthenticationNumberController.class)
-public class AuthenticationNumberControllerTests {
+public class SignUpNumberControllerTests {
 
     @Autowired
     private MockMvc mockMvc;

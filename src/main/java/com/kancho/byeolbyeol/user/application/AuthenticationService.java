@@ -1,8 +1,8 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
-import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
-import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
+import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumber;
+import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumberRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationFindPasswordNumberDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationSignUpNumberDto;
 import com.kancho.byeolbyeol.user.dto.response.ResFindPasswordTokenDto;
@@ -16,27 +16,27 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final AuthenticationNumberRepository authenticationNumberRepository;
+    private final SignUpNumberRepository signUpNumberRepository;
     private final JWTManager jwtManager;
 
     public ResRegisterTokenDto verifySignUpNumber(ReqValidationSignUpNumberDto reqValidationSignUpNumberDto) {
 
-        AuthenticationNumber authenticationNumber =
-                authenticationNumberRepository
+        SignUpNumber signUpNumber =
+                signUpNumberRepository
                         .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
                                 reqValidationSignUpNumberDto.getEmail(),
                                 System.currentTimeMillis())
                         .orElseThrow(NotFoundAuthenticationNumberException::new);
 
-        if (authenticationNumber.isNotEqualNumber(reqValidationSignUpNumberDto.getNumber())) {
+        if (signUpNumber.isNotEqualNumber(reqValidationSignUpNumberDto.getNumber())) {
             throw new IsNotSameAuthenticationNumberException();
         }
 
-        String registerToken = jwtManager.createRegisterToken(authenticationNumber.getEmail());
+        String registerToken = jwtManager.createRegisterToken(signUpNumber.getEmail());
 
-        authenticationNumberRepository.
+        signUpNumberRepository.
                 deleteByEmailAndExpirationTimeLessThanEqual(
-                        authenticationNumber.getEmail(), authenticationNumber.getExpirationTime());
+                        signUpNumber.getEmail(), signUpNumber.getExpirationTime());
 
         return ResRegisterTokenDto.builder()
                 .registerToken(registerToken)

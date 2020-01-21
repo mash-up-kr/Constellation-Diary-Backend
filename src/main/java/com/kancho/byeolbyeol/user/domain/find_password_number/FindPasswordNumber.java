@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.user.domain.authenticationnumber;
+package com.kancho.byeolbyeol.user.domain.find_password_number;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,9 +9,9 @@ import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "authentication_numbers")
+@Table(name = "find_password_numbers")
 @Entity
-public class AuthenticationNumber {
+public class FindPasswordNumber {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +19,17 @@ public class AuthenticationNumber {
 
     private String email;
 
+    private String userId;
+
     private String number;
 
     private Long expirationTime;
 
     @Builder
-    private AuthenticationNumber(String email, String number,
-                                 Long expirationTime) {
+    private FindPasswordNumber(String email, String userId, String number,
+                         Long expirationTime) {
         this.email = email;
+        this.userId = userId;
         this.number = number;
         this.expirationTime = expirationTime;
     }

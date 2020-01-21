@@ -1,12 +1,12 @@
-package com.kancho.byeolbyeol.user.domain.authenticationnumber;
+package com.kancho.byeolbyeol.user.domain.find_password_number;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-public interface AuthenticationNumberRepository extends JpaRepository<AuthenticationNumber, Long> {
-    Optional<AuthenticationNumber>
+public interface FindPasswordNumberRepository extends JpaRepository<FindPasswordNumber, Long> {
+    Optional<FindPasswordNumber>
     findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
             String email, Long currentTimeMillis);
 

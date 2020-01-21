@@ -1,8 +1,8 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
-import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumber;
-import com.kancho.byeolbyeol.user.domain.authenticationnumber.AuthenticationNumberRepository;
+import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumber;
+import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumberRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationSignUpNumberDto;
 import com.kancho.byeolbyeol.user.exception.IsNotSameAuthenticationNumberException;
 import com.kancho.byeolbyeol.user.exception.NotFoundAuthenticationNumberException;
@@ -26,25 +26,25 @@ public class AuthenticationServiceTests {
     public ExpectedException expectedException = ExpectedException.none();
 
     private AuthenticationService authenticationService;
-    private AuthenticationNumberRepository authenticationNumberRepository;
+    private SignUpNumberRepository signUpNumberRepository;
     private JWTManager jwtManager;
-    private AuthenticationNumber authenticationNumber;
+    private SignUpNumber signUpNumber;
     private ReqValidationSignUpNumberDto reqValidationSignUpNumberDto;
 
     @Before
     public void mockUp() {
-        authenticationNumber = mock(AuthenticationNumber.class);
-        authenticationNumberRepository = mock(AuthenticationNumberRepository.class);
+        signUpNumber = mock(SignUpNumber.class);
+        signUpNumberRepository = mock(SignUpNumberRepository.class);
         jwtManager = mock(JWTManager.class);
         authenticationService =
-                new AuthenticationService(authenticationNumberRepository, jwtManager);
+                new AuthenticationService(signUpNumberRepository, jwtManager);
 
         reqValidationSignUpNumberDto = new ReqValidationSignUpNumberDto(123456L, "test@naver.com");
     }
 
     @Test
     public void 인증_번호가_존재하지_않을_경우() {
-        when(authenticationNumberRepository
+        when(signUpNumberRepository
                 .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
                         any(), any()))
                 .thenReturn(Optional.empty());
@@ -56,11 +56,11 @@ public class AuthenticationServiceTests {
 
     @Test
     public void 인증_번호가_같지_않을_경우() {
-        when(authenticationNumberRepository
+        when(signUpNumberRepository
                 .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
                         any(), any()))
-                .thenReturn(Optional.ofNullable(authenticationNumber));
-        when(authenticationNumber.isNotEqualNumber(any())).thenReturn(true);
+                .thenReturn(Optional.ofNullable(signUpNumber));
+        when(signUpNumber.isNotEqualNumber(any())).thenReturn(true);
 
         expectedException.expect(IsNotSameAuthenticationNumberException.class);
 
