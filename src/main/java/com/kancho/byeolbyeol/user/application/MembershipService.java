@@ -4,12 +4,9 @@ import com.kancho.byeolbyeol.authentication.JWTManager;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.Constellation;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.ConstellationRepository;
-import com.kancho.byeolbyeol.user.dto.requset.ReqModifyConstellationDto;
+import com.kancho.byeolbyeol.user.dto.requset.*;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
-import com.kancho.byeolbyeol.user.dto.requset.ReqModifyQuestionAlarmDto;
-import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
-import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
 import com.kancho.byeolbyeol.user.dto.response.ResTokenDto;
 import com.kancho.byeolbyeol.user.dto.response.ResUserDto;
 import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
@@ -83,14 +80,7 @@ public class MembershipService {
 
         user.modifyConstellation(constellation.getId());
 
-        return ResUserDto.builder()
-                .id(user.getId())
-                .constellation(constellation.getName())
-                .userId(user.getUserId())
-                .horoscopeAlarmFlag(user.getHoroscopeAlarmFlag())
-                .questionAlarmFlag(user.getQuestionAlarmFlag())
-                .questionTime(user.getQuestionTime())
-                .build();
+        return createUserInfo(user, constellation);
     }
 
     @Transactional
@@ -103,14 +93,20 @@ public class MembershipService {
 
         user.modifyQuestionAlarm(reqModifyQuestionAlarmDto.getModifyQuestionAlarm());
 
-        return ResUserDto.builder()
-                .id(user.getId())
-                .constellation(constellation.getName())
-                .userId(user.getUserId())
-                .horoscopeAlarmFlag(user.getHoroscopeAlarmFlag())
-                .questionAlarmFlag(user.getQuestionAlarmFlag())
-                .questionTime(user.getQuestionTime())
-                .build();
+        return createUserInfo(user, constellation);
+    }
+
+    @Transactional
+    public ResUserDto modifyHoroscopeAlarm(UserInfo userInfo, ReqModifyHoroscopeAlarmDto reqModifyHoroscopeAlarmDto) {
+        User user = userRepository.findById(userInfo.getId())
+                .orElseThrow(NotFoundUserException::new);
+
+        Constellation constellation = constellationRepository.findById(user.getConstellationsId())
+                .orElseThrow(NotFoundConstellationException::new);
+
+        user.modifyHoroscopeAlarm(reqModifyHoroscopeAlarmDto.getHoroscopeAlarm());
+
+        return createUserInfo(user, constellation);
     }
 
 

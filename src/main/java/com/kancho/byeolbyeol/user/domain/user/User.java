@@ -64,4 +64,8 @@ public class User {
     public void modifyQuestionAlarm(Boolean questionAlarm) {
         this.questionAlarmFlag = questionAlarm;
     }
+
+    public void modifyHoroscopeAlarm(Boolean horoscopeAlarm) {
+        this.horoscopeAlarmFlag = horoscopeAlarm;
+    }
 }

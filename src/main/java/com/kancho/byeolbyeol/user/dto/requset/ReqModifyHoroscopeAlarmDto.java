@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReqModifyQuestionAlarmDto {
+public class ReqModifyHoroscopeAlarmDto {
 
-    private Boolean modifyQuestionAlarm;
+    private Boolean horoscopeAlarm;
 }
