@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.user.application;
 
+import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.user.dto.requset.*;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
@@ -26,31 +27,35 @@ public class UserService {
                 .build();
     }
 
-    public ResUserInfoDto signUp(ReqSignUpDto reqSignUpDto) {
-        return membershipService.signUp(reqSignUpDto);
+    public ResUserInfoDto signUp(ReqTimeZone reqTimeZone, ReqSignUpDto reqSignUpDto) {
+        return membershipService.signUp(reqTimeZone, reqSignUpDto);
     }
 
-    public ResUserInfoDto signIn(ReqSignInDto reqSignInDto) {
-        return membershipService.signIn(reqSignInDto);
+    public ResUserInfoDto signIn(ReqTimeZone reqTimeZone, ReqSignInDto reqSignInDto) {
+        return membershipService.signIn(reqTimeZone, reqSignInDto);
     }
 
     public ResTokenDto refreshToken(UserInfo userInfo) {
         return tokenService.refreshToken(userInfo);
     }
 
-    public ResUserDto modifyConstellations(UserInfo userInfo, ReqModifyConstellationDto reqModifyConstellationDto) {
-        return membershipService.modifyConstellations(userInfo, reqModifyConstellationDto);
+    public ResUserDto modifyConstellations(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                           ReqModifyConstellationDto reqModifyConstellationDto) {
+        return membershipService.modifyConstellations(userInfo, reqTimeZone, reqModifyConstellationDto);
     }
 
-    public ResUserDto modifyQuestionAlarm(UserInfo userInfo, ReqModifyQuestionAlarmDto reqModifyQuestionAlarmDto) {
-        return membershipService.modifyQuestionAlarm(userInfo, reqModifyQuestionAlarmDto);
+    public ResUserDto modifyQuestionAlarm(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                          ReqModifyQuestionAlarmDto reqModifyQuestionAlarmDto) {
+        return membershipService.modifyQuestionAlarm(userInfo, reqTimeZone, reqModifyQuestionAlarmDto);
     }
 
-    public ResUserDto modifyHoroscopeAlarm(UserInfo userInfo, ReqModifyHoroscopeAlarmDto reqModifyHoroscopeAlarmDto) {
-        return membershipService.modifyHoroscopeAlarm(userInfo, reqModifyHoroscopeAlarmDto);
+    public ResUserDto modifyHoroscopeAlarm(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                           ReqModifyHoroscopeAlarmDto reqModifyHoroscopeAlarmDto) {
+        return membershipService.modifyHoroscopeAlarm(userInfo, reqTimeZone, reqModifyHoroscopeAlarmDto);
     }
 
-    public ResUserDto modifyQuestionTime(UserInfo userInfo, ReqModifyQuestionTimeDto reqModifyHoroscopeAlarmDto) {
-        return membershipService.modifyQuestionTime(userInfo, reqModifyHoroscopeAlarmDto);
+    public ResUserDto modifyQuestionTime(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                         ReqModifyQuestionTimeDto reqModifyHoroscopeAlarmDto) {
+        return membershipService.modifyQuestionTime(userInfo, reqTimeZone, reqModifyHoroscopeAlarmDto);
     }
 }

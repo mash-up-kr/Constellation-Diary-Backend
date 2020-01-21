@@ -19,6 +19,7 @@ import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
+@Api(description = "오늘의 질문 관련 API")
 public class DailyQuestionController {
     private final DailyQuestionService dailyQuestionService;
 

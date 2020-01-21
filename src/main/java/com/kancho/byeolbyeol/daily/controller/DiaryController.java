@@ -20,6 +20,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@Api(description = "일기 관련 API")
 public class DiaryController {
     private final DiaryService diaryService;
 

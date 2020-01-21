@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.user.controller;
 
+import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
@@ -56,13 +57,14 @@ public class UserController {
     })
     @PostMapping("/users/sign-up")
     public ResponseEntity<ResUserInfoDto> signUp(
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
             @RequestBody @Valid ReqSignUpDto reqSignUpDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new RequestWornFieldException();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(reqSignUpDto));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(reqTimeZone, reqSignUpDto));
     }
 
     @ApiOperation(value = "로그인 - questionTime(UTC)")
@@ -74,16 +76,17 @@ public class UserController {
     })
     @PostMapping("/users/sign-in")
     public ResponseEntity<ResUserInfoDto> signIn(
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
             @RequestBody @Valid ReqSignInDto reqSignInDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new RequestWornFieldException();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqSignInDto));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqTimeZone, reqSignInDto));
     }
 
-    @ApiOperation(value = "유저 별자리 변경 - questionTime(UTC)")
+    @ApiOperation(value = "유저 별자리 변경")
     @ApiResponses({
             @ApiResponse(code = 200, message = "유저 별자리 변경 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -98,12 +101,13 @@ public class UserController {
     })
     @PatchMapping("/users/constellations")
     public ResponseEntity<ResUserDto> modifyConstellation(
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
             @RequestBody @Valid ReqModifyConstellationDto reqModifyConstellationDto) {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userService.modifyConstellations(userInfo, reqModifyConstellationDto));
+                .body(userService.modifyConstellations(userInfo, reqTimeZone, reqModifyConstellationDto));
     }
 
     @ApiOperation(value = "질문 푸시알람 설정")
@@ -121,12 +125,13 @@ public class UserController {
     })
     @PatchMapping("/users/question-alarm")
     public ResponseEntity<ResUserDto> modifyQuestionAlarm(
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
             @RequestBody @Valid ReqModifyQuestionAlarmDto reqModifyQuestionAlarmDto) {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userService.modifyQuestionAlarm(userInfo, reqModifyQuestionAlarmDto));
+                .body(userService.modifyQuestionAlarm(userInfo, reqTimeZone, reqModifyQuestionAlarmDto));
     }
 
     @ApiOperation(value = "운세 푸시알람 설정")
@@ -144,15 +149,16 @@ public class UserController {
     })
     @PatchMapping("/users/horoscope-alarm")
     public ResponseEntity<ResUserDto> modifyHoroscopeAlarm(
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
             @RequestBody @Valid ReqModifyHoroscopeAlarmDto reqModifyHoroscopeAlarmDto) {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userService.modifyHoroscopeAlarm(userInfo, reqModifyHoroscopeAlarmDto));
+                .body(userService.modifyHoroscopeAlarm(userInfo, reqTimeZone,reqModifyHoroscopeAlarmDto));
     }
 
-    @ApiOperation(value = "질문 푸시알람 시간 설정 - UTC 기준")
+    @ApiOperation(value = "질문 푸시알람 시간 설정")
     @ApiResponses({
             @ApiResponse(code = 200, message = "질문 푸시알람 시간 설정 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -167,12 +173,13 @@ public class UserController {
     })
     @PatchMapping("/users/question-time")
     public ResponseEntity<ResUserDto> modifyQuestionTime(
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
             @RequestBody @Valid ReqModifyQuestionTimeDto reqModifyHoroscopeAlarmDto) {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userService.modifyQuestionTime(userInfo, reqModifyHoroscopeAlarmDto));
+                .body(userService.modifyQuestionTime(userInfo, reqTimeZone, reqModifyHoroscopeAlarmDto));
     }
 
 
