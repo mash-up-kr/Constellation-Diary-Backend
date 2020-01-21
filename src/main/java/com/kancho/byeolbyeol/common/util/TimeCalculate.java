@@ -2,15 +2,14 @@ package com.kancho.byeolbyeol.common.util;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.Date;
 
 public class TimeCalculate {
 
     private final static Integer ZERO = 0;
+    private final static Integer TWENTY_TWO = 22;
+    private final static Integer EIGHT = 8;
     private final static Integer FIFTY_NINE = 59;
     private final static Long LONG_ONE = 1L;
     private final static Long DAY_TIME = 24L;
@@ -20,12 +19,16 @@ public class TimeCalculate {
         return nowTime.plusHours(reqTimeZone.getParallax()).toLocalDate();
     }
 
-    public static LocalDateTime covertLocalDateTime(Date date) {
-        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
-    }
-
     public static Date covertDate(LocalDateTime nowTime, ReqTimeZone reqTimeZone) {
         return Date.from(nowTime.plusHours(reqTimeZone.getParallax()).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public static LocalTime convertLocalTime(Date date) {
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalTime();
+    }
+
+    public static LocalDateTime covertLocalDateTime(Date date) {
+        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     public static LocalDateTime createStartTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
@@ -66,6 +69,16 @@ public class TimeCalculate {
     public static LocalDateTime createEndDate(Integer year, Integer month, ReqTimeZone reqTimeZone) {
         LocalDateTime localDateTime = LocalDateTime.of(year, month, ONE_DAY, ZERO, ZERO, ZERO);
         return localDateTime.plusMonths(LONG_ONE).minusHours(reqTimeZone.getParallax());
+    }
+
+    public static LocalTime createQuestionTime(ReqTimeZone reqTimeZone) {
+        LocalTime questionTime = LocalTime.of(TWENTY_TWO, ZERO);
+        return questionTime.minusHours(reqTimeZone.getParallax());
+    }
+
+    public static LocalTime createHoroscopeTime(ReqTimeZone reqTimeZone) {
+        LocalTime horoscopeTime = LocalTime.of(EIGHT, ZERO);
+        return horoscopeTime.minusHours(reqTimeZone.getParallax());
     }
 
     private TimeCalculate() {

@@ -1,14 +1,14 @@
 package com.kancho.byeolbyeol.user.application;
 
 import com.kancho.byeolbyeol.authentication.JWTManager;
+import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
+import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.Constellation;
 import com.kancho.byeolbyeol.horoscope.domain.constellation.ConstellationRepository;
-import com.kancho.byeolbyeol.user.dto.requset.ReqModifyConstellationDto;
+import com.kancho.byeolbyeol.user.dto.requset.*;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
-import com.kancho.byeolbyeol.user.dto.requset.ReqSignInDto;
-import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpDto;
 import com.kancho.byeolbyeol.user.dto.response.ResTokenDto;
 import com.kancho.byeolbyeol.user.dto.response.ResUserDto;
 import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class MembershipService {
     private final ConstellationRepository constellationRepository;
     private final JWTManager jwtManager;
 
-    public ResUserInfoDto signUp(ReqSignUpDto reqSignUpDto) {
+    public ResUserInfoDto signUp(ReqTimeZone reqTimeZone, ReqSignUpDto reqSignUpDto) {
         boolean result = userRepository.existsByUserId(reqSignUpDto.getUserId());
 
         if (result) {
@@ -38,17 +39,20 @@ public class MembershipService {
         Constellation constellation = constellationRepository.findByName(reqSignUpDto.getConstellation())
                 .orElseThrow(NotFoundConstellationException::new);
 
+
         User user = User.builder()
                 .constellationsId(constellation.getId())
                 .email(reqSignUpDto.getEmail())
                 .userId(reqSignUpDto.getUserId())
                 .password(reqSignUpDto.getPassword())
+                .horoscopeTime(TimeCalculate.createHoroscopeTime(reqTimeZone))
+                .questionTime(TimeCalculate.createQuestionTime(reqTimeZone))
                 .build();
 
         user = userRepository.save(user);
 
         ResTokenDto resTokenDto = createTokens(user);
-        ResUserDto resUserDto = createUserInfo(user, constellation);
+        ResUserDto resUserDto = createUserInfo(user, constellation, reqTimeZone);
 
         return ResUserInfoDto.builder()
                 .resTokenDto(resTokenDto)
@@ -56,7 +60,7 @@ public class MembershipService {
                 .build();
     }
 
-    public ResUserInfoDto signIn(ReqSignInDto reqSignInDto) {
+    public ResUserInfoDto signIn(ReqTimeZone reqTimeZone, ReqSignInDto reqSignInDto) {
         User user = userRepository.findByUserId(reqSignInDto.getUserId())
                 .orElseThrow(NotFoundUserException::new);
 
@@ -64,7 +68,7 @@ public class MembershipService {
                 .orElseThrow(NotFoundConstellationException::new);
 
         ResTokenDto resTokenDto = createTokens(user);
-        ResUserDto resUserDto = createUserInfo(user, constellation);
+        ResUserDto resUserDto = createUserInfo(user, constellation, reqTimeZone);
 
         return ResUserInfoDto.builder()
                 .resTokenDto(resTokenDto)
@@ -73,7 +77,8 @@ public class MembershipService {
     }
 
     @Transactional
-    public ResUserDto modifyConstellations(UserInfo userInfo, ReqModifyConstellationDto reqModifyConstellationDto) {
+    public ResUserDto modifyConstellations(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                           ReqModifyConstellationDto reqModifyConstellationDto) {
         User user = userRepository.findById(userInfo.getId())
                 .orElseThrow(NotFoundUserException::new);
 
@@ -82,19 +87,72 @@ public class MembershipService {
 
         user.modifyConstellation(constellation.getId());
 
-        return ResUserDto.builder()
-                .id(user.getId())
-                .constellation(constellation.getName())
-                .userId(user.getUserId())
-                .horoscopeAlarmFlag(user.getHoroscopeAlarmFlag())
-                .questionAlarmFlag(user.getQuestionAlarmFlag())
-                .questionTime(user.getQuestionTime())
-                .build();
+        return createUserInfo(user, constellation, reqTimeZone);
+    }
+
+    @Transactional
+    public ResUserDto modifyQuestionAlarm(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                          ReqModifyQuestionAlarmDto reqModifyQuestionAlarmDto) {
+        User user = userRepository.findById(userInfo.getId())
+                .orElseThrow(NotFoundUserException::new);
+
+        Constellation constellation = constellationRepository.findById(user.getConstellationsId())
+                .orElseThrow(NotFoundConstellationException::new);
+
+        user.modifyQuestionAlarm(reqModifyQuestionAlarmDto.getModifyQuestionAlarm());
+
+        return createUserInfo(user, constellation, reqTimeZone);
+    }
+
+    @Transactional
+    public ResUserDto modifyHoroscopeAlarm(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                           ReqModifyHoroscopeAlarmDto reqModifyHoroscopeAlarmDto) {
+        User user = userRepository.findById(userInfo.getId())
+                .orElseThrow(NotFoundUserException::new);
+
+        Constellation constellation = constellationRepository.findById(user.getConstellationsId())
+                .orElseThrow(NotFoundConstellationException::new);
+
+        user.modifyHoroscopeAlarm(reqModifyHoroscopeAlarmDto.getHoroscopeAlarm());
+
+        return createUserInfo(user, constellation, reqTimeZone);
+    }
+
+    @Transactional
+    public ResUserDto modifyQuestionTime(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                         ReqModifyQuestionTimeDto reqModifyQuestionTimeDto) {
+        User user = userRepository.findById(userInfo.getId())
+                .orElseThrow(NotFoundUserException::new);
+
+        Constellation constellation = constellationRepository.findById(user.getConstellationsId())
+                .orElseThrow(NotFoundConstellationException::new);
+
+        LocalTime questionTime = TimeCalculate.convertLocalTime(reqModifyQuestionTimeDto.getDate());
+
+        user.modifyQuestionTime(questionTime);
+
+        return createUserInfo(user, constellation, reqTimeZone);
+    }
+
+
+    @Transactional
+    public ResUserDto modifyHoroscopeTime(UserInfo userInfo, ReqTimeZone reqTimeZone,
+                                          ReqModifyHoroscopeTimeDto reqModifyHoroscopeTimeDto) {
+        User user = userRepository.findById(userInfo.getId())
+                .orElseThrow(NotFoundUserException::new);
+
+        Constellation constellation = constellationRepository.findById(user.getConstellationsId())
+                .orElseThrow(NotFoundConstellationException::new);
+
+        LocalTime horoscopeTime = TimeCalculate.convertLocalTime(reqModifyHoroscopeTimeDto.getDate());
+
+        user.modifyHoroscopeTime(horoscopeTime);
+
+        return createUserInfo(user, constellation, reqTimeZone);
     }
 
 
     private ResTokenDto createTokens(User user) {
-
         String authenticationToken = jwtManager.createAuthenticationToken(user.getUserId(), user.getId());
         String refreshToken = jwtManager.createRefreshToken(user.getUserId(), user.getId());
 
@@ -104,16 +162,16 @@ public class MembershipService {
                 .build();
     }
 
-    private ResUserDto createUserInfo(User user, Constellation constellation) {
+    private ResUserDto createUserInfo(User user, Constellation constellation, ReqTimeZone reqTimeZone) {
         return ResUserDto.builder()
                 .id(user.getId())
                 .userId(user.getUserId())
+                .timeZone(reqTimeZone.getValue())
                 .constellation(constellation.getName())
                 .horoscopeAlarmFlag(user.getHoroscopeAlarmFlag())
                 .questionAlarmFlag(user.getQuestionAlarmFlag())
                 .questionTime(user.getQuestionTime())
                 .build();
     }
-
 
 }

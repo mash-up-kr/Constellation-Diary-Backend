@@ -14,6 +14,7 @@ import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
+@Api(description = "운세 관련 API")
 public class HoroscopeController {
 
     private final HoroscopeService horoscopeService;
