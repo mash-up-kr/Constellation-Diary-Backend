@@ -1,6 +1,6 @@
 package com.kancho.byeolbyeol.user.controller;
 
-import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
+import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
 import com.kancho.byeolbyeol.user.application.AuthenticationNumberService;
 import com.kancho.byeolbyeol.user.dto.requset.ReqAuthenticationNumbersDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationNumberDto;
@@ -33,7 +33,7 @@ public class AuthenticationNumberController {
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         authenticationNumberService.sendAuthenticationNumber(reqAuthenticationNumbersDto);
@@ -54,7 +54,7 @@ public class AuthenticationNumberController {
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK)

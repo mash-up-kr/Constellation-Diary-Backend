@@ -1,7 +1,7 @@
 package com.kancho.byeolbyeol.user.controller;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
-import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
+import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.user.application.UserService;
@@ -35,7 +35,7 @@ public class UserController {
             @RequestParam("user-id") String checkUserId) {
 
         if (checkUserId == null) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.duplicateCheck(checkUserId));
@@ -52,7 +52,7 @@ public class UserController {
             @RequestParam("email") @Email String email) {
 
         if (email == null) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.findUserId(email));
@@ -77,7 +77,7 @@ public class UserController {
             @RequestBody @Valid ReqSignUpDto reqSignUpDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(reqTimeZone, reqSignUpDto));
@@ -96,7 +96,7 @@ public class UserController {
             @RequestBody @Valid ReqSignInDto reqSignInDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqTimeZone, reqSignInDto));

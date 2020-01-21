@@ -4,16 +4,16 @@ import com.kancho.byeolbyeol.exception.BaseException;
 import com.kancho.byeolbyeol.exception.ErrorModel;
 import org.springframework.http.HttpStatus;
 
-public class RequestWornFieldException extends BaseException {
-    public RequestWornFieldException() {
+public class RequestWrongFieldException extends BaseException {
+    public RequestWrongFieldException() {
         this(HttpStatus.BAD_REQUEST);
     }
 
-    private RequestWornFieldException(HttpStatus httpStatus) {
+    private RequestWrongFieldException(HttpStatus httpStatus) {
         this(4001, httpStatus);
     }
 
-    private RequestWornFieldException(int code, HttpStatus httpStatus) {
+    private RequestWrongFieldException(int code, HttpStatus httpStatus) {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)

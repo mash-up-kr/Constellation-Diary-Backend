@@ -1,7 +1,7 @@
 package com.kancho.byeolbyeol.daily.controller;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
-import com.kancho.byeolbyeol.common.exception.RequestWornFieldException;
+import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.daily.application.DailyQuestionService;
@@ -41,7 +41,7 @@ public class DailyQuestionController {
                                                                  @RequestParam(value = "date") Date date) {
 
         if (date == null) {
-            throw new RequestWornFieldException();
+            throw new RequestWrongFieldException();
         }
 
         UserInfo userInfo = ThreadContext.userInfo.get();
