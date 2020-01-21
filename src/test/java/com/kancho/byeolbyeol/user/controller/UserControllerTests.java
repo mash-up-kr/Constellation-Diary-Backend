@@ -49,6 +49,7 @@ public class UserControllerTests {
         this.mockMvc.perform(post("/users/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", "testToken")
+                .header("Time-Zone", "KST")
                 .content(objectMapper.writeValueAsString(reqSignUpDto)))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -62,6 +63,7 @@ public class UserControllerTests {
         this.mockMvc.perform(post("/users/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", "testToken")
+                .header("Time-Zone", "KST")
                 .content(objectMapper.writeValueAsString(reqSignUpDto)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
