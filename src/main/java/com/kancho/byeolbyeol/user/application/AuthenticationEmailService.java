@@ -5,8 +5,10 @@ import com.kancho.byeolbyeol.user.domain.find_password_number.FindPasswordNumber
 import com.kancho.byeolbyeol.user.domain.find_password_number.FindPasswordNumberRepository;
 import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumber;
 import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumberRepository;
+import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqFindPasswordNumberDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqSignUpNumberDto;
+import com.kancho.byeolbyeol.user.exception.IsNotExistsUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class AuthenticationEmailService {
     private final static Long THREE_MINUTES = 180000L;
 
     private final EmailService emailService;
+    private final UserRepository userRepository;
     private final SignUpNumberRepository signUpNumberRepository;
     private final FindPasswordNumberRepository findPasswordNumberRepository;
 
@@ -37,6 +40,13 @@ public class AuthenticationEmailService {
     }
 
     public void sendFindPasswordNumber(ReqFindPasswordNumberDto reqFindPasswordNumberDto) {
+        boolean result =
+                userRepository.existsByEmailAndUserId(reqFindPasswordNumberDto.getEmail(), reqFindPasswordNumberDto.getUserId());
+
+        if (!result) {
+            throw new IsNotExistsUserException();
+        }
+
         String number = createAuthenticationNumber();
 
         emailService.sendAuthenticationNumberMail(

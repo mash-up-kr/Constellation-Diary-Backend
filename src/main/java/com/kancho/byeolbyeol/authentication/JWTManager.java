@@ -70,7 +70,6 @@ public class JWTManager {
                 .build();
     }
 
-
     private String createSignUpJWT(String email, TokenType tokenType, Long day) {
 
         JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);

@@ -29,7 +29,7 @@ public class AuthenticationNumberController {
             @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
-    @PostMapping("/authentication-numbers")
+    @PostMapping("/authentication-numbers/sign-up")
     public ResponseEntity<Void> generateSignUpNumber(
             @RequestBody @Valid ReqSignUpNumberDto reqSignUpNumberDto,
             BindingResult bindingResult) {
@@ -50,7 +50,7 @@ public class AuthenticationNumberController {
                     "4002 - Not Found Authentication-Number, 4003 - Is Not Same Authentication-Number"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
-    @PostMapping("/authentication")
+    @PostMapping("/authentication/sign-up")
     public ResponseEntity<ResAuthenticationTokenDto> verifySignUpNumber(
             @RequestBody @Valid ReqValidationSignUpNumberDto reqValidationSignUpNumberDto,
             BindingResult bindingResult) {
@@ -66,10 +66,10 @@ public class AuthenticationNumberController {
     @ApiOperation(value = "인증번호 생성 - FIND_PASSWORD(비밀번호 찾기)")
     @ApiResponses({
             @ApiResponse(code = 201, message = "인증번호 생성 - FIND_PASSWORD(비밀번호 찾기) 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4014 - Is Not Exists User"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
-    @PostMapping("/authentication-numbers")
+    @PostMapping("/authentication-numbers/find-password")
     public ResponseEntity<Void> generateFindPasswordNumber(
             @RequestBody @Valid ReqFindPasswordNumberDto reqFindPasswordNumberDto,
             BindingResult bindingResult) {
@@ -90,7 +90,7 @@ public class AuthenticationNumberController {
                     "4002 - Not Found Authentication-Number, 4003 - Is Not Same Authentication-Number"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
-    @PostMapping("/authentication")
+    @PostMapping("/authentication/find-password")
     public ResponseEntity<ResAuthenticationTokenDto> verifyFindPasswordNumber(
             @RequestBody @Valid ReqValidationFindPasswordNumberDto reqValidationFindPasswordNumberDto,
             BindingResult bindingResult) {
