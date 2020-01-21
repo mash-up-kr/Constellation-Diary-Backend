@@ -43,7 +43,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.duplicateCheck(checkUserId));
     }
 
-    @ApiOperation(value = "회원 가입")
+    @ApiOperation(value = "회원 가입 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "회원 가입 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -68,7 +68,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(reqTimeZone, reqSignUpDto));
     }
 
-    @ApiOperation(value = "로그인 - questionTime(UTC)")
+    @ApiOperation(value = "로그인 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "로그인 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -87,7 +87,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqTimeZone, reqSignInDto));
     }
 
-    @ApiOperation(value = "유저 별자리 변경")
+    @ApiOperation(value = "유저 별자리 변경 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "유저 별자리 변경 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -111,7 +111,7 @@ public class UserController {
                 .body(userService.modifyConstellations(userInfo, reqTimeZone, reqModifyConstellationDto));
     }
 
-    @ApiOperation(value = "질문 푸시알람 설정")
+    @ApiOperation(value = "질문 푸시알람 설정 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "질문 푸시알람 설정 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -135,7 +135,7 @@ public class UserController {
                 .body(userService.modifyQuestionAlarm(userInfo, reqTimeZone, reqModifyQuestionAlarmDto));
     }
 
-    @ApiOperation(value = "운세 푸시알람 설정")
+    @ApiOperation(value = "운세 푸시알람 설정 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "운세 푸시알람 설정 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -159,7 +159,7 @@ public class UserController {
                 .body(userService.modifyHoroscopeAlarm(userInfo, reqTimeZone,reqModifyHoroscopeAlarmDto));
     }
 
-    @ApiOperation(value = "질문 푸시알람 시간 설정")
+    @ApiOperation(value = "질문 푸시알람 시간 설정 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "질문 푸시알람 시간 설정 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -183,7 +183,7 @@ public class UserController {
                 .body(userService.modifyQuestionTime(userInfo, reqTimeZone, reqModifyQuestionTimeDto));
     }
 
-    @ApiOperation(value = "운세 푸시알람 시간 설정")
+    @ApiOperation(value = "운세 푸시알람 시간 설정 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "운세 푸시알람 시간 설정 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
