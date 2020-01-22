@@ -28,6 +28,8 @@ public class HoroscopeService {
 
         Constellation constellation = constellationRepository.findByName(constellationName)
                 .orElseThrow(NotFoundConstellationException::new);
+        System.out.println(constellation.getName());
+        System.out.println(nowLocalDate);
 
         Horoscope horoscope = horoscopeRepository
                 .findByConstellationsIdAndDate(constellation.getId(), nowLocalDate)
