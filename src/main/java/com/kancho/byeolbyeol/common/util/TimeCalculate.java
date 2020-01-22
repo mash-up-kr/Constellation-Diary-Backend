@@ -1,7 +1,10 @@
 package com.kancho.byeolbyeol.common.util;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
+import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.Date;
 
@@ -14,6 +17,7 @@ public class TimeCalculate {
     private final static Long LONG_ONE = 1L;
     private final static Long DAY_TIME = 24L;
     private final static Integer ONE_DAY = 1;
+    private final static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
     public static LocalDate covertLocalDate(LocalDateTime nowTime, ReqTimeZone reqTimeZone) {
         return nowTime.plusHours(reqTimeZone.getParallax()).toLocalDate();
@@ -29,6 +33,17 @@ public class TimeCalculate {
 
     public static LocalDateTime covertLocalDateTime(Date date) {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    public static Date convertDate(String date) {
+        SimpleDateFormat transFormat = new SimpleDateFormat(DATE_FORMAT);
+        Date to = null;
+        try {
+            to = transFormat.parse(date);
+        } catch (ParseException e) {
+            throw new RequestWrongFieldException();
+        }
+        return to;
     }
 
     public static LocalDateTime createStartTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
@@ -80,6 +95,7 @@ public class TimeCalculate {
         LocalTime horoscopeTime = LocalTime.of(EIGHT, ZERO);
         return horoscopeTime.minusHours(reqTimeZone.getParallax());
     }
+
 
     private TimeCalculate() {
 

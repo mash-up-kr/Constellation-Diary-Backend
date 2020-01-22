@@ -2,6 +2,7 @@ package com.kancho.byeolbyeol.horoscope.controller;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
+import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.horoscope.dto.ResHoroscopeDto;
 import com.kancho.byeolbyeol.horoscope.application.HoroscopeService;
 import io.swagger.annotations.*;
@@ -30,20 +31,28 @@ public class HoroscopeController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
                     required = true, dataType = "string", paramType = "header",
-                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca"),
+            @ApiImplicitParam(name = "constellation", value = "Constellation Name",
+                    required = true, dataType = "string", paramType = "query",
+                    defaultValue = "물병자리"),
+            @ApiImplicitParam(name = "date", value = "Request Date",
+                    required = true, dataType = "string", paramType = "query",
+                    defaultValue = "yyyy-MM-ddTHH:mm:ss.SSSZ")
     })
     @GetMapping("/horoscopes")
     public ResponseEntity<ResHoroscopeDto> findHoroscopeByConstellation(
             @RequestParam("constellation") String constellationName,
-            @RequestParam("date") Date date,
+            @RequestParam("date") String date,
             @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone) {
+
+        Date requestDate = TimeCalculate.convertDate(date);
 
         if (constellationName == null) {
             throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(horoscopeService.findHoroscope(constellationName, date, reqTimeZone));
+                .body(horoscopeService.findHoroscope(constellationName, requestDate, reqTimeZone));
     }
 
     @ApiOperation(value = "운세 아이디로 운세 보기 - 요청시 Time-Zone 선택")

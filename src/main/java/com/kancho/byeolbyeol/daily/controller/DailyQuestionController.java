@@ -4,6 +4,7 @@ import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
 import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
+import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.daily.application.DailyQuestionService;
 import com.kancho.byeolbyeol.daily.dto.ResDailyQuestionDto;
 import io.swagger.annotations.*;
@@ -34,19 +35,19 @@ public class DailyQuestionController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
                     required = true, dataType = "string", paramType = "header",
-                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca"),
+            @ApiImplicitParam(name = "date", value = "Request Date",
+                    required = true, dataType = "string", paramType = "query",
+                    defaultValue = "yyyy-MM-ddTHH:mm:ss.SSSZ")
     })
     @GetMapping("/daily-questions")
     public ResponseEntity<ResDailyQuestionDto> getDailyQuestions(@RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
-                                                                 @RequestParam(value = "date") Date date) {
-
-        if (date == null) {
-            throw new RequestWrongFieldException();
-        }
+                                                                 @RequestParam(value = "date") String date) {
+        Date requestDate = TimeCalculate.convertDate(date);
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(dailyQuestionService.getDailyQuestions(userInfo.getId(), date, reqTimeZone));
+                .body(dailyQuestionService.getDailyQuestions(userInfo.getId(), requestDate, reqTimeZone));
     }
 }
