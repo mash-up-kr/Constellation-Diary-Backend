@@ -10,8 +10,6 @@ public class ResHoroscopeDto {
 
     private Long id;
 
-    private String timeZone;
-
     private LocalDate date;
 
     private String content;
@@ -27,11 +25,10 @@ public class ResHoroscopeDto {
     private String constellation;
 
     @Builder
-    private ResHoroscopeDto(Long id, String timeZone, LocalDate date, String content,
+    private ResHoroscopeDto(Long id, LocalDate date, String content,
                             String stylist, String numeral, String word,
                             String exercise, String constellation) {
         this.id = id;
-        this.timeZone = timeZone;
         this.date = date;
         this.content = content;
         this.stylist = stylist;
