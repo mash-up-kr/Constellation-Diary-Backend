@@ -41,6 +41,9 @@ public class User {
 
     private Boolean questionAlarmFlag;
 
+    @Lob
+    private String fcmToken;
+
     @Builder
     private User(String userId, String password, Long constellationsId, String email,
                  LocalTime questionTime, LocalTime horoscopeTime) {
@@ -85,5 +88,13 @@ public class User {
 
     public void modifyPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public void saveFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
+    public boolean isNotEqualToPassword(String password) {
+        return !BCrypt.checkpw(password, this.password);
     }
 }
