@@ -91,7 +91,6 @@ public class JWTManager {
 
     private String createFindPasswordJWT(String email, String userId, TokenType tokenType, Long day) {
 
-        System.out.println(tokenType.getValue());
         JwtBuilder jwtHeader = createJWTRegisterClaim(tokenType, day);
 
         return jwtHeader.claim(EMAIL, email)
