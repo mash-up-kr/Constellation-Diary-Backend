@@ -15,4 +15,7 @@ public class ReqSignInDto {
 
     @NotNull
     private String password;
+
+    @NotNull
+    private String fcmToken;
 }

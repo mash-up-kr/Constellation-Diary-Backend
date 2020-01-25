@@ -20,7 +20,7 @@ public class HoroscopeController {
 
     private final HoroscopeService horoscopeService;
 
-    @ApiOperation(value = "선택한 별자리 오늘의 운세 보기 - 요청시 Time-Zone 선택")
+    @ApiOperation(value = "선택한 별자리 오늘의 운세 보기 - 요청시 Time-Zone 선택, Response Date 단순 날짜(변환x)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "선택한 별자리 오늘의 운세 보기 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
@@ -55,7 +55,7 @@ public class HoroscopeController {
                 .body(horoscopeService.findHoroscope(constellationName, requestDate, reqTimeZone));
     }
 
-    @ApiOperation(value = "운세 아이디로 운세 보기 - 요청시 Time-Zone 선택")
+    @ApiOperation(value = "운세 아이디로 운세 보기 - 요청시 Time-Zone 선택, Response Date 단순 날짜(변환x)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "운세 아이디로 운세 보기 성공"),
             @ApiResponse(code = 400, message = "4004 - Not Found Constellation, 4009 - Not Found Horoscope"),
@@ -69,11 +69,10 @@ public class HoroscopeController {
     })
     @GetMapping("/horoscopes/{horoscope-id:^[0-9]+$}")
     public ResponseEntity<ResHoroscopeDto> findHoroscopeByHoroscopeId(
-            @PathVariable("horoscope-id") Long horoscopeId,
-            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone) {
+            @PathVariable("horoscope-id") Long horoscopeId) {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(horoscopeService.findHoroscope(horoscopeId, reqTimeZone));
+                .body(horoscopeService.findHoroscope(horoscopeId));
     }
 
 

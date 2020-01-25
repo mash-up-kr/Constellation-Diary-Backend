@@ -28,17 +28,15 @@ public class HoroscopeService {
 
         Constellation constellation = constellationRepository.findByName(constellationName)
                 .orElseThrow(NotFoundConstellationException::new);
-        System.out.println(constellation.getName());
-        System.out.println(nowLocalDate);
 
         Horoscope horoscope = horoscopeRepository
                 .findByConstellationsIdAndDate(constellation.getId(), nowLocalDate)
                 .orElseThrow(NotFoundHoroscopeException::new);
 
-        return toResHoroscopeDto(horoscope, constellation, reqTimeZone);
+        return toResHoroscopeDto(horoscope, constellation);
     }
 
-    public ResHoroscopeDto findHoroscope(Long horoscopeId, ReqTimeZone reqTimeZone) {
+    public ResHoroscopeDto findHoroscope(Long horoscopeId) {
         Horoscope horoscope = horoscopeRepository
                 .findById(horoscopeId)
                 .orElseThrow(NotFoundHoroscopeException::new);
@@ -46,13 +44,12 @@ public class HoroscopeService {
         Constellation constellation = constellationRepository.findById(horoscope.getConstellationsId())
                 .orElseThrow(NotFoundConstellationException::new);
 
-        return toResHoroscopeDto(horoscope, constellation, reqTimeZone);
+        return toResHoroscopeDto(horoscope, constellation);
     }
 
-    private ResHoroscopeDto toResHoroscopeDto(Horoscope horoscope, Constellation constellation, ReqTimeZone reqTimeZone) {
+    private ResHoroscopeDto toResHoroscopeDto(Horoscope horoscope, Constellation constellation) {
         return ResHoroscopeDto.builder()
                 .id(horoscope.getId())
-                .timeZone(reqTimeZone.getValue())
                 .constellation(constellation.getName())
                 .content(horoscope.getContent())
                 .date(horoscope.getDate())

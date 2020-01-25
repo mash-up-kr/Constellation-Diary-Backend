@@ -16,6 +16,7 @@ import com.kancho.byeolbyeol.user.dto.response.ResUserInfoDto;
 import com.kancho.byeolbyeol.user.exception.ExistsUserIdException;
 import com.kancho.byeolbyeol.common.exception.NotFoundConstellationException;
 import com.kancho.byeolbyeol.common.exception.NotFoundUserException;
+import com.kancho.byeolbyeol.user.exception.IsNotEqualToPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -61,12 +62,19 @@ public class MembershipService {
                 .build();
     }
 
+    @Transactional
     public ResUserInfoDto signIn(ReqTimeZone reqTimeZone, ReqSignInDto reqSignInDto) {
         User user = userRepository.findByUserId(reqSignInDto.getUserId())
                 .orElseThrow(NotFoundUserException::new);
 
+        if (user.isNotEqualToPassword(reqSignInDto.getPassword())) {
+            throw new IsNotEqualToPasswordException();
+        }
+
         Constellation constellation = constellationRepository.findById(user.getConstellationsId())
                 .orElseThrow(NotFoundConstellationException::new);
+
+        user.saveFcmToken(reqSignInDto.getFcmToken());
 
         ResTokenDto resTokenDto = createTokens(user);
         ResUserDto resUserDto = createUserInfo(user, constellation, reqTimeZone);

@@ -69,12 +69,4 @@ public class AuthenticationServiceTests {
 
         authenticationService.verifySignUpNumber(reqValidationSignUpNumberDto);
     }
-
-    @Test
-    public void test() {
-        Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-
-        System.out.println(dateFormat.format(date).equals("5:16"));
-    }
 }

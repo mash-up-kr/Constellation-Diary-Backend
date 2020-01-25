@@ -38,9 +38,4 @@ public class HoroscopeTest {
         assertThat(horoscope.getWord(), is(Word.COFFEE));
         assertThat(horoscope.getExercise(), is(Exercise.BICYCLE));
     }
-
-    @Test
-    public void asdf(){
-        System.out.println(LocalTime.now().getHour() +":" + LocalTime.now().getMinute());
-    }
 }
