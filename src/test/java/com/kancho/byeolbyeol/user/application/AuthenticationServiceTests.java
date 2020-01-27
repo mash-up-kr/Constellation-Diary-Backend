@@ -48,7 +48,7 @@ public class AuthenticationServiceTests {
                         any(), any()))
                 .thenReturn(Optional.empty());
 
-        expectedException.expect(NotFoundAuthenticationNumberException.class);
+        expectedException.expect(FailAuthenticationNumberException.class);
 
         authenticationService.verifySignUpNumber(reqValidationSignUpNumberDto);
     }
