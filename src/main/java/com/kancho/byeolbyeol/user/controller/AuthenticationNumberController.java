@@ -26,7 +26,7 @@ public class AuthenticationNumberController {
     @ApiOperation(value = "인증번호 생성 - SIGN_UP(회원가입)")
     @ApiResponses({
             @ApiResponse(code = 201, message = "인증번호 생성 - SIGN_UP(회원가입) 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4009 - Exists Email"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @PostMapping("/authentication-numbers/sign-up")
