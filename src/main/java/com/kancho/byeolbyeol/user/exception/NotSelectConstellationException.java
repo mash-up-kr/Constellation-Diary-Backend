@@ -4,20 +4,20 @@ import com.kancho.byeolbyeol.exception.BaseException;
 import com.kancho.byeolbyeol.exception.ErrorModel;
 import org.springframework.http.HttpStatus;
 
-public class ExistsUserIdException extends BaseException {
-    public ExistsUserIdException() {
+public class NotSelectConstellationException extends BaseException {
+    public NotSelectConstellationException() {
         this(HttpStatus.BAD_REQUEST);
     }
 
-    private ExistsUserIdException(HttpStatus httpStatus) {
-        this(4006, httpStatus);
+    private NotSelectConstellationException(HttpStatus httpStatus) {
+        this(4004, httpStatus);
     }
 
-    private ExistsUserIdException(int code, HttpStatus httpStatus) {
+    private NotSelectConstellationException(int code, HttpStatus httpStatus) {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Exists UserId")
+                .massage("Not Select Constellation")
                 .build());
     }
 }

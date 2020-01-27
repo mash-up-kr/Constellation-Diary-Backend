@@ -4,20 +4,20 @@ import com.kancho.byeolbyeol.exception.BaseException;
 import com.kancho.byeolbyeol.exception.ErrorModel;
 import org.springframework.http.HttpStatus;
 
-public class NotFoundUserByEmailException extends BaseException {
-    public NotFoundUserByEmailException() {
+public class NonexistentUserByEmailException extends BaseException {
+    public NonexistentUserByEmailException() {
         this(HttpStatus.BAD_REQUEST);
     }
 
-    private NotFoundUserByEmailException(HttpStatus httpStatus) {
-        this(4013, httpStatus);
+    private NonexistentUserByEmailException(HttpStatus httpStatus) {
+        this(4003, httpStatus);
     }
 
-    private NotFoundUserByEmailException(int code, HttpStatus httpStatus) {
+    private NonexistentUserByEmailException(int code, HttpStatus httpStatus) {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Not Found User By Email")
+                .massage("Nonexistent User By Email")
                 .build());
     }
 }
