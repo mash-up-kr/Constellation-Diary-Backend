@@ -102,6 +102,28 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(reqTimeZone, reqSignInDto));
     }
 
+    @ApiOperation(value = "로그아웃")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "사용 X - 204 사용"),
+            @ApiResponse(code = 204, message = "로그아웃 성공"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+    })
+    @PostMapping("/users/sign-out")
+    public ResponseEntity<Void> signOut() {
+
+        UserInfo userInfo = ThreadContext.userInfo.get();
+
+        userService.signOut(userInfo);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @ApiOperation(value = "토큰 재발급")
     @ApiResponses({
             @ApiResponse(code = 200, message = "토큰 재발급 성공"),

@@ -97,4 +97,8 @@ public class User {
     public boolean isNotEqualToPassword(String password) {
         return !BCrypt.checkpw(password, this.password);
     }
+
+    public void removeFcmToken() {
+        this.fcmToken = null;
+    }
 }

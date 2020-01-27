@@ -7,9 +7,12 @@ import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.dto.requset.*;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.response.*;
+import com.kancho.byeolbyeol.user.exception.FailAuthenticationNumberException;
 import com.kancho.byeolbyeol.user.exception.NonexistentUserByEmailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +38,14 @@ public class UserService {
                 .userId(ReplacePassword.changeAsterisk(user.getUserId()))
                 .build();
 
+    }
+
+    @Transactional
+    public void signOut(UserInfo userInfo) {
+        User user = userRepository.findById(userInfo.getId())
+                .orElseThrow(FailAuthenticationNumberException::new);
+
+        user.removeFcmToken();
     }
 
     public void modifyPassword(String token, ReqModifyPasswordDto reqModifyPasswordDto) {
