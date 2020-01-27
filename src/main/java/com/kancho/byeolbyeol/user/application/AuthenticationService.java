@@ -8,8 +8,7 @@ import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumberRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationFindPasswordNumberDto;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationSignUpNumberDto;
 import com.kancho.byeolbyeol.user.dto.response.ResAuthenticationTokenDto;
-import com.kancho.byeolbyeol.user.exception.IsNotSameAuthenticationNumberException;
-import com.kancho.byeolbyeol.user.exception.NotFoundAuthenticationNumberException;
+import com.kancho.byeolbyeol.user.exception.FailAuthenticationNumberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +27,10 @@ public class AuthenticationService {
                         .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
                                 reqValidationSignUpNumberDto.getEmail(),
                                 System.currentTimeMillis())
-                        .orElseThrow(NotFoundAuthenticationNumberException::new);
+                        .orElseThrow(FailAuthenticationNumberException::new);
 
         if (signUpNumber.isNotEqualNumber(reqValidationSignUpNumberDto.getNumber())) {
-            throw new IsNotSameAuthenticationNumberException();
+            throw new FailAuthenticationNumberException();
         }
 
         String token = jwtManager.createSignUpToken(signUpNumber.getEmail());
@@ -52,10 +51,10 @@ public class AuthenticationService {
                                 reqValidationFindPasswordNumberDto.getEmail(),
                                 reqValidationFindPasswordNumberDto.getUserId(),
                                 System.currentTimeMillis())
-                        .orElseThrow(NotFoundAuthenticationNumberException::new);
+                        .orElseThrow(FailAuthenticationNumberException::new);
 
         if (findPasswordNumber.isNotEqualNumber(reqValidationFindPasswordNumberDto.getNumber())) {
-            throw new IsNotSameAuthenticationNumberException();
+            throw new FailAuthenticationNumberException();
         }
 
         String token = jwtManager.createFindPasswordToken(findPasswordNumber.getUserId(),

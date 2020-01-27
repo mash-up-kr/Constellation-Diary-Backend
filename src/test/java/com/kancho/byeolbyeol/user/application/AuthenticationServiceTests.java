@@ -5,16 +5,12 @@ import com.kancho.byeolbyeol.user.domain.find_password_number.FindPasswordNumber
 import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumber;
 import com.kancho.byeolbyeol.user.domain.sign_up_numbers.SignUpNumberRepository;
 import com.kancho.byeolbyeol.user.dto.requset.ReqValidationSignUpNumberDto;
-import com.kancho.byeolbyeol.user.exception.IsNotSameAuthenticationNumberException;
-import com.kancho.byeolbyeol.user.exception.NotFoundAuthenticationNumberException;
+import com.kancho.byeolbyeol.user.exception.FailAuthenticationNumberException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -65,7 +61,7 @@ public class AuthenticationServiceTests {
                 .thenReturn(Optional.ofNullable(signUpNumber));
         when(signUpNumber.isNotEqualNumber(any())).thenReturn(true);
 
-        expectedException.expect(IsNotSameAuthenticationNumberException.class);
+        expectedException.expect(FailAuthenticationNumberException.class);
 
         authenticationService.verifySignUpNumber(reqValidationSignUpNumberDto);
     }
