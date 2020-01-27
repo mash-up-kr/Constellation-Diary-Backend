@@ -6,11 +6,11 @@ import org.springframework.http.HttpStatus;
 
 public class IsExceedWriteDiaryException extends BaseException {
     public IsExceedWriteDiaryException() {
-        this(HttpStatus.BAD_REQUEST);
+        this(HttpStatus.FORBIDDEN);
     }
 
     private IsExceedWriteDiaryException(HttpStatus httpStatus) {
-        this(4012, httpStatus);
+        this(4302, httpStatus);
     }
 
     private IsExceedWriteDiaryException(int code, HttpStatus httpStatus) {

@@ -1,7 +1,6 @@
 package com.kancho.byeolbyeol.daily.controller;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
-import com.kancho.byeolbyeol.common.exception.RequestWrongFieldException;
 import com.kancho.byeolbyeol.common.user_context.ThreadContext;
 import com.kancho.byeolbyeol.common.user_context.UserInfo;
 import com.kancho.byeolbyeol.common.util.TimeCalculate;
@@ -27,8 +26,7 @@ public class DailyQuestionController {
     @ApiOperation(value = "데일리 질문 - question 필드에 일기 제목 or 질문, existDiary - 일기 존재 여부, 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "데일리 질문 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4006 - Not Found User, " +
-                    " 4008 - Not Found Question "),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })

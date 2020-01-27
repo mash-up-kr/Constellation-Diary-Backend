@@ -1,16 +1,15 @@
 package com.kancho.byeolbyeol.daily.application;
 
 import com.kancho.byeolbyeol.common.constant.ReqTimeZone;
+import com.kancho.byeolbyeol.common.exception.FailAuthenticationException;
 import com.kancho.byeolbyeol.common.util.TimeCalculate;
 import com.kancho.byeolbyeol.daily.domain.daily_question.DailyQuestion;
 import com.kancho.byeolbyeol.daily.domain.daily_question.DailyQuestionRepository;
 import com.kancho.byeolbyeol.daily.domain.diary.Diary;
 import com.kancho.byeolbyeol.daily.domain.diary.DiaryRepository;
 import com.kancho.byeolbyeol.daily.dto.ResDailyQuestionDto;
-import com.kancho.byeolbyeol.daily.exception.NotFoundQuestionException;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
-import com.kancho.byeolbyeol.common.exception.NotFoundUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +23,7 @@ import java.util.Optional;
 public class DailyQuestionService {
 
     private final static String COMMON_QUESTION = "오늘의 운세를\n확인 해보세요";
+    private final static String DAILY_QUESTION = "오늘 하루,\n어떠셨나요?";
 
     private final UserRepository userRepository;
     private final DailyQuestionRepository dailyQuestionRepository;
@@ -37,7 +37,7 @@ public class DailyQuestionService {
         LocalDateTime endTime = TimeCalculate.createEndTime(nowDateTime, reqTimeZone);
 
         User user = userRepository.findById(id)
-                .orElseThrow(NotFoundUserException::new);
+                .orElseThrow(FailAuthenticationException::new);
 
         Optional<Diary> diary = diaryRepository.findByUsersIdAndDateBetween(id, startTime, endTime);
         if (diary.isPresent()) {
@@ -49,7 +49,7 @@ public class DailyQuestionService {
         }
 
         DailyQuestion dailyQuestion = dailyQuestionRepository.findByDate(nowLocalDate)
-                .orElseThrow(NotFoundQuestionException::new);
+                .orElse(DailyQuestion.builder().content(DAILY_QUESTION).date(nowLocalDate).build());
         return dailyQuestionMapper.toResDailyQuestionDto(dailyQuestion.getContent());
     }
 }

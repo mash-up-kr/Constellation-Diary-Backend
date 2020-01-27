@@ -44,7 +44,7 @@ public class UserController {
     @ApiOperation(value = "아이디 찾기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "아이디 찾기 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4013 - Not Found User By Email"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4003 - Nonexistent User By Email"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @GetMapping("/users/find-id")
@@ -62,7 +62,7 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "회원 가입 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4004 - Not Found Constellation, 4007 - Exists UserId"),
+                    "4005 - Not Found Constellation, 4006 - Exists UserId"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
@@ -86,8 +86,8 @@ public class UserController {
     @ApiOperation(value = "로그인 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "로그인 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4004 - Not Found Constellation, 4006 - Not Found User"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4004 - Not Select Constellation"),
+            @ApiResponse(code = 401, message = "4104 - Nonexistent UserId, 4105 - Is Not Equal To Password"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @PostMapping("/users/sign-in")

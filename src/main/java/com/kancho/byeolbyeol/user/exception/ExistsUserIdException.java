@@ -10,7 +10,7 @@ public class ExistsUserIdException extends BaseException {
     }
 
     private ExistsUserIdException(HttpStatus httpStatus) {
-        this(4007, httpStatus);
+        this(4006, httpStatus);
     }
 
     private ExistsUserIdException(int code, HttpStatus httpStatus) {

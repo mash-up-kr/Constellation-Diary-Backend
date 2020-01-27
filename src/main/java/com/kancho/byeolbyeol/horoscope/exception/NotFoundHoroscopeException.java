@@ -10,7 +10,7 @@ public class NotFoundHoroscopeException extends BaseException {
     }
 
     private NotFoundHoroscopeException(HttpStatus httpStatus) {
-        this(4009, httpStatus);
+        this(4007, httpStatus);
     }
 
     private NotFoundHoroscopeException(int code, HttpStatus httpStatus) {

@@ -4,20 +4,20 @@ import com.kancho.byeolbyeol.exception.BaseException;
 import com.kancho.byeolbyeol.exception.ErrorModel;
 import org.springframework.http.HttpStatus;
 
-public class IsNotEqualToPasswordException extends BaseException {
-    public IsNotEqualToPasswordException() {
+public class NonexistentUserIdException extends BaseException {
+    public NonexistentUserIdException() {
         this(HttpStatus.UNAUTHORIZED);
     }
 
-    private IsNotEqualToPasswordException(HttpStatus httpStatus) {
-        this(4105, httpStatus);
+    private NonexistentUserIdException(HttpStatus httpStatus) {
+        this(4104, httpStatus);
     }
 
-    private IsNotEqualToPasswordException(int code, HttpStatus httpStatus) {
+    private NonexistentUserIdException(int code, HttpStatus httpStatus) {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Is Not Equal To Password")
+                .massage("Nonexistent UserId")
                 .build());
     }
 }

@@ -10,7 +10,7 @@ public class IsNotExistsUserException extends BaseException {
     }
 
     private IsNotExistsUserException(HttpStatus httpStatus) {
-        this(4014, httpStatus);
+        this(4002, httpStatus);
     }
 
     private IsNotExistsUserException(int code, HttpStatus httpStatus) {

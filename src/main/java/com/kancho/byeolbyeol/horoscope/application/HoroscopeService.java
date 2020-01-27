@@ -27,7 +27,7 @@ public class HoroscopeService {
         LocalDate nowLocalDate = TimeCalculate.covertLocalDate(nowDateTime, reqTimeZone);
 
         Constellation constellation = constellationRepository.findByName(constellationName)
-                .orElseThrow(NotFoundConstellationException::new);
+                .orElseThrow(NotFoundHoroscopeException::new);
 
         Horoscope horoscope = horoscopeRepository
                 .findByConstellationsIdAndDate(constellation.getId(), nowLocalDate)
@@ -42,7 +42,7 @@ public class HoroscopeService {
                 .orElseThrow(NotFoundHoroscopeException::new);
 
         Constellation constellation = constellationRepository.findById(horoscope.getConstellationsId())
-                .orElseThrow(NotFoundConstellationException::new);
+                .orElseThrow(NotFoundHoroscopeException::new);
 
         return toResHoroscopeDto(horoscope, constellation);
     }

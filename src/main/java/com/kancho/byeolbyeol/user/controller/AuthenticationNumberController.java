@@ -46,8 +46,8 @@ public class AuthenticationNumberController {
     @ApiOperation(value = "인증번호 인증 - SIGN_UP(회원가입)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "인증번호 인증 - SIGN_UP(회원가입) 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4002 - Not Found Authentication-Number, 4003 - Is Not Same Authentication-Number"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
+            @ApiResponse(code = 401, message = "4102 - Fail Authentication-Number(check field)"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @PostMapping("/authentication/sign-up")
@@ -66,7 +66,7 @@ public class AuthenticationNumberController {
     @ApiOperation(value = "인증번호 생성 - FIND_PASSWORD(비밀번호 찾기)")
     @ApiResponses({
             @ApiResponse(code = 201, message = "인증번호 생성 - FIND_PASSWORD(비밀번호 찾기) 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4014 - Is Not Exists User"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4002 - Is Not Exists User"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @PostMapping("/authentication-numbers/find-password")
@@ -86,8 +86,8 @@ public class AuthenticationNumberController {
     @ApiOperation(value = "인증번호 인증 - FIND_PASSWORD(비밀번호 찾기)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "인증번호 인증 - FIND_PASSWORD(비밀번호 찾기) 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4002 - Not Found Authentication-Number, 4003 - Is Not Same Authentication-Number"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
+            @ApiResponse(code = 401, message = "4102 - Fail Authentication-Number(check field)"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @PostMapping("/authentication/find-password")

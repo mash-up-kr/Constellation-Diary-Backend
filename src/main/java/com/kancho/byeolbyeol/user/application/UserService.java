@@ -7,7 +7,7 @@ import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.dto.requset.*;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import com.kancho.byeolbyeol.user.dto.response.*;
-import com.kancho.byeolbyeol.user.exception.NotFoundUserByEmailException;
+import com.kancho.byeolbyeol.user.exception.NonexistentUserByEmailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ public class UserService {
 
     public ResUserIdDto findUserId(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(NotFoundUserByEmailException::new);
+                .orElseThrow(NonexistentUserByEmailException::new);
 
         return ResUserIdDto.builder()
                 .userId(ReplacePassword.changeAsterisk(user.getUserId()))
