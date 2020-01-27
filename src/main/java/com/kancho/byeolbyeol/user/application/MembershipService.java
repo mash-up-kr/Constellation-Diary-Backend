@@ -92,7 +92,7 @@ public class MembershipService {
     public ResUserDto modifyConstellations(UserInfo userInfo, ReqTimeZone reqTimeZone,
                                            ReqModifyConstellationDto reqModifyConstellationDto) {
         User user = userRepository.findById(userInfo.getId())
-                .orElseThrow(NotFoundUserException::new);
+                .orElseThrow(FailAuthenticationException::new);
 
         Constellation constellation = constellationRepository.findByName(reqModifyConstellationDto.getConstellation())
                 .orElseThrow(NotFoundConstellationException::new);
@@ -106,10 +106,10 @@ public class MembershipService {
     public ResUserDto modifyQuestionAlarm(UserInfo userInfo, ReqTimeZone reqTimeZone,
                                           ReqModifyQuestionAlarmDto reqModifyQuestionAlarmDto) {
         User user = userRepository.findById(userInfo.getId())
-                .orElseThrow(NotFoundUserException::new);
+                .orElseThrow(FailAuthenticationException::new);
 
         Constellation constellation = constellationRepository.findById(user.getConstellationsId())
-                .orElseThrow(NotFoundConstellationException::new);
+                .orElseThrow(NotSelectConstellationException::new);
 
         user.modifyQuestionAlarm(reqModifyQuestionAlarmDto.getModifyQuestionAlarm());
 
@@ -123,7 +123,7 @@ public class MembershipService {
                 .orElseThrow(FailAuthenticationException::new);
 
         Constellation constellation = constellationRepository.findById(user.getConstellationsId())
-                .orElseThrow(NotFoundConstellationException::new);
+                .orElseThrow(NotSelectConstellationException::new);
 
         user.modifyHoroscopeAlarm(reqModifyHoroscopeAlarmDto.getHoroscopeAlarm());
 
@@ -137,7 +137,7 @@ public class MembershipService {
                 .orElseThrow(FailAuthenticationException::new);
 
         Constellation constellation = constellationRepository.findById(user.getConstellationsId())
-                .orElseThrow(NotFoundConstellationException::new);
+                .orElseThrow(NotSelectConstellationException::new);
 
         LocalTime questionTime = TimeCalculate.convertLocalTime(reqModifyQuestionTimeDto.getDate());
 
@@ -154,7 +154,7 @@ public class MembershipService {
                 .orElseThrow(FailAuthenticationException::new);
 
         Constellation constellation = constellationRepository.findById(user.getConstellationsId())
-                .orElseThrow(NotFoundConstellationException::new);
+                .orElseThrow(NotSelectConstellationException::new);
 
         LocalTime horoscopeTime = TimeCalculate.convertLocalTime(reqModifyHoroscopeTimeDto.getDate());
 
@@ -169,7 +169,7 @@ public class MembershipService {
 
         User user =
                 userRepository.findByUserIdAndEmail(findPasswordUserInfo.getUserId(), findPasswordUserInfo.getEmail())
-                        .orElseThrow(NotFoundUserException::new);
+                        .orElseThrow(FailAuthenticationException::new);
 
         user.modifyPassword(reqModifyPasswordDto.getPassword());
     }
