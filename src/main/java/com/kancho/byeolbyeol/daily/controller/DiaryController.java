@@ -53,10 +53,11 @@ public class DiaryController {
 
     @ApiOperation(value = "일기 작성 - 요청시 Time-Zone 선택")
     @ApiResponses({
+            @ApiResponse(code = 200, message = "사용 X - 201 사용"),
             @ApiResponse(code = 201, message = "일기 작성 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4012 - Is Exceed Write Diary"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 403, message = "4302 - Is Not The Writer"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
@@ -83,8 +84,9 @@ public class DiaryController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "일기 보기 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4010 - Not Found Diary, 4011 -Is Not The Writer"),
+                    "4008 - Not Found Diary"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 403, message = "4301 - Is Not The Writer"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
@@ -106,8 +108,9 @@ public class DiaryController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "일기 수정 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4010 - Not Found Diary, 4011 -Is Not The Writer"),
+                    "4008 - Not Found Diary"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 403, message = "4301 - Is Not The Writer"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
@@ -134,10 +137,12 @@ public class DiaryController {
 
     @ApiOperation(value = "일기 삭제")
     @ApiResponses({
+            @ApiResponse(code = 200, message = "사용 X - 204 사용"),
             @ApiResponse(code = 204, message = "일기 삭제 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4010 - Not Found Diary, 4011 -Is Not The Writer"),
+                    "4008 - Not Found Diary"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 403, message = "4301 - Is Not The Writer"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({

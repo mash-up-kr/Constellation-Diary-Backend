@@ -10,7 +10,7 @@ public class NotFoundDiaryException extends BaseException {
     }
 
     private NotFoundDiaryException(HttpStatus httpStatus) {
-        this(4010, httpStatus);
+        this(4008, httpStatus);
     }
 
     private NotFoundDiaryException(int code, HttpStatus httpStatus) {

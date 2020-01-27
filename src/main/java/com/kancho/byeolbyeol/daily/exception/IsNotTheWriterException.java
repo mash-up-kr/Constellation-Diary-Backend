@@ -6,11 +6,11 @@ import org.springframework.http.HttpStatus;
 
 public class IsNotTheWriterException extends BaseException {
     public IsNotTheWriterException() {
-        this(HttpStatus.BAD_REQUEST);
+        this(HttpStatus.FORBIDDEN);
     }
 
     private IsNotTheWriterException(HttpStatus httpStatus) {
-        this(4011, httpStatus);
+        this(4301, httpStatus);
     }
 
     private IsNotTheWriterException(int code, HttpStatus httpStatus) {
