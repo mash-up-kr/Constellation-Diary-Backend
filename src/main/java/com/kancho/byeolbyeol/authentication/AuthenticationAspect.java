@@ -33,6 +33,10 @@ public class AuthenticationAspect {
     public void refreshToken() {
     }
 
+    @Pointcut("execution(public * com.kancho.byeolbyeol.user.controller.UserController.signOut(..))")
+    public void userSignOut() {
+    }
+
     @Pointcut("execution(public * com.kancho.byeolbyeol.daily.controller.DailyQuestionController.*(..))")
     public void dailyQuestionController() {
     }
@@ -63,7 +67,7 @@ public class AuthenticationAspect {
         ThreadContext.userInfo.set(userInfo);
     }
 
-    @Before(value = "dailyQuestionController() || diaryController() || userChangeController()")
+    @Before(value = "dailyQuestionController() || diaryController() || userChangeController() || userSignOut()")
     public void checkAuthenticationToken() {
         String token = getToken();
 
@@ -75,7 +79,7 @@ public class AuthenticationAspect {
         ThreadContext.userInfo.set(userInfo);
     }
 
-    @After(value = "dailyQuestionController() || diaryController() || userChangeController()")
+    @After(value = "dailyQuestionController() || diaryController() || userChangeController() || userSignOut()")
     public void removeThreadLocal() {
         ThreadContext.userInfo.remove();
     }
