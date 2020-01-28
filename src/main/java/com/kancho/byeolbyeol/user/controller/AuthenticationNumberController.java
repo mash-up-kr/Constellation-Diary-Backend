@@ -29,6 +29,7 @@ public class AuthenticationNumberController {
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4009 - Exists Email"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/authentication-numbers/sign-up")
     public ResponseEntity<Void> generateSignUpNumber(
             @RequestBody @Valid ReqSignUpNumberDto reqSignUpNumberDto,
@@ -69,6 +70,7 @@ public class AuthenticationNumberController {
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4002 - Is Not Exists User"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/authentication-numbers/find-password")
     public ResponseEntity<Void> generateFindPasswordNumber(
             @RequestBody @Valid ReqFindPasswordNumberDto reqFindPasswordNumberDto,
