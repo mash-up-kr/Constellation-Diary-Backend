@@ -1,18 +1,15 @@
 package com.kancho.byeolbyeol.common.constant;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ReqTimeZone {
     UTC("UTC", 0L),
     KST("KST", 9L);
 
     private String value;
     private Long parallax;
-
-
-    ReqTimeZone(String value, Long parallax) {
-        this.value = value;
-        this.parallax = parallax;
-    }
 }

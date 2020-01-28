@@ -1,8 +1,11 @@
-package com.kancho.byeolbyeol.horoscope.domain.horoscope.constant;
+package com.kancho.byeolbyeol.horoscope.domain.constant;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum Stylist {
     METAL_MATERIAL_COMPONENTS("금속재료소품"),
     SILVER_RING("은색반지"),
@@ -20,8 +23,4 @@ public enum Stylist {
     BELT("벨트");
 
     private String value;
-
-    Stylist(String value) {
-        this.value = value;
-    }
 }

@@ -1,14 +1,12 @@
 package com.kancho.byeolbyeol.horoscope.domain;
 
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.Horoscope;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Exercise;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Numeral;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Stylist;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Word;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Word;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

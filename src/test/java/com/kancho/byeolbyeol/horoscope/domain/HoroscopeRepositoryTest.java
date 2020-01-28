@@ -1,11 +1,9 @@
 package com.kancho.byeolbyeol.horoscope.domain;
 
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.Horoscope;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.HoroscopeRepository;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Exercise;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Numeral;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Stylist;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Word;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Word;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

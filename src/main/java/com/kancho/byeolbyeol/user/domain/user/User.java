@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.user.domain.user;
 
+import com.kancho.byeolbyeol.common.constant.Constellation;
 import com.kancho.byeolbyeol.common.entity_converter.LocalTimePersistenceConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -27,7 +28,8 @@ public class User {
 
     private String email;
 
-    private Long constellationsId;
+    @Enumerated(EnumType.STRING)
+    private Constellation constellation;
 
     @Convert(converter = LocalTimePersistenceConverter.class)
     @Column(name = "horoscope_time", columnDefinition = "TIME")
@@ -45,11 +47,11 @@ public class User {
     private String fcmToken;
 
     @Builder
-    private User(String userId, String password, Long constellationsId, String email,
+    private User(String userId, String password, Constellation constellation, String email,
                  LocalTime questionTime, LocalTime horoscopeTime) {
         this.userId = userId;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-        this.constellationsId = constellationsId;
+        this.constellation = constellation;
         this.email = email;
         this.horoscopeAlarmFlag = true;
         this.questionAlarmFlag = true;
@@ -66,8 +68,8 @@ public class User {
         return compare > 0;
     }
 
-    public void modifyConstellation(Long constellationsId) {
-        this.constellationsId = constellationsId;
+    public void modifyConstellation(Constellation constellation) {
+        this.constellation = constellation;
     }
 
     public void modifyQuestionAlarm(Boolean questionAlarm) {

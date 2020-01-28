@@ -1,10 +1,11 @@
-package com.kancho.byeolbyeol.horoscope.domain.horoscope;
+package com.kancho.byeolbyeol.horoscope.domain;
 
+import com.kancho.byeolbyeol.common.constant.Constellation;
 import com.kancho.byeolbyeol.common.entity_converter.LocalDatePersistenceConverter;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Exercise;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Numeral;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Stylist;
-import com.kancho.byeolbyeol.horoscope.domain.horoscope.constant.Word;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
+import com.kancho.byeolbyeol.horoscope.domain.constant.Word;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,12 +43,13 @@ public class Horoscope {
     @Enumerated(EnumType.STRING)
     private Exercise exercise;
 
-    private Long constellationsId;
+    @Enumerated(EnumType.STRING)
+    private Constellation constellation;
 
     @Builder
-    private Horoscope(Long constellationsId, LocalDate date, String content,
+    private Horoscope(Constellation constellation, LocalDate date, String content,
                       Stylist stylist, Numeral numeral, Word word, Exercise exercise) {
-        this.constellationsId = constellationsId;
+        this.constellation = constellation;
         this.date = date;
         this.content = content;
         this.stylist = stylist;
