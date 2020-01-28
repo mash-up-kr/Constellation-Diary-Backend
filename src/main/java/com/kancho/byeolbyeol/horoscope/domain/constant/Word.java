@@ -1,8 +1,11 @@
-package com.kancho.byeolbyeol.horoscope.domain.horoscope.constant;
+package com.kancho.byeolbyeol.horoscope.domain.constant;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum Word {
     LOVE("사랑"),
     FRIENDSHIP("우정"),
@@ -19,9 +22,4 @@ public enum Word {
     STICKER("스티커");
 
     private String value;
-
-    Word(String value) {
-        this.value = value;
-    }
-
 }

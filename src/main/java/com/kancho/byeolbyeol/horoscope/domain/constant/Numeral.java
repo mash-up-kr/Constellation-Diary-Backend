@@ -1,8 +1,11 @@
-package com.kancho.byeolbyeol.horoscope.domain.horoscope.constant;
+package com.kancho.byeolbyeol.horoscope.domain.constant;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum Numeral {
     ONE("1"),
     TWO("2"),
@@ -16,7 +19,4 @@ public enum Numeral {
 
     private String value;
 
-    Numeral(String value) {
-        this.value = value;
-    }
 }

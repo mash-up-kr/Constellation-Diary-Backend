@@ -41,18 +41,18 @@ public class HoroscopeController {
     })
     @GetMapping("/horoscopes")
     public ResponseEntity<ResHoroscopeDto> findHoroscopeByConstellation(
-            @RequestParam("constellation") String constellationName,
+            @RequestParam("constellation") String constellation,
             @RequestParam("date") String date,
             @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone) {
 
         Date requestDate = TimeCalculate.convertDate(date);
 
-        if (constellationName == null) {
+        if (constellation == null) {
             throw new RequestWrongFieldException();
         }
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(horoscopeService.findHoroscope(constellationName, requestDate, reqTimeZone));
+                .body(horoscopeService.findHoroscope(constellation, requestDate, reqTimeZone));
     }
 
     @ApiOperation(value = "운세 아이디로 운세 보기 - 요청시 Time-Zone 선택, Response Date 단순 날짜(변환x)")
