@@ -35,7 +35,8 @@ public class AuthenticationService {
 
         String token = jwtManager.createSignUpToken(signUpNumber.getEmail());
 
-        signUpNumberRepository.delete(signUpNumber);
+        signUpNumberRepository.deleteByEmailAndExpirationTimeLessThanEqual(
+                signUpNumber.getEmail(), signUpNumber.getExpirationTime());
 
         return ResAuthenticationTokenDto.builder()
                 .token(token)
@@ -60,7 +61,8 @@ public class AuthenticationService {
         String token = jwtManager.createFindPasswordToken(findPasswordNumber.getUserId(),
                 findPasswordNumber.getEmail());
 
-        findPasswordNumberRepository.delete(findPasswordNumber);
+        findPasswordNumberRepository.deleteByEmailAndExpirationTimeLessThanEqual(
+                findPasswordNumber.getEmail(), findPasswordNumber.getExpirationTime());
 
         return ResAuthenticationTokenDto.builder()
                 .token(token)
