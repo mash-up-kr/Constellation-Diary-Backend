@@ -32,6 +32,7 @@ public class UserChangeController {
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/users/password")
     public ResponseEntity<Void> modifyPassword(
             @RequestHeader("Authorization") String token,

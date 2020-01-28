@@ -53,7 +53,6 @@ public class DiaryController {
 
     @ApiOperation(value = "일기 작성 - 요청시 Time-Zone 선택")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "사용 X - 201 사용"),
             @ApiResponse(code = 201, message = "일기 작성 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
@@ -65,6 +64,7 @@ public class DiaryController {
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/diaries")
     public ResponseEntity<Void> writeDiary(@RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
                                            @RequestBody @Valid ReqWriteDiaryDto reqWriteDiaryDto,
@@ -137,7 +137,6 @@ public class DiaryController {
 
     @ApiOperation(value = "일기 삭제")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "사용 X - 204 사용"),
             @ApiResponse(code = 204, message = "일기 삭제 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
                     "4008 - Not Found Diary"),
@@ -150,6 +149,7 @@ public class DiaryController {
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/diaries/{diary-id:^[0-9]+$}")
     public ResponseEntity<Void> deleteDiary(
             @PathVariable("diary-id") Long diaryId) {

@@ -104,7 +104,6 @@ public class UserController {
 
     @ApiOperation(value = "로그아웃")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "사용 X - 204 사용"),
             @ApiResponse(code = 204, message = "로그아웃 성공"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
@@ -114,6 +113,7 @@ public class UserController {
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/users/sign-out")
     public ResponseEntity<Void> signOut() {
 
