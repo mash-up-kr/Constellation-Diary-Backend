@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.user.domain.user;
 
+import com.kancho.byeolbyeol.common.constant.Constellation;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import com.kancho.byeolbyeol.user.domain.user.UserRepository;
 import org.junit.After;
@@ -35,7 +36,7 @@ public class UserRepositoryTest {
         userRepository.save(User.builder()
                 .userId("test")
                 .password("test123")
-                .constellationsId(1L)
+                .constellation(Constellation.AQUARIUS)
                 .build());
 
         //when
@@ -44,6 +45,6 @@ public class UserRepositoryTest {
         //then
         User user = userList.get(0);
         assertThat(user.getUserId(), is("test"));
-        assertThat(user.getConstellationsId(), is(1L));
+        assertThat(user.getConstellation(), is(Constellation.AQUARIUS));
     }
 }

@@ -1,4 +1,4 @@
-package com.kancho.byeolbyeol.config;
+package com.kancho.byeolbyeol.config.database.h2;
 
 import org.h2.tools.Server;
 import org.springframework.boot.context.properties.ConfigurationProperties;

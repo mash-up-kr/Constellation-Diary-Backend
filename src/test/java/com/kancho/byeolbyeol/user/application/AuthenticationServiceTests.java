@@ -43,10 +43,7 @@ public class AuthenticationServiceTests {
 
     @Test
     public void 인증_번호가_존재하지_않을_경우() {
-        when(signUpNumberRepository
-                .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
-                        any(), any()))
-                .thenReturn(Optional.empty());
+        when(signUpNumberRepository.findById(any())).thenReturn(Optional.empty());
 
         expectedException.expect(FailAuthenticationNumberException.class);
 
@@ -55,10 +52,7 @@ public class AuthenticationServiceTests {
 
     @Test
     public void 인증_번호가_같지_않을_경우() {
-        when(signUpNumberRepository
-                .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
-                        any(), any()))
-                .thenReturn(Optional.ofNullable(signUpNumber));
+        when(signUpNumberRepository.findById(any())).thenReturn(Optional.ofNullable(signUpNumber));
         when(signUpNumber.isNotEqualNumber(any())).thenReturn(true);
 
         expectedException.expect(FailAuthenticationNumberException.class);
