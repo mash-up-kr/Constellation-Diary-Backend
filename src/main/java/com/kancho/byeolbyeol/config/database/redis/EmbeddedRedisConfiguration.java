@@ -2,6 +2,7 @@ package com.kancho.byeolbyeol.config.database.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.util.StringUtils;
 import redis.embedded.RedisServer;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @Configuration
+@Profile("local")
 public class EmbeddedRedisConfiguration {
 
     @Value("${spring.redis.port}")
