@@ -13,11 +13,9 @@ import com.kancho.byeolbyeol.user.exception.IsNotExistsUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class AuthenticationEmailService {
-    private final static Long THREE_MINUTES = 180000L;
 
     private final EmailService emailService;
     private final UserRepository userRepository;
@@ -27,21 +25,20 @@ public class AuthenticationEmailService {
     public void sendSignUpNumber(ReqSignUpNumberDto reqSignUpNumberDto) {
         boolean result = userRepository.existsByEmail(reqSignUpNumberDto.getEmail());
 
-        if(result) {
+        if (result) {
             throw new ExistsEmailException();
         }
 
         String number = createAuthenticationNumber();
 
-        emailService.sendAuthenticationNumberMail(
-                reqSignUpNumberDto.getEmail(),
-                MailForm.SIGN_UP.getSubject(), MailForm.SIGN_UP.getContent() + number);
+        emailService.sendAuthenticationNumberMail(reqSignUpNumberDto.getEmail(),
+                MailForm.SIGN_UP.getSubject(),
+                MailForm.SIGN_UP.getContent() + number);
 
-        SignUpNumber signUpNumber = SignUpNumber.builder()
-                .email(reqSignUpNumberDto.getEmail())
-                .number(number)
-                .expirationTime(System.currentTimeMillis() + THREE_MINUTES)
-                .build();
+        SignUpNumber signUpNumber = signUpNumberRepository.findById(reqSignUpNumberDto.getEmail())
+                .orElse(createSignUpNumber(reqSignUpNumberDto));
+
+        signUpNumber.changeNumber(number);
 
         signUpNumberRepository.save(signUpNumber);
     }
@@ -56,23 +53,35 @@ public class AuthenticationEmailService {
 
         String number = createAuthenticationNumber();
 
-        emailService.sendAuthenticationNumberMail(
-                reqFindPasswordNumberDto.getEmail(),
-                MailForm.FIND_PASSWORD.getSubject(), MailForm.FIND_PASSWORD.getContent() + number);
+        emailService.sendAuthenticationNumberMail(reqFindPasswordNumberDto.getEmail(),
+                MailForm.FIND_PASSWORD.getSubject(),
+                MailForm.FIND_PASSWORD.getContent() + number);
 
-        FindPasswordNumber findPasswordNumber = FindPasswordNumber.builder()
-                .email(reqFindPasswordNumberDto.getEmail())
-                .userId(reqFindPasswordNumberDto.getUserId())
-                .number(number)
-                .expirationTime(System.currentTimeMillis() + THREE_MINUTES)
-                .build();
+        String id = reqFindPasswordNumberDto.getUserId() + reqFindPasswordNumberDto.getEmail();
+
+        FindPasswordNumber findPasswordNumber = findPasswordNumberRepository.findById(id)
+                .orElse(createFindPasswordNumber(reqFindPasswordNumberDto));
+
+        findPasswordNumber.changeNumber(number);
 
         findPasswordNumberRepository.save(findPasswordNumber);
     }
 
-
     private String createAuthenticationNumber() {
         return RandomNumber.generateNumber().toString();
+    }
+
+    private SignUpNumber createSignUpNumber(ReqSignUpNumberDto reqSignUpNumberDto) {
+        return SignUpNumber.builder()
+                .email(reqSignUpNumberDto.getEmail())
+                .build();
+    }
+
+    private FindPasswordNumber createFindPasswordNumber(ReqFindPasswordNumberDto reqFindPasswordNumberDto) {
+        return FindPasswordNumber.builder()
+                .email(reqFindPasswordNumberDto.getEmail())
+                .userId(reqFindPasswordNumberDto.getUserId())
+                .build();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.user.domain.user;
 
+import com.kancho.byeolbyeol.common.constant.Constellation;
 import com.kancho.byeolbyeol.user.domain.user.User;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +14,11 @@ public class UserTest {
         User user = User.builder()
                 .userId("test")
                 .password("test123")
-                .constellationsId(1L)
+                .constellation(Constellation.AQUARIUS)
                 .build();
 
         assertThat(user.getUserId(), is("test"));
-        assertThat(user.getConstellationsId(), is(1L));
+        assertThat(user.getConstellation(), is(Constellation.AQUARIUS));
     }
 
 }

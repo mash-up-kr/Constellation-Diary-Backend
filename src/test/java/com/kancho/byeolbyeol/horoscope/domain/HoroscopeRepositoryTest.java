@@ -1,5 +1,6 @@
 package com.kancho.byeolbyeol.horoscope.domain;
 
+import com.kancho.byeolbyeol.common.constant.Constellation;
 import com.kancho.byeolbyeol.horoscope.domain.constant.Exercise;
 import com.kancho.byeolbyeol.horoscope.domain.constant.Numeral;
 import com.kancho.byeolbyeol.horoscope.domain.constant.Stylist;
@@ -39,7 +40,7 @@ public class HoroscopeRepositoryTest {
                 "즐거운 시간이 많겠지만 건강관리는 좀 하셔야 합니다. 특정한 목적을 가진 만남은 좋지 않습니다. 취미나 동호회활동은 약간 기대에 모자란 정도입니다.";
 
         horoscopeRepository.save(Horoscope.builder()
-                .constellationsId(1L)
+                .constellation(Constellation.AQUARIUS)
                 .date(LocalDate.now())
                 .content(contentTestData)
                 .stylist(Stylist.SCARF)
@@ -53,7 +54,7 @@ public class HoroscopeRepositoryTest {
 
         //then
         Horoscope horoscope = horoscopeList.get(0);
-        assertThat(horoscope.getConstellationsId(), is(1L));
+        assertThat(horoscope.getConstellation(), is(Constellation.AQUARIUS));
         assertThat(horoscope.getContent(), is(contentTestData));
         assertThat(horoscope.getStylist(), is(Stylist.SCARF));
         assertThat(horoscope.getNumeral(), is(Numeral.FIVE));

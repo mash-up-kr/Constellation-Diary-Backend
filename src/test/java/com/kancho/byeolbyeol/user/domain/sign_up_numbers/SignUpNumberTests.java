@@ -12,7 +12,6 @@ public class SignUpNumberTests {
         Long differentNumber = 123321L;
 
         SignUpNumber signUpNumber = SignUpNumber.builder()
-                .expirationTime(100000L)
                 .number(sameNumber.toString())
                 .email("test@naver.com")
                 .build();

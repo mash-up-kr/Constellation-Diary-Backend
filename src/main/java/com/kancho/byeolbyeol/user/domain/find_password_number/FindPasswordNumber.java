@@ -4,18 +4,17 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "find_password_numbers")
-@Entity
+@RedisHash(value = "find_password_numbers", timeToLive = 180L)
 public class FindPasswordNumber {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String email;
 
@@ -23,18 +22,19 @@ public class FindPasswordNumber {
 
     private String number;
 
-    private Long expirationTime;
-
     @Builder
-    private FindPasswordNumber(String email, String userId, String number,
-                         Long expirationTime) {
+    private FindPasswordNumber(String email, String userId, String number) {
+        this.id = email + userId;
         this.email = email;
         this.userId = userId;
         this.number = number;
-        this.expirationTime = expirationTime;
     }
 
     public boolean isNotEqualNumber(Long number) {
         return !this.number.equals(number.toString());
+    }
+
+    public void changeNumber(String number) {
+        this.number = number;
     }
 }

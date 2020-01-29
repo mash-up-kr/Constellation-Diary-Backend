@@ -4,31 +4,28 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "sign_up_numbers")
-@Entity
+@RedisHash(value = "sign_up_numbers", timeToLive = 180L)
 public class SignUpNumber {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String email;
+    private String id;
 
     private String number;
 
-    private Long expirationTime;
-
     @Builder
-    private SignUpNumber(String email, String number,
-                         Long expirationTime) {
-        this.email = email;
+    private SignUpNumber(String email, String number) {
+        this.id = email;
         this.number = number;
-        this.expirationTime = expirationTime;
+    }
+
+    public void changeNumber(String number) {
+        this.number = number;
     }
 
     public boolean isNotEqualNumber(Long number) {

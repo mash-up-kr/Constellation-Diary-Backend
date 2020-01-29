@@ -22,21 +22,16 @@ public class AuthenticationService {
 
     public ResAuthenticationTokenDto verifySignUpNumber(ReqValidationSignUpNumberDto reqValidationSignUpNumberDto) {
 
-        SignUpNumber signUpNumber =
-                signUpNumberRepository
-                        .findFirstByEmailAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
-                                reqValidationSignUpNumberDto.getEmail(),
-                                System.currentTimeMillis())
-                        .orElseThrow(FailAuthenticationNumberException::new);
+        SignUpNumber signUpNumber = signUpNumberRepository.findById(reqValidationSignUpNumberDto.getEmail())
+                .orElseThrow(FailAuthenticationNumberException::new);
 
         if (signUpNumber.isNotEqualNumber(reqValidationSignUpNumberDto.getNumber())) {
             throw new FailAuthenticationNumberException();
         }
 
-        String token = jwtManager.createSignUpToken(signUpNumber.getEmail());
+        String token = jwtManager.createSignUpToken(signUpNumber.getId());
 
-        signUpNumberRepository.deleteByEmailAndExpirationTimeLessThanEqual(
-                signUpNumber.getEmail(), signUpNumber.getExpirationTime());
+        signUpNumberRepository.delete(signUpNumber);
 
         return ResAuthenticationTokenDto.builder()
                 .token(token)
@@ -46,23 +41,18 @@ public class AuthenticationService {
     public ResAuthenticationTokenDto verifyFindPasswordNumber(
             ReqValidationFindPasswordNumberDto reqValidationFindPasswordNumberDto) {
 
-        FindPasswordNumber findPasswordNumber =
-                findPasswordNumberRepository
-                        .findFirstByEmailAndUserIdAndExpirationTimeGreaterThanEqualOrderByExpirationTimeDesc(
-                                reqValidationFindPasswordNumberDto.getEmail(),
-                                reqValidationFindPasswordNumberDto.getUserId(),
-                                System.currentTimeMillis())
-                        .orElseThrow(FailAuthenticationNumberException::new);
+        String id = reqValidationFindPasswordNumberDto.getEmail() + reqValidationFindPasswordNumberDto.getUserId();
+
+        FindPasswordNumber findPasswordNumber = findPasswordNumberRepository.findById(id)
+                .orElseThrow(FailAuthenticationNumberException::new);
 
         if (findPasswordNumber.isNotEqualNumber(reqValidationFindPasswordNumberDto.getNumber())) {
             throw new FailAuthenticationNumberException();
         }
 
-        String token = jwtManager.createFindPasswordToken(findPasswordNumber.getUserId(),
-                findPasswordNumber.getEmail());
+        String token = jwtManager.createFindPasswordToken(findPasswordNumber.getUserId(), findPasswordNumber.getEmail());
 
-        findPasswordNumberRepository.deleteByEmailAndExpirationTimeLessThanEqual(
-                findPasswordNumber.getEmail(), findPasswordNumber.getExpirationTime());
+        findPasswordNumberRepository.delete(findPasswordNumber);
 
         return ResAuthenticationTokenDto.builder()
                 .token(token)
