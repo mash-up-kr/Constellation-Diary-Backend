@@ -27,6 +27,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'com.h2database:h2:1.4.197'
     implementation 'io.jsonwebtoken:jjwt-api:0.10.7'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'it.ozimov:embedded-redis:0.7.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.10.7'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.10.7'
     compileOnly 'org.projectlombok:lombok'
