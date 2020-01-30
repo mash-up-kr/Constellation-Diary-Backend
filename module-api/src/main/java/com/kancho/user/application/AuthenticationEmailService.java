@@ -1,11 +1,11 @@
 package com.kancho.user.application;
 
 import com.kancho.common.util.RandomNumber;
+import com.kancho.user.UserRepository;
 import com.kancho.user.domain.find_password_number.FindPasswordNumber;
 import com.kancho.user.domain.find_password_number.FindPasswordNumberRepository;
 import com.kancho.user.domain.sign_up_numbers.SignUpNumber;
 import com.kancho.user.domain.sign_up_numbers.SignUpNumberRepository;
-import com.kancho.user.domain.user.UserRepository;
 import com.kancho.user.dto.requset.ReqFindPasswordNumberDto;
 import com.kancho.user.dto.requset.ReqSignUpNumberDto;
 import com.kancho.user.exception.ExistsEmailException;

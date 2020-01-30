@@ -1,4 +1,4 @@
-package com.kancho.common.entity_converter;
+package com.kancho.entity_converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

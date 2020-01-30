@@ -8,8 +8,8 @@ import com.kancho.daily.domain.DiaryRepository;
 import com.kancho.daily.dto.ResDailyQuestionDto;
 import com.kancho.daily_question.DailyQuestion;
 import com.kancho.daily_question.DailyQuestionRepository;
-import com.kancho.user.domain.user.User;
-import com.kancho.user.domain.user.UserRepository;
+import com.kancho.user.User;
+import com.kancho.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
