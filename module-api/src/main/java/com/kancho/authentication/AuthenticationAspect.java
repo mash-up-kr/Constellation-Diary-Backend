@@ -20,10 +20,6 @@ public class AuthenticationAspect {
 
     private final JWTManager jwtManager;
 
-    @Pointcut("execution(public * com.kancho.user.controller.UserController.signUp(..))")
-    public void signUp() {
-    }
-
     @Pointcut("execution(public * com.kancho.user.controller.UserChangeController.*(..)) && " +
             "!execution(public * com.kancho.user.controller.UserChangeController.modifyPassword(..))")
     public void userChangeController() {
@@ -43,16 +39,6 @@ public class AuthenticationAspect {
 
     @Pointcut("execution(public * com.kancho.daily.controller.DiaryController.*(..))")
     public void diaryController() {
-    }
-
-    @Before(value = "signUp()")
-    public void checkRegisterToken() {
-        String token = getToken();
-
-        if (isEmptyToken(token)) {
-            throw new FailAuthenticationException();
-        }
-        jwtManager.authenticate(token, TokenType.SIGN_UP_TOKEN::verifyValue);
     }
 
     @Before(value = "refreshToken()")

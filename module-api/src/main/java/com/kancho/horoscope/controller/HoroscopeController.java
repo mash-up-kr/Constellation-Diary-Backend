@@ -20,9 +20,9 @@ public class HoroscopeController {
 
     private final HoroscopeService horoscopeService;
 
-    @ApiOperation(value = "선택한 별자리 오늘의 운세 보기 - 요청시 Time-Zone 선택, Response Date 단순 날짜(변환x)")
+    @ApiOperation(value = "선택한 별자리 운세 보기 - 요청시 Time-Zone 선택, Response Date 단순 날짜(변환x)")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "선택한 별자리 오늘의 운세 보기 성공"),
+            @ApiResponse(code = 200, message = "선택한 별자리 운세 보기 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
                     "4007 - Not Found Horoscope"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),

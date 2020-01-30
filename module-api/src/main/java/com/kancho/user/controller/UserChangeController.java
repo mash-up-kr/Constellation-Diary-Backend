@@ -70,8 +70,7 @@ public class UserChangeController {
     @ApiOperation(value = "질문 푸시알람 설정 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "질문 푸시알람 설정 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4004 - Not Select Constellation"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
@@ -94,8 +93,7 @@ public class UserChangeController {
     @ApiOperation(value = "운세 푸시알람 설정 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "운세 푸시알람 설정 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4004 - Not Select Constellation"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
@@ -118,8 +116,7 @@ public class UserChangeController {
     @ApiOperation(value = "질문 푸시알람 시간 설정 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "질문 푸시알람 시간 설정 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4004 - Not Select Constellation"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
@@ -142,8 +139,7 @@ public class UserChangeController {
     @ApiOperation(value = "운세 푸시알람 시간 설정 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "운세 푸시알람 시간 설정 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4004 - Not Select Constellation"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
