@@ -1,7 +1,7 @@
-package com.kancho.user.domain.user;
+package com.kancho.user;
 
-import com.kancho.common.entity_converter.LocalTimePersistenceConverter;
 import com.kancho.constellation.Constellation;
+import com.kancho.entity_converter.LocalTimePersistenceConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

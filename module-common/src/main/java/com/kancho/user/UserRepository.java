@@ -1,4 +1,4 @@
-package com.kancho.user.domain.user;
+package com.kancho.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
