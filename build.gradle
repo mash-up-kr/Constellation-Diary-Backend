@@ -38,4 +38,10 @@ project(':module-scheduler') {
     }
 }
 
+project(':module-push') {
+    dependencies {
+        compile project(':module-common')
+    }
+}
+
 
