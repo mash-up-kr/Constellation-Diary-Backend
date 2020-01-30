@@ -1,10 +1,7 @@
 package com.kancho.user.domain.user;
 
-import com.kancho.common.constant.ReqTimeZone;
 import com.kancho.constellation.Constellation;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalTime;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
