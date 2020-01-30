@@ -32,5 +32,10 @@ project(':module-api') {
     }
 }
 
+project(':module-scheduler') {
+    dependencies {
+        compile project(':module-common')
+    }
+}
 
 
