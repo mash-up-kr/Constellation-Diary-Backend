@@ -5,9 +5,6 @@ import com.kancho.exception.ErrorModel;
 import org.springframework.http.HttpStatus;
 
 public class NotSelectConstellationException extends BaseException {
-    public NotSelectConstellationException() {
-        this(HttpStatus.BAD_REQUEST);
-    }
 
     private NotSelectConstellationException(HttpStatus httpStatus) {
         this(4004, httpStatus);

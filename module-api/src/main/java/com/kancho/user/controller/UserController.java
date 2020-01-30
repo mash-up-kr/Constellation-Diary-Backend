@@ -86,7 +86,7 @@ public class UserController {
     @ApiOperation(value = "로그인 - 요청시 Time-Zone 선택")
     @ApiResponses({
             @ApiResponse(code = 200, message = "로그인 성공"),
-            @ApiResponse(code = 400, message = "4001 - Request Worn Field, 4004 - Not Select Constellation"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
             @ApiResponse(code = 401, message = "4104 - Nonexistent UserId, 4105 - Is Not Equal To Password"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
@@ -109,7 +109,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 에러")
     })
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Refresh JWT",
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
                     required = true, dataType = "string", paramType = "header",
                     defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
     })

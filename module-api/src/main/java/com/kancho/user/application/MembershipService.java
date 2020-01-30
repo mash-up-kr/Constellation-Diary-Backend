@@ -143,11 +143,9 @@ public class MembershipService {
     @Transactional
     public void modifyPassword(String token, ReqModifyPasswordDto reqModifyPasswordDto) {
         FindPasswordUserInfo findPasswordUserInfo = jwtManager.getFindPasswordUserInfo(token);
-
         User user =
                 userRepository.findByUserIdAndEmail(findPasswordUserInfo.getUserId(), findPasswordUserInfo.getEmail())
                         .orElseThrow(FailAuthenticationException::new);
-
         user.modifyPassword(reqModifyPasswordDto.getPassword());
     }
 
