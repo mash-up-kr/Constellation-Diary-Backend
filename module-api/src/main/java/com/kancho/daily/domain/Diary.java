@@ -1,6 +1,6 @@
 package com.kancho.daily.domain;
 
-import com.kancho.common.entity_converter.LocalDateTimePersistenceConverter;
+import com.kancho.entity_converter.LocalDateTimePersistenceConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
