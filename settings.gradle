@@ -1,1 +1,5 @@
 rootProject.name = 'byeolbyeol'
+include 'module-common'
+include 'module-api'
+include 'module-scheduler'
+
