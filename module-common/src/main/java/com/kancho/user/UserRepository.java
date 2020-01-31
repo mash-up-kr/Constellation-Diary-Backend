@@ -20,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUserIdAndEmail(String userId, String email);
 
     List<User> findByHoroscopeAlarmFlagAndHoroscopeTime(Boolean Flag, LocalTime nowTime);
+
+    List<User> findByQuestionAlarmFlagAndQuestionTime(Boolean Flag, LocalTime nowTime);
 }
