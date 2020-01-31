@@ -11,6 +11,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.h2database:h2:1.4.197")
     implementation("com.google.firebase:firebase-admin:6.8.1")
+    implementation ("io.github.microutils:kotlin-logging:1.7.6")
     runtimeOnly("mysql:mysql-connector-java")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
