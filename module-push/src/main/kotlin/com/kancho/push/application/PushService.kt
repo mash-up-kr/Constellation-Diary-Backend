@@ -20,7 +20,21 @@ class PushService(private val notificationService: NotificationService,
             } else {
                 tokens.add(user.fcmToken)
             }
-
         }
+    }
+
+    fun sendDailyQuestionPushAlarm(nowTime: LocalTime) {
+        val users: MutableList<User> = userRepository.findByQuestionAlarmFlagAndQuestionTime(true, nowTime)
+
+        var tokens: MutableList<String> = mutableListOf()
+        for (user in users) {
+            if (tokens.size == 500) {
+                notificationService.send(tokens, "별별일기", "오늘 하루는 어떠셨나요?")
+                tokens = mutableListOf()
+            } else {
+                tokens.add(user.fcmToken)
+            }
+        }
+
     }
 }

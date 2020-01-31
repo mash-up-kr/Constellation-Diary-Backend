@@ -9,4 +9,5 @@ class PushController(private val pushService: PushService) {
 
     fun sendHoroscopePushAlarm(nowTime: LocalTime) = pushService.sendHoroscopePushAlarm(nowTime)
 
+    fun sendDailyQuestionPushAlarm(nowTime: LocalTime) = pushService.sendDailyQuestionPushAlarm(nowTime)
 }
