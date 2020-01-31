@@ -1,4 +1,4 @@
-package com.kancho.horoscope_push.application
+package com.kancho.push.application
 
 import com.kancho.constellation.Constellation
 import com.kancho.horoscope.Horoscope

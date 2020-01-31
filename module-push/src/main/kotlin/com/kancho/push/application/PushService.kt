@@ -1,4 +1,4 @@
-package com.kancho.horoscope_push.application
+package com.kancho.push.application
 
 import com.kancho.user.User
 import com.kancho.user.UserRepository
@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service
 import java.time.LocalTime
 
 @Service
-class HoroscopePushService(private val notificationService: NotificationService,
-                           private val userRepository: UserRepository) {
+class PushService(private val notificationService: NotificationService,
+                  private val userRepository: UserRepository) {
     fun sendHoroscopePushAlarm(nowTime: LocalTime) {
 
         val users: MutableList<User> = userRepository.findByHoroscopeAlarmFlagAndHoroscopeTime(true, nowTime)

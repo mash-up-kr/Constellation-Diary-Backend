@@ -1,9 +1,9 @@
-package com.kancho.horoscope_push.infrastructure
+package com.kancho.push.infrastructure
 
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.MulticastMessage
-import com.kancho.horoscope_push.application.NotificationService
+import com.kancho.push.application.NotificationService
 import org.springframework.stereotype.Component
 
 import java.util.ArrayList
