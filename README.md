@@ -16,7 +16,7 @@
 - 운세 & 질문 푸시 알람
 - 별자리 & 비밀번호 변경
 
-## 프로젝트 설계 및 분
+## 프로젝트 설계 및 분석
 - [Wiki](https://github.com/mash-up-kr/Constellation-Diary-Backend/wiki/Byeol-Byeol)
 
 ## API Spec
