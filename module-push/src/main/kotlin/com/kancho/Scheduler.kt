@@ -12,4 +12,9 @@ class Scheduler(val pushController: PushController) {
     fun startHoroscopeJob() {
         pushController.sendHoroscopePushAlarm(LocalTime.now())
     }
+
+    @Scheduled(cron = "0 */1 * * * *")
+    fun startQuestionJob() {
+        pushController.sendDailyQuestionPushAlarm(LocalTime.now())
+    }
 }
