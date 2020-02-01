@@ -48,14 +48,17 @@ public class TimeCalculate {
 
     public static LocalDateTime createStartTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
         LocalDateTime localDateKstTime;
-        LocalDateTime temp = localDateTime;
+        LocalDateTime temp =
+                LocalDateTime.of(localDateTime.getYear(), localDateTime.getMonth(),
+                        localDateTime.getDayOfMonth(), localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond());
+
 
         int year = localDateTime.getYear();
         Month month = localDateTime.getMonth();
         int day = localDateTime.getDayOfMonth();
-        temp.minusDays(1L);
+        temp = temp.minusDays(1);
 
-        if (!temp.getMonth().equals(temp.getMonth())) {
+        if (!(temp.getMonth().getValue() == localDateTime.getMonth().getValue())) {
             year = temp.getYear();
             month = temp.getMonth();
             day = temp.getDayOfMonth();
@@ -68,13 +71,16 @@ public class TimeCalculate {
 
     public static LocalDateTime createEndTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
         LocalDateTime localDateKstTime;
-        LocalDateTime temp = localDateTime;
+        LocalDateTime temp =
+                LocalDateTime.of(localDateTime.getYear(), localDateTime.getMonth(),
+                        localDateTime.getDayOfMonth(), localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond());
+
         int year = localDateTime.getYear();
         Month month = localDateTime.getMonth();
         int day = localDateTime.getDayOfMonth();
-        temp.plusDays(1L);
+        temp = temp.plusDays(1);
 
-        if (!temp.getMonth().equals(temp.getMonth())) {
+        if (!(temp.getMonth().getValue() == localDateTime.getMonth().getValue())) {
             year = temp.getYear();
             month = temp.getMonth();
             day = temp.getDayOfMonth();
