@@ -25,8 +25,6 @@ public class HoroscopeService {
         LocalDate nowLocalDate = TimeCalculate.covertLocalDate(nowDateTime, reqTimeZone);
 
         Constellation constellation = Constellation.findByConstellation(constellationName);
-        System.out.println(nowDateTime);
-        System.out.println(constellation.getValue());
         Horoscope horoscope = horoscopeRepository
                 .findByConstellationAndDate(constellation, nowLocalDate)
                 .orElseThrow(NotFoundHoroscopeException::new);

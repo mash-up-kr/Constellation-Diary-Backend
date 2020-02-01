@@ -48,27 +48,40 @@ public class TimeCalculate {
 
     public static LocalDateTime createStartTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
         LocalDateTime localDateKstTime;
-        if (localDateTime.getHour() >= (DAY_TIME - reqTimeZone.getParallax())) {
-            localDateKstTime = LocalDateTime.of(localDateTime.getYear(), localDateTime.getMonth(),
-                    localDateTime.getDayOfMonth(), (int) (DAY_TIME - reqTimeZone.getParallax()), ZERO, ZERO);
+        LocalDateTime temp = localDateTime;
 
-        } else {
-            localDateKstTime = LocalDateTime.of(localDateTime.getYear(), localDateTime.getMonth(),
-                    localDateTime.getDayOfMonth() - ONE_DAY, (int) (DAY_TIME - reqTimeZone.getParallax()), ZERO, ZERO);
+        int year = localDateTime.getYear();
+        Month month = localDateTime.getMonth();
+        int day = localDateTime.getDayOfMonth();
+        temp.minusDays(1L);
+
+        if (!temp.getMonth().equals(temp.getMonth())) {
+            year = temp.getYear();
+            month = temp.getMonth();
+            day = temp.getDayOfMonth();
         }
+
+        localDateKstTime = LocalDateTime.of(year, month,
+                day, (int) (DAY_TIME - reqTimeZone.getParallax()), ZERO, ZERO);
         return localDateKstTime;
     }
 
     public static LocalDateTime createEndTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
         LocalDateTime localDateKstTime;
-        if (localDateTime.getHour() >= (DAY_TIME - reqTimeZone.getParallax())) {
-            localDateKstTime = LocalDateTime.of(localDateTime.getYear(), localDateTime.getMonth(),
-                    localDateTime.getDayOfMonth() + ONE_DAY, (int) (DAY_TIME - reqTimeZone.getParallax()), FIFTY_NINE, FIFTY_NINE);
+        LocalDateTime temp = localDateTime;
+        int year = localDateTime.getYear();
+        Month month = localDateTime.getMonth();
+        int day = localDateTime.getDayOfMonth();
+        temp.plusDays(1L);
 
-        } else {
-            localDateKstTime = LocalDateTime.of(localDateTime.getYear(), localDateTime.getMonth(),
-                    localDateTime.getDayOfMonth(), (int) (DAY_TIME - reqTimeZone.getParallax()), FIFTY_NINE, FIFTY_NINE);
+        if (!temp.getMonth().equals(temp.getMonth())) {
+            year = temp.getYear();
+            month = temp.getMonth();
+            day = temp.getDayOfMonth();
         }
+
+        localDateKstTime = LocalDateTime.of(year, month,
+                day, (int) (DAY_TIME - reqTimeZone.getParallax()), FIFTY_NINE, FIFTY_NINE);
         return localDateKstTime;
     }
 
