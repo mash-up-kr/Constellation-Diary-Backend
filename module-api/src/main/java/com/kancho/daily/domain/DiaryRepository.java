@@ -10,4 +10,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Optional<Diary> findByUsersIdAndDateBetween(Long userId, LocalDateTime startTime, LocalDateTime endTime);
 
     List<Diary> findByUsersIdAndDateGreaterThanEqualAndDateLessThan(Long userId, LocalDateTime startTime, LocalDateTime endTime);
+
+    List<Diary> findAllByIdAndUsersId(List<Long> diaryIds, Long usersId);
 }

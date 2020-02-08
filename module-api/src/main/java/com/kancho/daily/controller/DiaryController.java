@@ -5,10 +5,7 @@ import com.kancho.common.exception.RequestWrongFieldException;
 import com.kancho.common.user_context.ThreadContext;
 import com.kancho.common.user_context.UserInfo;
 import com.kancho.daily.application.DiaryService;
-import com.kancho.daily.dto.ReqModifyDiaryDto;
-import com.kancho.daily.dto.ReqWriteDiaryDto;
-import com.kancho.daily.dto.ResDiariesDto;
-import com.kancho.daily.dto.ResDiaryDto;
+import com.kancho.daily.dto.*;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +20,6 @@ import javax.validation.Valid;
 @Api(description = "일기 관련 API")
 public class DiaryController {
     private final DiaryService diaryService;
-
 
     @ApiOperation(value = "일기 리스트 - 요청시 Time-Zone 선택")
     @ApiResponses({
@@ -157,6 +153,36 @@ public class DiaryController {
         UserInfo userInfo = ThreadContext.userInfo.get();
 
         diaryService.deleteDiary(userInfo, diaryId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
+    @ApiOperation(value = "다수의 일기 삭제")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "다수의 일기 삭제 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
+                    "4004 - Not Found Diary"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+    })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/diaries")
+    public ResponseEntity<Void> deleteDiaries(@RequestBody ReqDiariesDto reqDiariesDto,
+                                              BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new RequestWrongFieldException();
+        }
+
+        UserInfo userInfo = ThreadContext.userInfo.get();
+
+        diaryService.deleteDiaries(userInfo, reqDiariesDto);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

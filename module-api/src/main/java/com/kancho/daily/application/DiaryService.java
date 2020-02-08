@@ -9,6 +9,7 @@ import com.kancho.daily.dto.*;
 import com.kancho.daily.exception.IsExceedWriteDiaryException;
 import com.kancho.daily.exception.IsNotTheWriterException;
 import com.kancho.daily.exception.NotFoundDiaryException;
+import com.kancho.daily.exception.IsEmptyDiariesException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -126,4 +127,14 @@ public class DiaryService {
         diaryRepository.delete(diary);
     }
 
+    public void deleteDiaries(UserInfo userInfo, ReqDiariesDto reqDiariesDto) {
+        List<Diary> diaries = diaryRepository.findAllByIdAndUsersId(reqDiariesDto.getDiaryIds(), userInfo.getId());
+
+        if (diaries.isEmpty()) {
+            throw new IsEmptyDiariesException();
+        }
+
+        diaryRepository.deleteAll(diaries);
+
+    }
 }
