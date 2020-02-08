@@ -7,6 +7,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.10.7'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'it.ozimov:embedded-redis:0.7.2'
+    implementation 'com.google.firebase:firebase-admin:6.8.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.10.7'
