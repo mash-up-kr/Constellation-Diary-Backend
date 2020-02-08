@@ -128,8 +128,7 @@ public class DiaryService {
     }
 
     public void deleteDiaries(UserInfo userInfo, ReqDiariesDto reqDiariesDto) {
-        List<Diary> diaries = diaryRepository.findAllByIdAndUsersId(reqDiariesDto.getDiaryIds(), userInfo.getId());
-
+        List<Diary> diaries = diaryRepository.findAllByIdInAndUsersId(reqDiariesDto.getDiaryIds(), userInfo.getId());
         if (diaries.isEmpty()) {
             throw new IsEmptyDiariesException();
         }
