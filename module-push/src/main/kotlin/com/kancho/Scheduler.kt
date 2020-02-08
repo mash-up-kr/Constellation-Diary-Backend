@@ -7,17 +7,19 @@ import org.springframework.stereotype.Component
 import java.time.LocalTime
 
 @Component
-class Scheduler(val pushController: PushController) {
+@Profile("horoscope")
+class HoroscopeScheduler(val pushController: PushController) {
 
-    @Profile("horoscope")
-    @Scheduled(cron = "0 */1 * * * *")
-    fun startHoroscopeJob() {
-        pushController.sendHoroscopePushAlarm(LocalTime.now())
-    }
+    @Scheduled(cron = "* */1 * * * *")
+    fun startHoroscopeJob() = pushController.sendHoroscopePushAlarm(LocalTime.now())
 
-    @Profile("question")
-    @Scheduled(cron = "0 */1 * * * *")
-    fun startQuestionJob() {
-        pushController.sendDailyQuestionPushAlarm(LocalTime.now())
-    }
+}
+
+@Component
+@Profile("question")
+class QuestionSchedulerTwo(val pushController: PushController) {
+
+    @Scheduled(cron = "* */1 * * * *")
+    fun startQuestionJob() = pushController.sendDailyQuestionPushAlarm(LocalTime.now())
+
 }
