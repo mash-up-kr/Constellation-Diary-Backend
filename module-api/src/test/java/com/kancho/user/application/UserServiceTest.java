@@ -1,6 +1,6 @@
 package com.kancho.user.application;
 
-import com.kancho.user.domain.user.UserRepository;
+import com.kancho.user.UserRepository;
 import com.kancho.user.dto.response.ResCheckUserDto;
 import org.junit.Before;
 import org.junit.Test;
