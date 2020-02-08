@@ -9,7 +9,7 @@ import org.junit.Test
 
 class HoroscopeDesignationTest {
 
-    lateinit var horoscopeDesignation: HoroscopeDesignation
+    private lateinit var horoscopeDesignation: HoroscopeDesignation
 
 
     @Before

@@ -1,4 +1,4 @@
-package com.kancho.push.application
+package com.kancho.horoscope_push.application
 
 import com.kancho.constellation.Constellation
 import com.kancho.horoscope.Horoscope
@@ -9,7 +9,7 @@ import org.junit.Test
 
 class HoroscopeDesignationTest {
 
-    lateinit var horoscopeDesignation: HoroscopeDesignation
+    private lateinit var horoscopeDesignation: HoroscopeDesignation
 
 
     @Before

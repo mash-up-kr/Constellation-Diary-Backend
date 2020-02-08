@@ -12,7 +12,7 @@ spring:
       driver-class-name: org.h2.Driver
   redis:
     host: localhost
-    port: 6379
+    port: 6399
 
   jpa:
     database-platform: H2
@@ -77,7 +77,7 @@ spring:
   profiles: test
   redis:
     host: localhost
-    port: 6379
+    port: 6323
   mail:
     host: smtp.gmail.com
     port: 587

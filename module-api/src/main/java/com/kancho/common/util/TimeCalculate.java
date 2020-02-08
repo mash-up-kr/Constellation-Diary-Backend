@@ -2,12 +2,15 @@ package com.kancho.common.util;
 
 import com.kancho.common.constant.ReqTimeZone;
 import com.kancho.common.exception.RequestWrongFieldException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.Date;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TimeCalculate {
 
     private final static Integer ZERO = 0;
@@ -37,58 +40,48 @@ public class TimeCalculate {
 
     public static Date convertDate(String date) {
         SimpleDateFormat transFormat = new SimpleDateFormat(DATE_FORMAT);
-        Date to = null;
+        Date result;
         try {
-            to = transFormat.parse(date);
+            result = transFormat.parse(date);
         } catch (ParseException e) {
             throw new RequestWrongFieldException();
         }
-        return to;
+        return result;
     }
 
     public static LocalDateTime createStartTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
-        LocalDateTime localDateKstTime;
-        LocalDateTime temp =
-                LocalDateTime.of(localDateTime.getYear(), localDateTime.getMonth(),
-                        localDateTime.getDayOfMonth(), localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond());
-
+        LocalDateTime temp = copyLocalDateTime(localDateTime);
 
         int year = localDateTime.getYear();
         Month month = localDateTime.getMonth();
         int day = localDateTime.getDayOfMonth();
-        temp = temp.minusDays(1);
+        temp = temp.minusDays(ONE_DAY);
 
-        if (!(temp.getMonth().getValue() == localDateTime.getMonth().getValue())) {
+        if (isNotSameMonth(temp, localDateTime)) {
             year = temp.getYear();
             month = temp.getMonth();
             day = temp.getDayOfMonth();
         }
 
-        localDateKstTime = LocalDateTime.of(year, month,
-                day, (int) (DAY_TIME - reqTimeZone.getParallax()), ZERO, ZERO);
-        return localDateKstTime;
+        return LocalDateTime.of(year, month, day, (int) (DAY_TIME - reqTimeZone.getParallax()), ZERO, ZERO);
+
     }
 
     public static LocalDateTime createEndTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
-        LocalDateTime localDateKstTime;
-        LocalDateTime temp =
-                LocalDateTime.of(localDateTime.getYear(), localDateTime.getMonth(),
-                        localDateTime.getDayOfMonth(), localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond());
+        LocalDateTime temp = copyLocalDateTime(localDateTime);
 
         int year = localDateTime.getYear();
         Month month = localDateTime.getMonth();
         int day = localDateTime.getDayOfMonth();
-        temp = temp.plusDays(1);
+        temp = temp.plusDays(ONE_DAY);
 
-        if (!(temp.getMonth().getValue() == localDateTime.getMonth().getValue())) {
+        if (isNotSameMonth(temp, localDateTime)) {
             year = temp.getYear();
             month = temp.getMonth();
             day = temp.getDayOfMonth();
         }
 
-        localDateKstTime = LocalDateTime.of(year, month,
-                day, (int) (DAY_TIME - reqTimeZone.getParallax()), FIFTY_NINE, FIFTY_NINE);
-        return localDateKstTime;
+        return LocalDateTime.of(year, month, day, (int) (DAY_TIME - reqTimeZone.getParallax()), FIFTY_NINE, FIFTY_NINE);
     }
 
     public static Long getDeadLine(ReqTimeZone reqTimeZone) {
@@ -115,10 +108,14 @@ public class TimeCalculate {
         return horoscopeTime.minusHours(reqTimeZone.getParallax());
     }
 
-
-    private TimeCalculate() {
+    private static LocalDateTime copyLocalDateTime(LocalDateTime localDateTime) {
+        return LocalDateTime.of(localDateTime.getYear(), localDateTime.getMonth(),
+                localDateTime.getDayOfMonth(), localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond());
 
     }
 
+    private static boolean isNotSameMonth(LocalDateTime left, LocalDateTime right) {
+        return !(left.getMonth().getValue() == right.getMonth().getValue());
+    }
 
 }
