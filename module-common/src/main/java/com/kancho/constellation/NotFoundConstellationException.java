@@ -1,7 +1,8 @@
 package com.kancho.constellation;
 
+import lombok.Getter;
 
-
+@Getter
 public class NotFoundConstellationException extends RuntimeException {
     private String massage;
 
