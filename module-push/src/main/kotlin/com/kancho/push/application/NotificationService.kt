@@ -4,6 +4,6 @@ import org.springframework.scheduling.annotation.Async
 
 interface NotificationService {
     @Async
-    fun send(tokens: List<String>, title: String, message: String)
+    fun send(tokens: List<String>, title: String, body: String)
 }
 

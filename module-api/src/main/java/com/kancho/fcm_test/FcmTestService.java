@@ -4,6 +4,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import com.kancho.authentication.JWTManager;
 import com.kancho.authentication.TokenType;
 import com.kancho.common.exception.NotFoundUserException;
@@ -28,6 +29,7 @@ public class FcmTestService {
         User user = userRepository.findById(userInfo.getId()).orElseThrow(NotFoundUserException::new);
 
         Message message = Message.builder()
+                .setNotification(new Notification("test title", "test body"))
                 .putData("title", "test title")
                 .putData("body", "test body")
                 .setToken(user.getFcmToken())
