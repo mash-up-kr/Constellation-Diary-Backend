@@ -5,7 +5,7 @@ import com.kancho.common.exception.FailAuthenticationException;
 import com.kancho.common.util.TimeCalculate;
 import com.kancho.daily.domain.Diary;
 import com.kancho.daily.domain.DiaryRepository;
-import com.kancho.daily.dto.ResDailyQuestionDto;
+import com.kancho.daily.dto.response.ResDailyQuestionDto;
 import com.kancho.daily_question.DailyQuestion;
 import com.kancho.daily_question.DailyQuestionRepository;
 import com.kancho.user.User;

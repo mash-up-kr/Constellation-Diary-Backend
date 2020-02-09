@@ -2,10 +2,14 @@ package com.kancho.daily.application;
 
 import com.kancho.common.constant.ReqTimeZone;
 import com.kancho.common.user_context.UserInfo;
+import com.kancho.common.util.MonthRange;
 import com.kancho.common.util.TimeCalculate;
 import com.kancho.daily.domain.Diary;
 import com.kancho.daily.domain.DiaryRepository;
-import com.kancho.daily.dto.*;
+import com.kancho.daily.dto.request.ReqDiariesDto;
+import com.kancho.daily.dto.request.ReqModifyDiaryDto;
+import com.kancho.daily.dto.request.ReqWriteDiaryDto;
+import com.kancho.daily.dto.response.*;
 import com.kancho.daily.exception.IsExceedWriteDiaryException;
 import com.kancho.daily.exception.IsNotTheWriterException;
 import com.kancho.daily.exception.NotFoundDiaryException;
@@ -25,6 +29,7 @@ import java.util.stream.Collectors;
 public class DiaryService {
 
     private final DiaryRepository diaryRepository;
+    private final DiaryCountService diaryCountService;
 
     public ResDiariesDto getDiaries(UserInfo userInfo, Integer year, Integer month, ReqTimeZone reqTimeZone) {
         LocalDateTime startDate = TimeCalculate.createStartDate(year, month, reqTimeZone);
@@ -135,5 +140,21 @@ public class DiaryService {
 
         diaryRepository.deleteAll(diaries);
 
+    }
+
+    public ResCountDiariesDto countDiaries(UserInfo userInfo, ReqTimeZone reqTimeZone, Integer year) {
+        List<ResCountYearDiaryDto> resCountYearDiaryDtos = new ArrayList<>();
+
+        for (int i = -2; i <= 2; i++) {
+            List<MonthRange> month = TimeCalculate.createRangeMonth(year + i, reqTimeZone);
+            ResCountYearDiaryDto resCountYearDiaryDto = diaryCountService.countDiaries(userInfo.getId(), month);
+            resCountYearDiaryDto.addInfo(year + i);
+            resCountYearDiaryDtos.add(resCountYearDiaryDto);
+        }
+
+        return ResCountDiariesDto.builder()
+                .timeZone(reqTimeZone.getValue())
+                .diaries(resCountYearDiaryDtos)
+                .build();
     }
 }

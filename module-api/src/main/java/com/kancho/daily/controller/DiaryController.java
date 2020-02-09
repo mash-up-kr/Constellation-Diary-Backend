@@ -5,7 +5,12 @@ import com.kancho.common.exception.RequestWrongFieldException;
 import com.kancho.common.user_context.ThreadContext;
 import com.kancho.common.user_context.UserInfo;
 import com.kancho.daily.application.DiaryService;
-import com.kancho.daily.dto.*;
+import com.kancho.daily.dto.request.ReqDiariesDto;
+import com.kancho.daily.dto.request.ReqModifyDiaryDto;
+import com.kancho.daily.dto.request.ReqWriteDiaryDto;
+import com.kancho.daily.dto.response.ResCountDiariesDto;
+import com.kancho.daily.dto.response.ResDiariesDto;
+import com.kancho.daily.dto.response.ResDiaryDto;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -162,7 +167,7 @@ public class DiaryController {
     @ApiResponses({
             @ApiResponse(code = 204, message = "다수의 일기 삭제 성공"),
             @ApiResponse(code = 400, message = "4001 - Request Worn Field, " +
-                    "4004 - Not Found Diary"),
+                    "4004 - Is Empty Diaries"),
             @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
@@ -185,6 +190,33 @@ public class DiaryController {
         diaryService.deleteDiaries(userInfo, reqDiariesDto);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
+    @ApiOperation(value = "연도의 달별로 일기 카운트")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "연도의 달별로 일기 카운트 성공"),
+            @ApiResponse(code = 400, message = "4001 - Request Worn Field"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+    })
+    @GetMapping("/diaries/count")
+    public ResponseEntity<ResCountDiariesDto> getCountDiaries(
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
+            @RequestParam("year") Integer year) {
+
+        if (year == null) {
+            throw new RequestWrongFieldException();
+        }
+
+        UserInfo userInfo = ThreadContext.userInfo.get();
+
+        return ResponseEntity.status(HttpStatus.OK).body(diaryService.countDiaries(userInfo, reqTimeZone, year));
     }
 
 }
