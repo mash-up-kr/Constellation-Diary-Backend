@@ -1,7 +1,7 @@
 package com.kancho.daily.application;
 
 import com.kancho.daily.domain.Diary;
-import com.kancho.daily.dto.ResDailyQuestionDto;
+import com.kancho.daily.dto.response.ResDailyQuestionDto;
 import org.springframework.stereotype.Component;
 
 @Component

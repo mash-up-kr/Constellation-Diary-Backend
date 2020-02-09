@@ -1,4 +1,4 @@
-package com.kancho.daily.dto;
+package com.kancho.daily.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

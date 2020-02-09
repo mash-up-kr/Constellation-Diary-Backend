@@ -5,7 +5,7 @@ import com.kancho.common.user_context.ThreadContext;
 import com.kancho.common.user_context.UserInfo;
 import com.kancho.common.util.TimeCalculate;
 import com.kancho.daily.application.DailyQuestionService;
-import com.kancho.daily.dto.ResDailyQuestionDto;
+import com.kancho.daily.dto.response.ResDailyQuestionDto;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

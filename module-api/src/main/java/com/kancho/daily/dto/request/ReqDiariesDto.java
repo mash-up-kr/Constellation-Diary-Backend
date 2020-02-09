@@ -1,4 +1,4 @@
-package com.kancho.daily.dto;
+package com.kancho.daily.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
