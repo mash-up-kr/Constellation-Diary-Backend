@@ -43,6 +43,7 @@ public class MembershipService {
                 .email(reqSignUpDto.getEmail())
                 .userId(reqSignUpDto.getUserId())
                 .password(reqSignUpDto.getPassword())
+                .fcmToken(reqSignUpDto.getFcmToken())
                 .horoscopeTime(TimeCalculate.createHoroscopeTime(reqTimeZone))
                 .questionTime(TimeCalculate.createQuestionTime(reqTimeZone))
                 .build();
