@@ -12,9 +12,7 @@ import java.util.ArrayList
 import com.google.firebase.messaging.SendResponse
 import mu.KLogging
 
-
 @Component
-
 class FcmNotificationService(private val firebaseApp: FirebaseApp) : NotificationService {
     companion object : KLogging()
 
