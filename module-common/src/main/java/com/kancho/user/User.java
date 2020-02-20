@@ -48,7 +48,7 @@ public class User {
 
     @Builder
     private User(String userId, String password, Constellation constellation, String email,
-                 LocalTime questionTime, LocalTime horoscopeTime) {
+                 LocalTime questionTime, LocalTime horoscopeTime, String fcmToken) {
         this.userId = userId;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.constellation = constellation;
@@ -57,6 +57,7 @@ public class User {
         this.questionAlarmFlag = true;
         this.questionTime = questionTime;
         this.horoscopeTime = horoscopeTime;
+        this.fcmToken = fcmToken;
     }
 
     public boolean isPreviousQuestionTime(LocalTime localTime, Long deadline) {

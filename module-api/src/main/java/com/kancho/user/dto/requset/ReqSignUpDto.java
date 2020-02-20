@@ -24,4 +24,7 @@ public class ReqSignUpDto {
 
     @NotNull
     private String constellation;
+
+    @NotNull
+    private String fcmToken;
 }
