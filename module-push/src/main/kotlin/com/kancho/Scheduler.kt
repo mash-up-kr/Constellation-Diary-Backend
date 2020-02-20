@@ -10,7 +10,7 @@ import java.time.LocalTime
 @Profile("horoscope")
 class HoroscopeScheduler(val pushController: PushController) {
 
-    @Scheduled(cron = "* */1 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     fun startHoroscopeJob() = pushController.sendHoroscopePushAlarm(LocalTime.now())
 
 }
@@ -19,7 +19,7 @@ class HoroscopeScheduler(val pushController: PushController) {
 @Profile("question")
 class QuestionSchedulerTwo(val pushController: PushController) {
 
-    @Scheduled(cron = "* */1 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     fun startQuestionJob() = pushController.sendDailyQuestionPushAlarm(LocalTime.now())
 
 }
