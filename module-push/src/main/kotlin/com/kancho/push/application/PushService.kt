@@ -11,10 +11,12 @@ class PushService(private val notificationService: NotificationService,
     fun sendHoroscopePushAlarm(nowTime: LocalTime) {
 
         val users: MutableList<User> = userRepository.findByHoroscopeAlarmFlagAndHoroscopeTime(true, nowTime)
+        val userSize: Int = users.size - 1
 
         var tokens: MutableList<String> = mutableListOf()
-        for (user in users) {
-            if (tokens.size == 500) {
+
+        for ((index, user) in users.withIndex()) {
+            if (tokens.size == 500 || userSize == index) {
                 notificationService.send(tokens, "별별일기", "오늘의 운세를 확인해보세요.")
                 tokens = mutableListOf()
             } else {
@@ -25,11 +27,13 @@ class PushService(private val notificationService: NotificationService,
 
     fun sendDailyQuestionPushAlarm(nowTime: LocalTime) {
         val users: MutableList<User> = userRepository.findByQuestionAlarmFlagAndQuestionTime(true, nowTime)
+        val userSize: Int = users.size - 1
 
         var tokens: MutableList<String> = mutableListOf()
-        for (user in users) {
-            if (tokens.size == 500) {
-                notificationService.send(tokens, "별별일기", "오늘 하루는 어떠셨나요?")
+
+        notificationService.send(tokens, "별별일기", "오늘 하루는 어떠셨나요?")
+        for ((index, user) in users.withIndex()) {
+            if (tokens.size == 500 || userSize == index) {
                 tokens = mutableListOf()
             } else {
                 tokens.add(user.fcmToken)
