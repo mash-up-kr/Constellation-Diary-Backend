@@ -44,7 +44,7 @@ public class UserControllerTests {
     @Test
     public void 회원가입_성공() throws Exception {
         ReqSignUpDto reqSignUpDto =
-                new ReqSignUpDto("test@naver.com", "testId", "testpwd", "물병자리");
+                new ReqSignUpDto("test@naver.com", "testId", "testpwd", "물병자리", "ㄹㅇㅁㄴㅁㄹㄴㅇ");
 
         this.mockMvc.perform(post("/users/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
