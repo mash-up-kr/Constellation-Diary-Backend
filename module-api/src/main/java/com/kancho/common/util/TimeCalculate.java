@@ -28,8 +28,8 @@ public class TimeCalculate {
         return nowTime.plusHours(reqTimeZone.getParallax()).toLocalDate();
     }
 
-    public static Date covertDate(LocalDateTime nowTime, ReqTimeZone reqTimeZone) {
-        return Date.from(nowTime.plusHours(reqTimeZone.getParallax()).atZone(ZoneId.systemDefault()).toInstant());
+    public static Date covertDate(LocalDateTime nowTime) {
+        return Date.from(nowTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public static LocalTime convertLocalTime(Date date) {
