@@ -53,24 +53,24 @@ public class TimeCalculate {
 
     public static LocalDateTime createStartTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
         LocalDateTime temp = copyLocalDateTime(localDateTime);
+        long limitTime = generateLimitTime(reqTimeZone);
 
-        long limitTime = DAY_TIME - reqTimeZone.getParallax();
         if (temp.getHour() < limitTime) {
             temp = temp.minusDays(ONE);
         }
-
         return LocalDateTime.of(temp.getYear(), temp.getMonth(), temp.getDayOfMonth(),
-                (int) (DAY_TIME - reqTimeZone.getParallax()), ZERO, ZERO);
+                (int) limitTime, ZERO, ZERO);
     }
 
     public static LocalDateTime createEndTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
         LocalDateTime temp = copyLocalDateTime(localDateTime);
-        long limitTime = DAY_TIME - reqTimeZone.getParallax();
+        long limitTime = generateLimitTime(reqTimeZone);
+
         if (temp.getHour() >= limitTime) {
             temp = temp.plusDays(ONE);
         }
         return LocalDateTime.of(temp.getYear(), temp.getMonth(), temp.getDayOfMonth(),
-                (int) (DAY_TIME - reqTimeZone.getParallax()), ZERO, ZERO).minusSeconds(LONG_ONE);
+                (int) limitTime, ZERO, ZERO).minusSeconds(LONG_ONE);
     }
 
     public static List<MonthRange> createRangeMonth(Integer year, ReqTimeZone reqTimeZone) {
@@ -120,8 +120,7 @@ public class TimeCalculate {
 
     }
 
-    private static boolean isNotSameMonth(LocalDateTime left, LocalDateTime right) {
-        return !(left.getMonth().getValue() == right.getMonth().getValue());
+    private static long generateLimitTime(ReqTimeZone reqTimeZone) {
+        return (DAY_TIME - reqTimeZone.getParallax()) % DAY_TIME;
     }
-
 }
