@@ -20,7 +20,6 @@ public class TimeCalculate {
     private final static Integer TWELVE = 12;
     private final static Integer TWENTY_TWO = 22;
     private final static Integer EIGHT = 8;
-    private final static Integer FIFTY_NINE = 59;
     private final static Long LONG_ONE = 1L;
     private final static Long DAY_TIME = 24L;
     private final static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
@@ -55,36 +54,23 @@ public class TimeCalculate {
     public static LocalDateTime createStartTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
         LocalDateTime temp = copyLocalDateTime(localDateTime);
 
-        int year = localDateTime.getYear();
-        Month month = localDateTime.getMonth();
-        int day = localDateTime.getDayOfMonth();
-        temp = temp.minusDays(ONE);
-
-        if (isNotSameMonth(temp, localDateTime)) {
-            year = temp.getYear();
-            month = temp.getMonth();
-            day = temp.getDayOfMonth();
+        long limitTime = DAY_TIME - reqTimeZone.getParallax();
+        if (temp.getHour() < limitTime) {
+            temp = temp.minusDays(ONE);
         }
 
-        return LocalDateTime.of(year, month, day, (int) (DAY_TIME - reqTimeZone.getParallax()), ZERO, ZERO);
-
+        return LocalDateTime.of(temp.getYear(), temp.getMonth(), temp.getDayOfMonth(),
+                (int) (DAY_TIME - reqTimeZone.getParallax()), ZERO, ZERO);
     }
 
     public static LocalDateTime createEndTime(LocalDateTime localDateTime, ReqTimeZone reqTimeZone) {
         LocalDateTime temp = copyLocalDateTime(localDateTime);
-
-        int year = localDateTime.getYear();
-        Month month = localDateTime.getMonth();
-        int day = localDateTime.getDayOfMonth();
-        temp = temp.plusDays(ONE);
-
-        if (isNotSameMonth(temp, localDateTime)) {
-            year = temp.getYear();
-            month = temp.getMonth();
-            day = temp.getDayOfMonth();
+        long limitTime = DAY_TIME - reqTimeZone.getParallax();
+        if (temp.getHour() >= limitTime) {
+            temp = temp.plusDays(ONE);
         }
-
-        return LocalDateTime.of(year, month, day, (int) (DAY_TIME - reqTimeZone.getParallax()), FIFTY_NINE, FIFTY_NINE);
+        return LocalDateTime.of(temp.getYear(), temp.getMonth(), temp.getDayOfMonth(),
+                (int) (DAY_TIME - reqTimeZone.getParallax()), ZERO, ZERO).minusSeconds(LONG_ONE);
     }
 
     public static List<MonthRange> createRangeMonth(Integer year, ReqTimeZone reqTimeZone) {
