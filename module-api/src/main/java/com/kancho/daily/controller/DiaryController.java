@@ -67,7 +67,7 @@ public class DiaryController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/diaries")
-    public ResponseEntity<Void> writeDiary(@RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
+    public ResponseEntity<ResDiaryDto> writeDiary(@RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone,
                                            @RequestBody @Valid ReqWriteDiaryDto reqWriteDiaryDto,
                                            BindingResult bindingResult) {
 
@@ -77,8 +77,8 @@ public class DiaryController {
 
         UserInfo userInfo = ThreadContext.userInfo.get();
 
-        diaryService.writeDiary(userInfo, reqWriteDiaryDto, reqTimeZone);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(diaryService.writeDiary(userInfo, reqWriteDiaryDto, reqTimeZone));
     }
 
     @ApiOperation(value = "일기 보기 - 요청시 Time-Zone 선택")
