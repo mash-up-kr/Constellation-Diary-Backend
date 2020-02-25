@@ -16,11 +16,10 @@ class PushService(private val notificationService: NotificationService,
         var tokens: MutableList<String> = mutableListOf()
 
         for ((index, user) in users.withIndex()) {
+            tokens.add(user.fcmToken)
             if (tokens.size == 500 || userSize == index) {
                 notificationService.send(tokens, "별별일기", "오늘의 운세를 확인해보세요.")
                 tokens = mutableListOf()
-            } else {
-                tokens.add(user.fcmToken)
             }
         }
     }
@@ -33,10 +32,9 @@ class PushService(private val notificationService: NotificationService,
 
         notificationService.send(tokens, "별별일기", "오늘 하루는 어떠셨나요?")
         for ((index, user) in users.withIndex()) {
+            tokens.add(user.fcmToken)
             if (tokens.size == 500 || userSize == index) {
                 tokens = mutableListOf()
-            } else {
-                tokens.add(user.fcmToken)
             }
         }
 
