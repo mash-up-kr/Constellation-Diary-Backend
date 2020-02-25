@@ -30,10 +30,10 @@ class PushService(private val notificationService: NotificationService,
 
         var tokens: MutableList<String> = mutableListOf()
 
-        notificationService.send(tokens, "별별일기", "오늘 하루는 어떠셨나요?")
         for ((index, user) in users.withIndex()) {
             tokens.add(user.fcmToken)
             if (tokens.size == 500 || userSize == index) {
+                notificationService.send(tokens, "별별일기", "오늘 하루는 어떠셨나요?")
                 tokens = mutableListOf()
             }
         }
