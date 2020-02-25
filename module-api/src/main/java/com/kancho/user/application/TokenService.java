@@ -15,9 +15,9 @@ public class TokenService {
     public ResTokenDto refreshToken(UserInfo userInfo) {
 
         String authenticationToken =
-                jwtManager.createRefreshToken(userInfo.getUserId(), userInfo.getId());
-        String refreshToken =
                 jwtManager.createAuthenticationToken(userInfo.getUserId(), userInfo.getId());
+        String refreshToken =
+                jwtManager.createRefreshToken(userInfo.getUserId(), userInfo.getId());
 
         return ResTokenDto.builder()
                 .authenticationToken(authenticationToken)
