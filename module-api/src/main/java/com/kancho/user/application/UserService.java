@@ -1,6 +1,7 @@
 package com.kancho.user.application;
 
 import com.kancho.common.constant.ReqTimeZone;
+import com.kancho.common.exception.FailAuthenticationException;
 import com.kancho.common.user_context.UserInfo;
 import com.kancho.common.util.ReplacePassword;
 import com.kancho.user.User;
@@ -36,6 +37,23 @@ public class UserService {
 
         return ResUserIdDto.builder()
                 .userId(ReplacePassword.changeAsterisk(user.getUserId()))
+                .build();
+
+    }
+
+    public ResUserDto getUser(ReqTimeZone reqTimeZone, UserInfo userInfo) {
+        User user = userRepository.findByIdAndUserId(userInfo.getId(), userInfo.getUserId())
+                .orElseThrow(FailAuthenticationException::new);
+
+        return ResUserDto.builder()
+                .id(user.getId())
+                .userId(user.getUserId())
+                .constellation(user.getConstellation().getValue())
+                .horoscopeAlarmFlag(user.getHoroscopeAlarmFlag())
+                .horoscopeTime(user.getHoroscopeTime())
+                .questionAlarmFlag(user.getQuestionAlarmFlag())
+                .questionTime(user.getQuestionTime())
+                .timeZone(reqTimeZone.getValue())
                 .build();
 
     }
@@ -88,5 +106,4 @@ public class UserService {
                                           ReqModifyHoroscopeTimeDto reqModifyHoroscopeTimeDto) {
         return membershipService.modifyHoroscopeTime(userInfo, reqTimeZone, reqModifyHoroscopeTimeDto);
     }
-
 }

@@ -124,6 +124,26 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @ApiOperation(value = "유저 정보 조회 - 인증 토큰 이용(시간 정보는 UTC로 내려갑니다. TimeZone을 이용하여 변환 시켜 주세요)")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "유저 정보 조회 성공"),
+            @ApiResponse(code = 401, message = "4101 - Fail Authentication check token"),
+            @ApiResponse(code = 500, message = "서버 에러")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Authentication JWT",
+                    required = true, dataType = "string", paramType = "header",
+                    defaultValue = "Bearer cbbb1a6e-8614-4a4d-a967-b0a42924e7ca")
+    })
+    @GetMapping("/users")
+    public ResponseEntity<ResUserDto> getUser(
+            @RequestHeader(value = "Time-Zone") ReqTimeZone reqTimeZone) {
+
+        UserInfo userInfo = ThreadContext.userInfo.get();
+
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUser(reqTimeZone, userInfo));
+    }
+
     @ApiOperation(value = "토큰 재발급")
     @ApiResponses({
             @ApiResponse(code = 200, message = "토큰 재발급 성공"),
