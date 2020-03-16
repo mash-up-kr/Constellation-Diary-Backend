@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class NotFoundConstellationException extends RuntimeException {
-    private String massage;
+    private String message;
 
     public NotFoundConstellationException() {
-       this.massage = "Not Found Constellation";
+       this.message = "Not Found Constellation";
     }
 }

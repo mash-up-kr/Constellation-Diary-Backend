@@ -17,7 +17,7 @@ public class NotFoundUserException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Not Found User")
+                .message("Not Found User")
                 .build());
     }
 }

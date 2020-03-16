@@ -17,7 +17,7 @@ public class NotFoundHoroscopeException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Not Found Horoscope")
+                .message("Not Found Horoscope")
                 .build());
     }
 }

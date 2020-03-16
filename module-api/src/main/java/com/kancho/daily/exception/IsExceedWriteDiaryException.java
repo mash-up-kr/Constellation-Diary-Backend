@@ -17,7 +17,7 @@ public class IsExceedWriteDiaryException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Is Exceed Write Diary")
+                .message("Is Exceed Write Diary")
                 .build());
     }
 }

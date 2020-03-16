@@ -17,7 +17,7 @@ public class CanNotSendMessageException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Fcm Send Error")
+                .message("Fcm Send Error")
                 .build());
     }
 }

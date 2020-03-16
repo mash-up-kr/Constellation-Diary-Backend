@@ -17,7 +17,7 @@ public class IsNotExistsUserException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Is Not Exists User - check UserId or Email")
+                .message("Is Not Exists User - check UserId or Email")
                 .build());
     }
 }
