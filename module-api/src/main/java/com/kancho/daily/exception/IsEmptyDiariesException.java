@@ -17,7 +17,7 @@ public class IsEmptyDiariesException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Is Empty Diaries")
+                .message("Is Empty Diaries")
                 .build());
     }
 }

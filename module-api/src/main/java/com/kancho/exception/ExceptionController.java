@@ -21,7 +21,7 @@ public class ExceptionController {
                 req.getMethod(),
                 req.getRequestURI(),
                 errorModel.getHttpStatus(),
-                errorModel.getMassage());
+                errorModel.getMessage());
 
         return ResponseEntity
                 .status(errorModel.getHttpStatus())
@@ -43,7 +43,7 @@ public class ExceptionController {
                 ErrorModel.builder()
                         .code(4005)
                         .httpStatus(HttpStatus.BAD_REQUEST)
-                        .massage(exception.getMessage())
+                        .message(exception.getMessage())
                         .build();
 
         return ResponseEntity

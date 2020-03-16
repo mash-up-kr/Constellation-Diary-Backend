@@ -17,7 +17,7 @@ public class ExistsEmailException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Exists Email")
+                .message("Exists Email")
                 .build());
     }
 }

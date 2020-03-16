@@ -17,7 +17,7 @@ public class RequestWrongFieldException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Request Field Null or Wrong Form - Check Request Field")
+                .message("Request Field Null or Wrong Form - Check Request Field")
                 .build());
     }
 }

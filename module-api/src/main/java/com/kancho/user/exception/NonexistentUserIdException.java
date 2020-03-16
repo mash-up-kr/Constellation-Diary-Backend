@@ -17,7 +17,7 @@ public class NonexistentUserIdException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Nonexistent UserId")
+                .message("Nonexistent UserId")
                 .build());
     }
 }

@@ -17,7 +17,7 @@ public class IsNotEqualToPasswordException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Is Not Equal To Password")
+                .message("Is Not Equal To Password")
                 .build());
     }
 }

@@ -17,7 +17,7 @@ public class FailAuthenticationNumberException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Fail Authentication-Number - check field")
+                .message("Fail Authentication-Number - check field")
                 .build());
     }
 }

@@ -17,7 +17,7 @@ public class NonexistentUserByEmailException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Nonexistent User By Email")
+                .message("Nonexistent User By Email")
                 .build());
     }
 }

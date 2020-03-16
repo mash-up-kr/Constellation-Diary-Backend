@@ -17,7 +17,7 @@ public class NotFoundDiaryException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Not Found Diary")
+                .message("Not Found Diary")
                 .build());
     }
 }

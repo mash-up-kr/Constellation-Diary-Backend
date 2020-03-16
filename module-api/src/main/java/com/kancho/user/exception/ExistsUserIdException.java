@@ -17,7 +17,7 @@ public class ExistsUserIdException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Exists UserId")
+                .message("Exists UserId")
                 .build());
     }
 }

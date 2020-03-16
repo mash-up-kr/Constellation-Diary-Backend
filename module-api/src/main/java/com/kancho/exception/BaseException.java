@@ -8,7 +8,7 @@ public class BaseException extends RuntimeException{
     private ErrorModel errorModel;
 
     protected BaseException(ErrorModel errorModel) {
-        super(errorModel.getMassage());
+        super(errorModel.getMessage());
         this.errorModel = errorModel;
     }
 }

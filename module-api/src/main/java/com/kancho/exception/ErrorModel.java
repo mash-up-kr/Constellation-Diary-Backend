@@ -8,12 +8,12 @@ import org.springframework.http.HttpStatus;
 public class ErrorModel {
     private int code;
     private HttpStatus httpStatus;
-    private String massage;
+    private String message;
 
     @Builder
-    private ErrorModel(int code, HttpStatus httpStatus, String massage) {
+    private ErrorModel(int code, HttpStatus httpStatus, String message) {
         this.code = code;
         this.httpStatus = httpStatus;
-        this.massage = massage;
+        this.message = message;
     }
 }

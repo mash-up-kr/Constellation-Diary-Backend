@@ -17,7 +17,7 @@ public class IsNotTheWriterException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Is Not The Writer")
+                .message("Is Not The Writer")
                 .build());
     }
 }

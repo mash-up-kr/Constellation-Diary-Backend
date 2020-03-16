@@ -18,7 +18,7 @@ public class FailAuthenticationException extends BaseException {
         super(ErrorModel.builder()
                 .code(code)
                 .httpStatus(httpStatus)
-                .massage("Fail Authentication - check token")
+                .message("Fail Authentication - check token")
                 .build());
     }
 }
