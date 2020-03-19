@@ -32,6 +32,7 @@ public class FcmTestService {
                 .setNotification(new Notification("test title", "test body"))
                 .putData("title", "test title")
                 .putData("body", "test body")
+                .putData("type", "test type")
                 .setToken(user.getFcmToken())
                 .build();
         try {
