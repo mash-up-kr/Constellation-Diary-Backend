@@ -16,12 +16,13 @@ import mu.KLogging
 class FcmNotificationService(private val firebaseApp: FirebaseApp) : NotificationService {
     companion object : KLogging()
 
-    override fun send(tokens: List<String>, title: String, body: String) {
+    override fun send(tokens: List<String>, title: String, body: String, type: String) {
         val notification = Notification(title, body)
         val message = MulticastMessage.builder()
                 .setNotification(notification)
                 .putData("title", title)
                 .putData("body", body)
+                .putData("type",type)
                 .addAllTokens(tokens)
                 .build()
 
