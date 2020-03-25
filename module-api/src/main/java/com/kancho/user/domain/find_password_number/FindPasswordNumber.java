@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@RedisHash(value = "find_password_numbers", timeToLive = 180L)
+@RedisHash(value = "find_password_numbers", timeToLive = 600L)
 public class FindPasswordNumber {
 
     @Id

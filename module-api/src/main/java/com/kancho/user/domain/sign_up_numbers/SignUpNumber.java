@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@RedisHash(value = "sign_up_numbers", timeToLive = 180L)
+@RedisHash(value = "sign_up_numbers", timeToLive = 600L)
 public class SignUpNumber {
 
     @Id
