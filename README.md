@@ -1,12 +1,14 @@
 # Byeol-Byeol
-- 별자리별 운세와 함께 갬성 일기를 작성 할 수 있는 서비스입니다.
+- 별자리 운세와 함께 갬성 일기를 작성 할 수 있는 서비스입니다.
+
+![image](https://user-images.githubusercontent.com/30069989/78128440-e7008c80-7450-11ea-94f6-c8ad105c45ae.png)
 
 ## Front
 - [iOS](https://github.com/mash-up-kr/Constellation-Diary-iOS)
 - [AOS](https://github.com/mash-up-kr/Constellation-Diary-AOS)
 
 ## Server Architecture
-![image](https://user-images.githubusercontent.com/30069989/74087460-604cb600-4a84-11ea-8bbe-44cc5b232c5f.png)
+![image](https://user-images.githubusercontent.com/30069989/78128609-2c24be80-7451-11ea-86fa-db1db65c22d4.png)
 
 ## 주요 기능
 - 별자리별 운세(매일 새로운 운세를 받아 보세요)
