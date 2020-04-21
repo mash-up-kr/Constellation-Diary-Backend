@@ -152,18 +152,14 @@ public class DiaryService {
     }
 
     public ResCountDiariesDto countDiaries(UserInfo userInfo, ReqTimeZone reqTimeZone, Integer year) {
-        List<ResCountYearDiaryDto> resCountYearDiaryDtos = new ArrayList<>();
 
-        for (int i = -2; i <= 2; i++) {
-            List<MonthRange> month = TimeCalculate.createRangeMonth(year + i, reqTimeZone);
-            ResCountYearDiaryDto resCountYearDiaryDto = diaryCountService.countDiaries(userInfo.getId(), month);
-            resCountYearDiaryDto.addInfo(year + i);
-            resCountYearDiaryDtos.add(resCountYearDiaryDto);
-        }
+        List<MonthRange> month = TimeCalculate.createRangeMonth(year, reqTimeZone);
+        ResCountYearDiaryDto resCountYearDiaryDto = diaryCountService.countDiaries(userInfo.getId(), month);
+        resCountYearDiaryDto.addInfo(year);
 
         return ResCountDiariesDto.builder()
                 .timeZone(reqTimeZone.getValue())
-                .diaries(resCountYearDiaryDtos)
+                .diaries(resCountYearDiaryDto)
                 .build();
     }
 }
